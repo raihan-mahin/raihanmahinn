@@ -1,3 +1,6 @@
+export { IOSNotes } from "./IOSNotes";
+export { IOSFiles } from "./IOSFiles";
+import { RecruiterContent } from "../RecruiterContent";
 import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star } from "lucide-react";
@@ -71,31 +74,6 @@ function SearchField({ value, onChange, placeholder }: { value: string; onChange
   );
 }
 
-/* ---------- Notes ---------- */
-export function IOSNotes({ onHome, payload }: { onHome: () => void; payload?: string | undefined }) {
-  const [list, setList] = useState<Note[]>(seedNotes);
-  const [q, setQ] = useState("");
-  const [sel, setSel] = useState<string | null>(payload ?? null);
-  useEffect(() => { try { const r = localStorage.getItem("mahin-os-notes"); if (r) setList(JSON.parse(r)); } catch { /* ignore */ } }, []);
-  const filtered = list.filter((n) => `${n.title} ${n.body}`.toLowerCase().includes(q.toLowerCase()));
-  const cur = list.find((n) => n.id === sel);
-  if (cur) return (
-    <IOSPage title="" backLabel="Notes" onBack={() => setSel(null)} large={false}>
-      <p className="pt-2 text-center text-[13px] text-muted-foreground">{cur.date}</p>
-      <div className="px-5 pt-2"><Render body={cur.body} /></div>
-    </IOSPage>
-  );
-  return (
-    <IOSPage title="Notes" backLabel="Home" onBack={onHome}>
-      <SearchField value={q} onChange={setQ} placeholder="Search" />
-      <Group header="Mahin's notes" footer={`${filtered.length} notes`}>
-        {filtered.map((n) => <Row key={n.id} title={n.title} sub={`${n.date}  ${n.body.replace(/^#+\s*|\n#*\s*-?\s*/gm, " ").trim().slice(0, 70)}`} onClick={() => setSel(n.id)} />)}
-        {!filtered.length && <p className="px-4 py-3 text-[15px] text-muted-foreground">No results</p>}
-      </Group>
-    </IOSPage>
-  );
-}
-
 /* ---------- Photos / Awards / Brands ---------- */
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
   return (
@@ -149,7 +127,7 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid, title = "
     return (
       <IOSPage title={a ? a.title : entry === "root" ? title : r.id} backLabel={leaveToHome ? "Home" : a ? r.id : "Albums"} onBack={() => (leaveToHome ? onHome() : a ? setAlbum(null) : setRoot(null))}>
         {awardsList ? (
-          <Group footer="7 podium finishes + 1 Marico finalist. Award photos pending upload.">
+          <Group footer="7 national podiums + 1 Marico finalist.">
             {items.map((x) => (
               <button key={x.id} onClick={() => setPid(x.id)} className="flex w-full items-center gap-3 px-4 py-2.5 text-left active:bg-accent">
                 <div className="size-14 shrink-0 overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="" /></div>
@@ -177,42 +155,6 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid, title = "
   return (
     <IOSPage title="Albums" backLabel="Home" onBack={onHome}>
       <AlbumGrid items={photoRoots.map((x) => ({ id: x.id, title: x.id, count: rootIds(x).length, cover: x.cover ?? albumCover(rootIds(x)) }))} onOpen={(id) => setRoot(id as ProjectCategory)} />
-    </IOSPage>
-  );
-}
-
-/* ---------- Files ---------- */
-export function IOSFiles({ onHome }: { onHome: () => void }) {
-  const os = useOS();
-  const [dir, setDir] = useState<string | null>(null);
-  const dirs: { key: string; items: { name: string; sub: string; open: [AppId, string?] }[] }[] = [
-    { key: "Experience", items: experience.map((e) => ({ name: `${e.role} — ${e.org}`, sub: `${e.period} · ${e.type}`, open: ["notes", "experience"] })) },
-    { key: "Projects", items: projects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ name: p.title, sub: p.subtitle, open: ["photos", p.id] })) },
-    { key: "Brand Campaigns", items: [...agencyBrands.map((b) => ({ name: `${b.brand} — agency workstream`, sub: "Current agency work", open: ["brands"] as [AppId] })), ...behanceWorks.map((w) => ({ name: w.title, sub: `${w.type} · Behance`, open: ["photos", `bh-${w.id}`] as [AppId, string] }))] },
-    { key: "Competitions/Awards", items: awards.map((a) => ({ name: `${a.title} — ${a.rank}`, sub: a.organizer, open: ["awards"] })) },
-    { key: "About", items: seedNotes.map((n) => ({ name: `${n.title}.txt`, sub: n.date, open: ["notes", n.id] })) },
-  ];
-  const cur = dirs.find((d) => d.key === dir);
-  const fi = <Folder size={28} className="fill-primary/25 text-primary" />;
-  if (cur?.key === "Experience") return (
-    <IOSPage title="Experience" backLabel="Browse" onBack={() => setDir(null)}>
-      {experience.map((e) => (
-        <Group key={e.id}>
-          <Row title={`${e.role} — ${e.org}`} sub={`${e.period} · ${e.type}`} onClick={() => os.open("notes", "experience")} />
-          {e.clients && <BrandStrip className="px-4 py-3" label={e.id === "bizlearner" ? "Pureit · acquired by A. O. Smith" : e.id === "agency" ? "Current workstream brands" : "Accounts handled"} names={e.clients} />}
-        </Group>
-      ))}
-    </IOSPage>
-  );
-  if (cur) return (
-    <IOSPage title={cur.key} backLabel="Browse" onBack={() => setDir(null)}>
-      <Group footer={`${cur.items.length} items`}>{cur.items.map((it) => <Row key={it.name} title={it.name} sub={it.sub} onClick={() => os.open(...it.open)} />)}</Group>
-    </IOSPage>
-  );
-  return (
-    <IOSPage title="Browse" backLabel="Home" onBack={onHome}>
-      <Group header="Locations"><Row icon={fi} title="Mahin's Portfolio" sub={`${dirs.reduce((a, d) => a + d.items.length, 0)} items`} chevron={false} /></Group>
-      <Group header="Folders">{dirs.map((d) => <Row key={d.key} icon={fi} title={d.key} value={String(d.items.length)} onClick={() => setDir(d.key)} />)}</Group>
     </IOSPage>
   );
 }
@@ -253,3 +195,5 @@ export function IOSSettings({ onHome }: { onHome: () => void }) {
     </IOSPage>
   );
 }
+
+export function IOSRecruiter({ onHome }: { onHome: () => void }) { return <div className="native-dark absolute inset-0"><IOSPage title="For Recruiters" backLabel="Home" onBack={onHome} large={false} inset={false}><RecruiterContent /></IOSPage></div>; }

@@ -214,3 +214,28 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* Shared native-inspired surfaces use local semantic roles. */
+.native-dark {
+  --background: oklch(0.1 0 0); --foreground: oklch(0.98 0 0);
+  --card: oklch(0.2 0 0); --card-foreground: var(--foreground);
+  --secondary: oklch(0.25 0 0); --secondary-foreground: var(--foreground);
+  --muted: oklch(0.23 0 0); --muted-foreground: oklch(0.67 0 0);
+  --primary: oklch(0.64 0.2 255); --primary-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / .12); --glass-strong: oklch(0.12 0 0 / .94);
+  background: var(--background); color: var(--foreground);
+}
+.home-profile { background: oklch(0.13 0.025 260 / .85); backdrop-filter: blur(24px); --secondary: oklch(0.3 0.01 260 / .85); --secondary-foreground: oklch(.97 0 0); --primary: oklch(.57 .22 255); --primary-foreground: oklch(1 0 0); }
+.portrait { position: relative; }
+.portrait img { position: absolute; width: 310%; max-width: none; height: auto; left: -112%; top: -65%; }
+.section-label { margin-bottom: 12px; font-size: 11px; text-transform: uppercase; font-weight: 600; color: var(--muted-foreground); letter-spacing: 0; }
+.linkedin-icon { display: grid; place-items: center; width: 56px; height: 56px; background: oklch(.5 .15 245); color: var(--chrome-foreground); border-radius: 13px; font-size: 38px; font-weight: 700; font-family: Arial, sans-serif; }
+.document-icon { position: relative; display: grid; place-items: center; width: 66px; height: 83px; border-radius: 5px; background: oklch(.96 0 0); color: oklch(.65 0 0); }
+.document-icon > svg { width: 30px; height: 30px; }
+.document-band { position: absolute; bottom: 12px; left: -4px; padding: 3px 6px; font-size: 9px; font-weight: 700; color: var(--chrome-foreground); border-radius: 2px; }
+.document-pdf { background: var(--tl-red); }.document-note { background: oklch(.67 .14 80); }.document-project { background: var(--primary); }
+.notes-native { --primary: var(--gold); }
+.music-cover { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; color: var(--chrome-foreground); overflow: hidden; }
+.music-cover span { font-size: 78px; transform: rotate(-12deg); }
+.music-focus { background: oklch(.48 .12 180); }.music-night { background: oklch(.38 .09 315); }.music-energy { background: oklch(.64 .2 25); }
+@media (max-height: 820px) and (max-width: 767px) { .home-profile { padding: 12px; } .home-profile .mt-4 { margin-top: 10px; } }

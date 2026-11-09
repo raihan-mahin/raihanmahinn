@@ -24,7 +24,7 @@ export function Notes({ payload }: { payload?: string | undefined }) {
   const [sel, setSel] = useState(payload ?? "about");
   const [q, setQ] = useState("");
   const [edit, setEdit] = useState(false);
-  useEffect(() => { try { const r = localStorage.getItem(KEY); if (r) setList(JSON.parse(r)); } catch { /* ignore */ } }, []);
+  useEffect(() => { try { const r = localStorage.getItem(KEY); if (r) { const stored: Note[] = JSON.parse(r); setList([...stored, ...seed.filter(n => !stored.some(s => s.id === n.id))]); } } catch { /* ignore */ } }, []);
   useEffect(() => { if (payload) { setSel(payload); setEdit(false); } }, [payload]);
   const save = (l: Note[]) => { setList(l); try { localStorage.setItem(KEY, JSON.stringify(l)); } catch { /* ignore */ } };
   const filtered = useMemo(() => list.filter((n) => `${n.title} ${n.body}`.toLowerCase().includes(q.toLowerCase())), [list, q]);
@@ -39,12 +39,12 @@ export function Notes({ payload }: { payload?: string | undefined }) {
           <button aria-label="New note" onClick={() => { const n = { id: `n${Date.now()}`, title: "New note", date: "Today", body: "# New note\n" }; save([n, ...list]); setSel(n.id); setEdit(true); }} className="rounded-md p-1.5 hover:bg-accent"><Plus size={15} /></button>
         </div>
         <ul className="flex-1 overflow-auto px-2 pb-2">
-          {filtered.map((n) => (
+          {["Pinned", "Recent"].map(section => <li key={section}><p className="px-3 pb-1 pt-3 text-[11px] font-semibold text-muted-foreground">{section}</p><ul>{filtered.filter(n => section === "Pinned" ? ["about", "experience", "pureit"].includes(n.id) : !["about", "experience", "pureit"].includes(n.id)).map((n) => (
             <li key={n.id}><button onClick={() => { setSel(n.id); setEdit(false); }} className={cn("w-full rounded-lg px-3 py-2 text-left", cur?.id === n.id ? "bg-gold/30" : "hover:bg-accent")}>
               <p className="truncate text-[13px] font-bold">{n.title}</p>
               <p className="truncate text-xs text-muted-foreground"><span className="font-semibold">{n.date}</span> {n.body.replace(/^#+\s*|\n#*\s*-?\s*/gm, " ").slice(0, 60)}</p>
             </button></li>
-          ))}
+          ))}</ul></li>)}
           {!filtered.length && <li className="p-3 text-xs text-muted-foreground">No notes match.</li>}
         </ul>
       </aside>

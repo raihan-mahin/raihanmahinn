@@ -1,7 +1,10 @@
 // Central content module for Mahin OS. Edit copy, projects and image URLs here.
 // To add images later: put a URL (or imported asset) in any `images: []` / `thumbnail` field.
 
+export const agencyName = "Independent Agency";
+
 export const profile = {
+  avatar: "/media/awards/marxcellence-2026-runner-up-solo-stage.jpg",
   fullName: "Abu Raihan Mahin",
   shortName: "Raihan Mahin",
   nickname: "Mahin",
@@ -30,8 +33,8 @@ export type Experience = {
 export const experience: Experience[] = [
   {
     id: "agency",
-    role: "Agency Lead",
-    org: "Independent agency",
+    role: "Co-Founder",
+    org: agencyName,
     period: "Current",
     type: "Current",
     clients: ["Lux", "Lifebuoy", "Dove"],
@@ -49,7 +52,7 @@ export const experience: Experience[] = [
     clients: ["Pureit", "A. O. Smith"],
     bullets: [
       "Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints.",
-      "Benchmarked the market and competitors in Bangladesh and Sri Lanka.",
+      "Conducted competitor benchmarking and feasibility research in Bangladesh and Sri Lanka.",
       "Created 300+ launch assets across Pureit Wave, Marina and Ultima Pro, including Ultima Pro's end-to-end communications.",
       "Worked with brand, media and agency teams on digital growth that reached a 6.5x increase in digital sales.",
     ],
@@ -71,7 +74,7 @@ export const experience: Experience[] = [
     clients: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"],
     bullets: [
       "Handled engagement across five client accounts — Upay, City Bank, IDLC, Break Station and Petal — with a 90% on-time response rate.",
-      "Supported agency research.",
+      "Conducted consumer research and contributed to campaign ideation.",
     ],
   },
 ];
@@ -135,21 +138,32 @@ export const education = [
 ];
 
 export const skills = {
-  Strategy: ["Go-to-market (GTM)", "Product launches", "Brand strategy", "Market research", "Competitor benchmarking", "Consumer insights"],
-  Creative: ["Marketing asset design", "Photoshop", "Illustrator", "Canva", "Figma", "Presentation tools"],
-  Business: ["Agency client servicing", "Campaign execution", "Stakeholder management", "Campaign planning"],
+  Strategy: ["Go-to-market (GTM)", "Product launch support", "Campaign planning & execution", "Consumer insights", "Market research", "Competitor benchmarking", "Feasibility research"],
+  Collaboration: ["Cross-functional collaboration", "Stakeholder management", "Project coordination", "Vendor coordination", "Agency client servicing"],
+  Technical: ["Website development", "Marketing asset design", "Photoshop", "Illustrator", "Canva", "Figma", "Presentation tools"],
 };
 
 // Detailed metrics (300+ assets, 6.5x, 7+ touchpoints, 3 launches) live in experience, case studies and the resume.
 export const podiums = awards.filter((a) => a.rank !== "Finalist").length;
 export const championships = awards.filter((a) => a.rank === "Champion").length;
-/** Exactly four homepage highlights, in order (desktop + phone). */
+/** Compact home achievements; recruiter metrics are separate. */
 export const highlights = [
-  { value: "10+", label: "Brands Worked With", note: "Owner-supplied (LinkedIn summary)" },
-  { value: String(podiums), label: "Competition Podiums", note: "3 Champion · 3 1st Runner-Up · 1 2nd Runner-Up" },
-  { value: String(awards.filter((a) => a.rank === "Finalist" && a.organizer === "Marico").length), label: "Marico Competition Finalist", note: "Over the Wall 2025" },
-  { value: "Pureit", label: "Unilever → A. O. Smith", note: "Brand transition, via BizLearner" },
+  { value: "10+", label: "brands worked with", note: "Owner-supplied summary" },
+  { value: String(podiums), label: "national competition podiums", note: "3 champions · 3 first runners-up · 1 second runner-up" },
 ];
+export const recruiter = {
+  subtitle: "Brand Marketing & Strategy Professional | GTM, Brand Transitions & Integrated Marketing",
+  summary: "My work spans go-to-market planning, brand transitions, product launches and agency client servicing. Through BizLearner, I helped bring Pureit's new identity to market and worked across three launches. Seven national competition podiums have sharpened my approach to research and brand challenges.",
+  roles: ["Brand Marketing", "GTM & Launches", "Campaign Strategy", "Agency Client Servicing"],
+  stats: [{ value: "10+", label: "Brands" }, { value: "7", label: "National Podiums" }, { value: "3", label: "Championships" }, { value: "200K", label: "Community" }],
+  highlights: ["Pureit, through BizLearner: brand transition from Unilever to A. O. Smith, 7+ touchpoints and three product launches.", "X Integrated: five client accounts, consumer research, campaign ideation and 90% on-time responses.", "Seven national podiums, including three championships; separately, a finalist among 1850+ teams at Marico's Over the Wall 2025.", "Founder & Admin of Music That Heals, a 200K-member community."],
+};
+export const listeningPlaylists = [
+  { title: "Focus & Flow", query: "instrumental focus", symbol: "♫", tone: "focus" },
+  { title: "After Hours", query: "late night jazz", symbol: "♪", tone: "night" },
+  { title: "Energy Boost", query: "workout energy", symbol: "♬", tone: "energy" },
+].map((p) => ({ ...p, url: `https://open.spotify.com/search/${encodeURIComponent(p.query)}` }));
+
 /** Kept for detailed views (e.g. resume); not shown on the homepage. */
 export const stats = [
   { value: "300+", label: "Marketing assets" },
@@ -183,8 +197,8 @@ export const projects: Project[] = [
     ...(a.caseBrands ? { brandRow: { label: "Case subjects (competition, not clients)", names: a.caseBrands } } : {}),
     ...(a.link ? { link: a.link, linkLabel: "View LinkedIn post" } : {}),
   })),
-  { id: "agency", title: "Agency Lead", subtitle: "Independent agency · Current", role: "Agency Lead", summary: "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.", images: [], brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
-  ...agencyBrands.map<Project>((b) => ({ id: `agency-${b.id}`, title: b.brand, subtitle: "Agency work · Current", role: "Agency Lead", summary: b.description, images: b.thumbnail ? [b.thumbnail] : [] })),
+  { id: "agency", title: "Co-Founder", subtitle: `${agencyName} · Current`, role: "Co-Founder", summary: "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.", images: [], brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
+  ...agencyBrands.map<Project>((b) => ({ id: `agency-${b.id}`, title: b.brand, subtitle: "Agency work · Current", role: "Co-Founder", summary: b.description, images: b.thumbnail ? [b.thumbnail] : [] })),
   { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023 – Oct 2024", role: "Junior Engagement Officer", summary: "Handled engagement across five client accounts with a 90% on-time response rate, and supported agency research.", images: [], brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
   { id: "legend", title: "Legend International School", subtitle: "Marketing Officer · Oct – Nov 2024", role: "Marketing Officer (contract)", summary: "Promotional material and marketing execution on a short contract.", images: [] },
   { id: "mth", title: "Music That Heals", subtitle: "Founder & Admin · 2020 – Present", role: "Founder & Admin", summary: "Built and led a 200K-member music community and organised live events.", images: [] },
@@ -196,7 +210,7 @@ export type PhotoAlbum = { id: string; title: string; ids: string[] };
 export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string };
 /** Single source of truth for the Photos hierarchy (desktop + phone). */
 export const photoRoots: PhotoRoot[] = [
-  { id: "Featured", cover: "/media/behance/242883541.jpg", ids: ["bh-pureit-cat", "bh-berger", "bh-skin", "bh-parachute", "bh-bankcard", "pureit-transition", "award-bizmetrics", "award-admaker"] },
+  { id: "Featured", cover: "/media/behance/234564039.jpg", ids: ["pureit-transition", "pureit-launches", "x-agency", "award-bizmetrics", "award-nexus", "award-admaker", "mth", "agency"] },
   { id: "Brand Design", albums: [
     { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man", "pureit-transition", "pureit-launches"] },
     { id: "berger", title: "Berger & Outdoor", ids: ["bh-berger", "bh-billboard"] },
@@ -230,27 +244,30 @@ ${profile.bio}
 - 7 competition podiums, incl. 3 championships, plus a Marico finalist spot
 
 ## Explore this computer
-- Photos: brand design, competitions and more work
+- Photos: GTM, brand transitions, competitions and client work
 - Finder: experience, projects and awards
 - Preview: my resume
 - Messages: ask me anything
 
 ${profile.email} · behance.net/raihanmahin` },
-  { id: "now", title: "Currently: Agency Lead", date: "Nov 2026", body: `# Agency Lead
+  { id: "now", title: "Currently: Co-Founder", date: "Nov 2026", body: `# Co-Founder
 I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.` },
-  { id: "pureit", title: "Pureit — transition & launches", date: "Jun 2026", body: `# Pureit (via BizLearner) · Aug 2024 – Jun 2026
+  { id: "pureit", title: "Pureit Brand Transition", date: "Jun 2026", body: `# Pureit (via BizLearner) · Aug 2024 – Jun 2026
 Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints.
 
 - Benchmarked the market and competitors in Bangladesh and Sri Lanka
 - Created 300+ launch assets across Wave, Marina and Ultima Pro
 - Supported Ultima Pro's end-to-end communications
 - Worked with brand, media and agency teams as digital sales grew 6.5x` },
-  { id: "skills", title: "Skills & tools", date: "Nov 2026", body: `# Skills\n${Object.entries(skills).map(([k, v]) => `## ${k}\n${v.map((s) => `- ${s}`).join("\n")}`).join("\n\n")}` },
+  { id: "skills", title: "Core Skills", date: "Nov 2026", body: `# Skills\n${Object.entries(skills).map(([k, v]) => `## ${k}\n${v.map((s) => `- ${s}`).join("\n")}`).join("\n\n")}` },
   { id: "awards", title: "Competitions & awards", date: "2026", body: `# 7 podiums + 1 Marico finalist\n${awards.map((a) => `- ${a.rank} — ${a.title} (${a.organizer}): ${a.focus}${a.scale ? `, ${a.scale}` : ""}`).join("\n")}` },
   { id: "community", title: "Community & leadership", date: "2026", body: `# Leadership\n${leadership.map((l) => `- ${l.role}, ${l.org} (${l.period}) — ${l.detail}`).join("\n")}` },
   { id: "insights", title: "Marketing Insights: Airtel → Cirkle", date: "2026", body: "# Marketing Insights\nMy LinkedIn take on the Airtel → Cirkle rebrand and what it means for long-term brand identity. Personal commentary, not a campaign I worked on.\n\n- Read: linkedin.com/posts/raihanmahin (From Airtel to Cirkle)" },
   { id: "education", title: "Education", date: "2026", body: `# Education\n${education.map((e) => `- ${e.degree} — ${e.school}, ${e.period}`).join("\n")}` },
-  { id: "experience", title: "Experience timeline", date: "2026", body: `# Experience\n${experience.map((e) => `## ${e.role} — ${e.org}\n${e.period} · ${e.type}\n${e.bullets.map((b) => `- ${b}`).join("\n")}`).join("\n\n")}` },
+  { id: "experience", title: "Where I’ve Worked", date: "2026", body: `# Experience\n${experience.map((e) => `## ${e.role} — ${e.org}\n${e.period} · ${e.type}\n${e.bullets.map((b) => `- ${b}`).join("\n")}`).join("\n\n")}` },
+  { id: "launches", title: "Pureit Product Launches", date: "Jun 2026", body: "# Pureit Product Launches\nWave, Marina and Ultima Pro: 300+ communication assets across the three launches. Ultima Pro included pre-to-post launch communications. Collaborative digital campaigns and e-commerce work contributed to 6.5x digital sales growth." },
+  { id: "x-accounts", title: "X Agency Accounts", date: "Oct 2024", body: "# X Agency Accounts\nUpay, City Bank, IDLC, Break Station and Petal. Handled engagement with 90% on-time responses, alongside consumer research and campaign ideation." },
+  { id: "website", title: "About This Site", date: "Nov 2026", body: "# About This Site\nMahin OS is my career portfolio, inspired by desktop and phone interfaces. Not affiliated with Apple. Design work sits in a separate Behance gallery." },
 ];
 
 export const qa = [

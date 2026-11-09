@@ -28,9 +28,10 @@ describe("positioning", () => {
     expect(all).not.toContain("ai content creator");
     expect(all).not.toContain("scroll-stopping");
   });
-  it("current role is Agency Lead, one of four equal entries", () => {
+  it("current role is Co-Founder, one of four equal entries", () => {
     expect(experience).toHaveLength(4);
-    expect(experience.find((e) => e.type === "Current")?.role).toBe("Agency Lead");
+    expect(experience.find((e) => e.type === "Current")?.role).toBe("Co-Founder");
+    expect(experience.find((e) => e.type === "Current")?.org).toBe("Independent Agency");
   });
   it("Featured holds no more than one agency item", () => {
     const featured = photoRoots.find((r) => r.id === "Featured")!.ids!;
@@ -69,9 +70,9 @@ describe("photos hierarchy & homepage", () => {
   it("Competitions holds all 8 awards", () => {
     expect(rootIds(photoRoots.find((r) => r.id === "Competitions")!)).toHaveLength(8);
   });
-  it("homepage shows exactly the four owner-chosen highlights", () => {
+  it("homepage shows only the two latest owner-chosen achievements", () => {
     expect(highlights.map((h) => [h.value, h.label])).toEqual([
-      ["10+", "Brands Worked With"], ["7", "Competition Podiums"], ["1", "Marico Competition Finalist"], ["Pureit", "Unilever → A. O. Smith"],
+      ["10+", "brands worked with"], ["7", "national competition podiums"],
     ]);
   });
 });

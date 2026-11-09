@@ -1,3 +1,5 @@
+import { RecruiterContent } from "../RecruiterContent";
+import { listeningPlaylists } from "@/data/portfolio";
 import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, SkipBack, SkipForward, RotateCcw, Trash2, Mail, Linkedin, FileText, ExternalLink } from "lucide-react";
@@ -105,45 +107,8 @@ export function Calendar() {
   );
 }
 
-const TRACKS = [
-  { t: "Healing Frequencies", a: "Music That Heals · Community Mix", d: 214 },
-  { t: "Live Night Sessions", a: "Music That Heals · Event Recording", d: 248 },
-  { t: "200K Strong", a: "Music That Heals · Anthem", d: 186 },
-  { t: "Dhaka Rain Lo-fi", a: "Community Picks", d: 201 },
-];
 export function Music() {
-  const [i, setI] = useState(0); const [playing, setPlaying] = useState(false); const [pos, setPos] = useState(0);
-  useEffect(() => {
-    if (!playing) return;
-    const t = setInterval(() => setPos((p) => { if (p + 1 >= (TRACKS[i]?.d ?? 0)) { setI((x) => (x + 1) % TRACKS.length); return 0; } return p + 1; }), 1000);
-    return () => clearInterval(t);
-  }, [playing, i]);
-  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-  const tr = TRACKS[i] ?? TRACKS[0]!;
-  return (
-    <div className="flex h-full flex-col sm:flex-row">
-      <div className="flex flex-col items-center justify-center gap-3 p-6 sm:w-72">
-        <div className={cn("ic-music grid size-40 place-items-center rounded-2xl text-4xl font-bold text-primary-foreground shadow-window", playing && "animate-pulse")}>♫</div>
-        <div className="text-center"><p className="font-bold">{tr.t}</p><p className="text-xs text-muted-foreground">{tr.a}</p></div>
-        <div className="w-full"><div className="h-1 rounded-full bg-muted"><div className="h-1 rounded-full bg-primary" style={{ width: `${(pos / tr.d) * 100}%` }} /></div>
-          <div className="mt-1 flex justify-between text-[10px] tabular-nums text-muted-foreground"><span>{fmt(pos)}</span><span>{fmt(tr.d)}</span></div></div>
-        <div className="flex items-center gap-4">
-          <button aria-label="Previous" onClick={() => { setI((i - 1 + TRACKS.length) % TRACKS.length); setPos(0); }}><SkipBack size={20} /></button>
-          <button aria-label={playing ? "Pause" : "Play"} onClick={() => setPlaying(!playing)} className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground">{playing ? <Pause size={20} /> : <Play size={20} />}</button>
-          <button aria-label="Next" onClick={() => { setI((i + 1) % TRACKS.length); setPos(0); }}><SkipForward size={20} /></button>
-        </div>
-        <p className="text-[10px] text-muted-foreground">Demo player · no audio</p>
-      </div>
-      <div className="min-h-0 flex-1 overflow-auto border-t border-border p-4 sm:border-l sm:border-t-0">
-        <h3 className="text-lg font-bold">Music That Heals</h3>
-        <p className="mb-3 text-xs text-muted-foreground">Founded 2020 · 200K-member community · live events</p>
-        {TRACKS.map((t, k) => (
-          <button key={t.t} onClick={() => { setI(k); setPos(0); setPlaying(true); }} className={cn("flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm", k === i ? "bg-accent text-accent-foreground" : "hover:bg-secondary")}>
-            <span className="w-4 text-xs text-muted-foreground">{k + 1}</span><span className="flex-1 font-medium">{t.t}</span><span className="text-xs tabular-nums text-muted-foreground">{fmt(t.d)}</span>
-          </button>))}
-      </div>
-    </div>
-  );
+  return <div className="native-dark h-full overflow-auto p-5"><h2 className="mb-1 text-[32px] font-bold">Playlists</h2><p className="mb-5 text-xs text-muted-foreground">Listening & discovery · Spotify</p><div className="grid grid-cols-2 gap-x-4 gap-y-6">{listeningPlaylists.map(p => <a key={p.title} href={p.url} target="_blank" rel="noreferrer" className="min-w-0"><div className={`music-cover music-${p.tone}`}><span>{p.symbol}</span></div><p className="mt-2 text-sm font-semibold">{p.title}</p><p className="mt-0.5 text-xs text-muted-foreground">Spotify</p></a>)}</div></div>;
 }
 
 const JUNK = ["generic-portfolio-template.zip", "boring_resume_v1_FINAL_final.docx", "stock-photo-handshake.jpg", "lorem-ipsum-case-study.pdf", "imposter-syndrome.tmp"];
@@ -170,44 +135,5 @@ export function TrashApp() {
 }
 
 export function Recruiter() {
-  const os = useOS();
-  const champs = awards.filter((a) => a.rank === "Champion");
-  return (
-    <div className="h-full overflow-auto p-6">
-      <p className="text-xs font-semibold uppercase tracking-widest text-primary">30-second overview</p>
-      <h2 className="mt-1 text-3xl font-bold tracking-tight">{profile.shortName}</h2>
-      <p className="font-semibold text-muted-foreground">{profile.headline} · {profile.location}</p>
-      <p className="mt-3 text-sm leading-relaxed">{profile.bio}</p>
-      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {highlights.map((s) => (
-          <div key={s.label} className="rounded-xl bg-secondary p-3"><p className="text-2xl font-bold">{s.value}</p><p className="text-[11px] text-muted-foreground">{s.label}</p></div>))}
-      </div>
-      <h3 className="mt-5 text-sm font-bold">Highlights</h3>
-      <ul className="mt-2 space-y-2 text-sm">
-        <li className="rounded-lg bg-secondary p-3"><b>Pureit, via BizLearner:</b> helped bring the new identity to market after the A. O. Smith acquisition; 300+ launch assets across Wave, Marina and Ultima Pro.</li>
-        <li className="rounded-lg bg-secondary p-3"><b>X Integrated Marketing Agency:</b> engagement across five client accounts, 90% on-time response.</li>
-        <li className="rounded-lg bg-secondary p-3"><b>Agency Lead (current):</b> I run an independent agency; we currently produce AI-generated content for {agencyBrands.map((b) => b.brand).join(", ")}.</li>
-        <li className="rounded-lg bg-secondary p-3"><b>{awards.length} competition results</b>, {champs.length} championships: {champs.map((c) => c.title).join(", ")}.</li>
-        <li className="rounded-lg bg-secondary p-3"><b>Community:</b> {leadership[0]?.detail}</li>
-        <li className="rounded-lg bg-secondary p-3"><b>Education:</b> {education[0]?.degree}, {education[0]?.school} ({education[0]?.period}).</li>
-      </ul>
-      <h3 className="mt-5 text-sm font-bold">Professional brands</h3>
-      <div className="mt-2 grid gap-2 sm:grid-cols-2">
-        <BrandStrip className="rounded-lg bg-secondary p-3" label="BizLearner — Pureit (acquired by A. O. Smith)" names={["Pureit", "A. O. Smith"]} />
-        <BrandStrip className="rounded-lg bg-secondary p-3" label="X Integrated Marketing Agency — accounts" names={experience.find((e) => e.id === "x-agency")?.clients ?? []} />
-        <BrandStrip className="rounded-lg bg-secondary p-3" label="Current agency workstream" names={agencyBrands.map((b) => b.brand)} />
-      </div>
-      <p className="mt-1 text-[11px] text-muted-foreground">Competition case brands are listed only on each award card.</p>
-      <h3 className="mt-5 text-sm font-bold">Experience</h3>
-      <ol className="mt-2 border-l-2 border-primary/40 pl-4">
-        {experience.map((e) => <li key={e.id} className="mb-2"><p className="text-sm font-semibold">{e.role} — {e.org}</p><p className="text-xs text-muted-foreground">{e.period} · {e.type}</p></li>)}
-      </ol>
-      <div className="mt-5 flex flex-wrap gap-2">
-        <a href={`mailto:${profile.email}`} className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"><Mail size={15} />{profile.email}</a>
-        <a href={profile.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold"><Linkedin size={15} />LinkedIn</a>
-        <a href={profile.behance} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold"><ExternalLink size={15} />Behance</a>
-        <button onClick={() => os.open("preview")} className="flex items-center gap-1.5 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold"><FileText size={15} />Resume</button>
-      </div>
-    </div>
-  );
+  return <div className="native-dark h-full overflow-auto"><RecruiterContent /></div>;
 }

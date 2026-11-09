@@ -5,7 +5,7 @@ import { awards } from "@/data/portfolio";
 
 describe("brand logos", () => {
   it("has logo files for Pureit, A. O. Smith, Upay, IDLC and City Bank", () => {
-    expect(Object.keys(brandLogos).sort()).toEqual(["A. O. Smith", "City Bank", "IDLC", "Pureit", "Upay"]);
+    expect(Object.keys(brandLogos).sort()).toEqual(["A. O. Smith", "City Bank", "Dove", "IDLC", "Lifebuoy", "Lux", "Pureit", "Unilever", "Upay"]);
     for (const l of Object.values(brandLogos)) expect(existsSync(`public${l.src}`)).toBe(true);
   });
   it("uses City Bank, never Citibank", () => {

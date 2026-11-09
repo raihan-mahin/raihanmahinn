@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { downloadResume } from "@/lib/resume";
 import { Printer } from "lucide-react";
 import { profile, experience, awards, leadership, education, skills } from "@/data/portfolio";
 
@@ -6,7 +8,7 @@ export function Preview() {
     <div className="flex h-full flex-col bg-muted">
       <div className="flex items-center justify-between border-b border-border bg-card px-3 py-1.5">
         <p className="text-xs font-semibold text-muted-foreground">Raihan_Mahin_Resume.pdf</p>
-        <button onClick={() => window.print()} className="flex items-center gap-1.5 rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground"><Printer size={13} />Print / Save PDF</button>
+        <Button onClick={() => { void downloadResume(); }} className="flex items-center gap-1.5 rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground"><Printer size={13} />Download PDF</Button>
       </div>
       <div className="min-h-0 flex-1 overflow-auto p-4">
         <article className="print-area mx-auto max-w-[680px] rounded bg-card p-8 text-[12.5px] leading-relaxed text-card-foreground shadow-soft">

@@ -1,0 +1,4 @@
+- [x] Rebuild compact desktop and iOS home with portrait and three actions.
+- [x] Native recruiter overview, actual sanitized PDF, Files, Notes and Spotify discovery.
+- [x] Correct Co-Founder positioning, career-first content and logo-only marks.
+- [x] Preserve media; test desktop/mobile interactions and commit without publishing.

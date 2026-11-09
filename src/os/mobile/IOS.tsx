@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Portrait } from "../Portrait";
 import { useRef, useState, type TouchEvent } from "react";
 import { Search, Wifi, BatteryFull, Signal, ChevronUp, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,10 +12,10 @@ import { AppIcon } from "../ui";
 import { Spotlight } from "../Overlays";
 import { AppBody } from "../Desktop";
 import type { ProjectCategory } from "@/data/portfolio";
-import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings } from "./MobileApps";
+import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings, IOSRecruiter } from "./MobileApps";
 
-const PAGE1: AppId[] = ["photos", "notes", "finder", "messages", "brands", "awards", "preview", "recruiter", "settings", "calendar", "music", "terminal"];
-const PAGE2: AppId[] = ["trash"];
+const PAGE1: AppId[] = ["finder", "notes", "messages", "photos", "settings", "calendar", "recruiter", "music"];
+const PAGE2: AppId[] = ["brands", "awards", "preview", "terminal", "trash"];
 const DOCK: AppId[] = ["messages", "photos", "notes", "preview"];
 const label = (id: AppId) => APPS[id].mobileName ?? APPS[id].name;
 const time = (d: Date | null) => (d ? d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(/\s?[AP]M/i, "") : "");
@@ -80,10 +82,10 @@ function IOSLock() {
 function Grid({ ids }: { ids: AppId[] }) {
   const os = useOS();
   return (
-    <div className="grid w-full shrink-0 snap-center grid-cols-4 content-start gap-x-4 gap-y-5 px-6">
+    <div className="grid w-full shrink-0 snap-center grid-cols-4 content-start gap-x-4 gap-y-4 px-6">
       {ids.map((id, i) => (
         <button key={id} onClick={() => os.open(id)} className="flex flex-col items-center gap-1.5 animate-ios-zoom active:scale-90" style={{ animationDelay: `${i * 20}ms` }}>
-          <AppIcon id={id} className="size-[64px]" />
+          <AppIcon id={id} className="size-[56px]" />
           <span className="text-shadow-soft max-w-full truncate text-[12px] font-medium text-chrome-foreground">{label(id)}</span>
         </button>
       ))}
@@ -99,23 +101,17 @@ function IOSHome() {
       {os.prefs.wallpaper === "image" ? <img src={wallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" /> : <div className={cn("absolute inset-0", `wp-${os.prefs.wallpaper}`)} />}
       <div className="relative flex min-h-0 flex-1 flex-col">
         <StatusBar light />
-        <div className="flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden pt-3 [scrollbar-width:none]"
+        <div className="flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden pt-1 [scrollbar-width:none]"
           onScroll={(e) => setPage(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}>
-          <div className="flex w-full shrink-0 snap-center flex-col gap-5">
-            <button onClick={() => os.open("notes", "about")} className="glass mx-6 rounded-3xl p-4 text-left text-foreground animate-ios-zoom">
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Portfolio</p>
-              <p className="text-2xl font-bold tracking-tight">Hi, I'm Mahin 👋</p>
-              <p className="text-xs font-semibold text-primary">{profile.headline}</p>
-              <div className="mt-3 grid grid-cols-2 gap-1.5">
-                {highlights.map((s) => (
-                  <div key={s.label} className="rounded-xl bg-secondary px-1 py-1.5 text-center"><p className="text-base font-bold leading-tight">{s.value}</p><p className="text-[11px] leading-tight text-muted-foreground">{s.label}</p></div>))}
-              </div>
-              <span role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); os.open("photos", "cat:Brand Design"); }}
-                className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-primary text-[13px] font-semibold text-primary-foreground">Explore brand design</span>
-            </button>
-            <Grid ids={PAGE1} />
+          <div className="flex w-full shrink-0 snap-center flex-col gap-3">
+            <section className="home-profile mx-5 rounded-[22px] p-4 text-chrome-foreground">
+              <div className="flex items-center gap-3"><Portrait className="size-[58px]" /><div className="min-w-0"><h2 className="text-[22px] font-bold">{profile.shortName}</h2><p className="mt-0.5 text-[12px] leading-snug opacity-75">{profile.headline}</p></div></div>
+              <div className="mt-4 grid grid-cols-3 gap-2"><Button className="h-11 px-0 text-xs" onClick={() => os.open("recruiter")}>Quick View</Button><Button variant="secondary" className="h-11 px-0 text-xs" onClick={() => os.open("preview")}>Resume</Button><Button variant="secondary" className="h-11 px-0 text-xs" asChild><a href={`mailto:${profile.email}`}>Email</a></Button></div>
+            </section>
+            <section className="mx-5 rounded-[20px] bg-sticky px-4 py-3 text-sticky-foreground"><h2 className="text-[19px] font-bold">Start here 👋</h2><div className="mt-2 flex gap-5">{highlights.map(h => <p key={h.value} className="flex-1 text-[12px] leading-snug"><strong className="mr-1 text-[19px]">{h.value}</strong>{h.label}</p>)}</div><Button className="mt-3 h-11 w-full bg-island text-chrome-foreground hover:bg-island/90" onClick={() => os.open("photos", "cat:Featured")}>See all projects →</Button></section>
+            <Grid ids={PAGE1} /><div className="px-6"><Button asChild variant="ghost" className="h-auto w-[64px] flex-col gap-1.5 p-0 text-chrome-foreground"><a href={profile.linkedin} target="_blank" rel="noreferrer"><span className="linkedin-icon">in</span><span className="text-[12px] font-medium">LinkedIn</span></a></Button></div>
           </div>
-          <div className="flex w-full shrink-0 snap-center flex-col gap-5">
+          <div className="flex w-full shrink-0 snap-center flex-col gap-3">
             <div className="glass mx-6 rounded-3xl p-4 text-foreground">
               <p className="text-sm font-bold">Say hello</p>
               <div className="mt-2 grid grid-cols-3 gap-2 text-xs font-semibold">
@@ -148,6 +144,7 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
   const pid = payload && !payload.startsWith("cat:") && !alb ? payload : undefined;
   let body: React.ReactNode;
   switch (id) {
+    case "recruiter": body = <IOSRecruiter onHome={home} />; break;
     case "notes": body = <IOSNotes onHome={home} payload={payload} />; break;
     case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialAlbum={alb} initialPid={pid} />; break;
     case "awards": body = <IOSPhotos onHome={home} initial="Competitions" title="Awards" initialPid={pid} />; break;
@@ -157,10 +154,10 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
     default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;
   }
   return (
-    <div className="fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground">
-      <div className="absolute inset-x-0 top-0 z-20"><StatusBar /></div>
+    <div className={cn("fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground", ["recruiter", "finder", "notes", "music"].includes(id) && "native-dark")}>
+      <div className="absolute inset-x-0 top-0 z-20"><StatusBar light={id === "recruiter" || id === "finder" || id === "notes" || id === "music"} /></div>
       <div className="relative min-h-0 flex-1">{body}</div>
-      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator onTap={home} /></div>
+      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator light={["recruiter", "finder", "notes", "music"].includes(id)} onTap={home} /></div>
     </div>
   );
 }

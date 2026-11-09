@@ -1,32 +1,12 @@
 import { X } from "lucide-react";
-import { highlights, photoRoots, rootIds } from "@/data/portfolio";
+import { profile, highlights } from "@/data/portfolio";
+import { Button } from "@/components/ui/button";
+import { Portrait } from "./Portrait";
 import { useOS } from "./store";
-
-/** Sticky-note "Start here" widget, modelled on the reference desktop. */
 export function DesktopWidget() {
   const os = useOS();
-  return (
-    <aside aria-label="Start here"
-      className="pointer-events-auto absolute left-6 top-12 hidden w-[272px] -rotate-1 rounded-sm bg-sticky p-4 text-sticky-foreground shadow-soft animate-fade-up lg:block">
-      <button onClick={() => os.setPrefs({ showWidget: false })} aria-label="Close widget" className="absolute right-2 top-2 grid size-6 place-items-center rounded opacity-60 hover:opacity-100"><X size={14} /></button>
-      <h2 className="text-lg font-bold">Start here 👋</h2>
-      <p className="mt-0.5 text-[13px] leading-snug">Brand marketing & strategy work, case competitions and design.</p>
-      <dl className="mt-3 grid grid-cols-2 gap-1.5">
-        {highlights.map((h) => (
-          <div key={h.label} title={h.note} className="rounded-md bg-sticky-chip px-2 py-1.5">
-            <dt className="text-[15px] font-bold leading-tight">{h.value}</dt>
-            <dd className="text-[10.5px] font-medium leading-tight opacity-80">{h.label}</dd>
-          </div>
-        ))}
-      </dl>
-      <div className="mt-3 flex flex-wrap gap-1.5">
-        {photoRoots.map((r) => (
-          <button key={r.id} onClick={() => os.open("photos", `cat:${r.id}`)} className="rounded-full bg-sticky-chip px-2.5 py-1 text-[12px] font-semibold hover:brightness-95">
-            {r.id === "Featured" ? "★ " : ""}{r.id} <span className="opacity-60">{rootIds(r).length}</span>
-          </button>
-        ))}
-      </div>
-      <button onClick={() => os.open("photos", "cat:Featured")} className="mt-3 w-full rounded-lg bg-foreground py-2 text-[13px] font-semibold text-background hover:opacity-90">See all projects →</button>
-    </aside>
-  );
+  return <aside aria-label="Start here" className="absolute left-6 top-14 w-[290px] text-chrome-foreground">
+    <section className="home-profile rounded-2xl p-4"><div className="flex items-center gap-3"><Portrait className="size-[58px]"/><div><h2 className="text-xl font-bold">{profile.shortName}</h2><p className="mt-1 text-xs leading-snug opacity-75">{profile.headline}</p></div></div><div className="mt-4 grid grid-cols-3 gap-2"><Button size="sm" className="h-10 px-0" onClick={()=>os.open("recruiter")}>Quick View</Button><Button size="sm" variant="secondary" className="h-10 px-0" onClick={()=>os.open("preview")}>Resume</Button><Button size="sm" variant="secondary" className="h-10 px-0" asChild><a href={`mailto:${profile.email}`}>Email</a></Button></div></section>
+    <section className="relative mt-5 -rotate-1 rounded-lg bg-sticky p-4 text-sticky-foreground shadow-soft"><Button variant="ghost" size="icon" aria-label="Close widget" className="absolute right-1 top-1 size-7" onClick={()=>os.setPrefs({showWidget:false})}><X/></Button><h2 className="text-lg font-bold">Start here 👋</h2><div className="my-3 flex gap-4">{highlights.map(h=><p key={h.value} className="flex-1 text-xs leading-snug"><strong className="block text-xl">{h.value}</strong>{h.label}</p>)}</div><Button className="h-10 w-full bg-island text-chrome-foreground hover:bg-island/90" onClick={()=>os.open("photos","cat:Featured")}>See all projects →</Button><div className="mt-3 grid grid-cols-2 gap-1">{[["About","notes","about"],["Experience","finder",""],["Competitions","photos","cat:Competitions"],["Skills","notes","skills"]].map(([label,id,payload])=><Button key={label} variant="ghost" size="sm" className="justify-start px-1 text-sticky-foreground" onClick={()=>os.open(id as "notes"|"finder"|"photos",payload||undefined)}>{label} →</Button>)}</div></section>
+  </aside>;
 }

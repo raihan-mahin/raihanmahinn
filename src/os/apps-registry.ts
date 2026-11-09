@@ -16,7 +16,7 @@ export const APPS: Record<AppId, AppMeta> = {
   music: { id: "music", name: "Music", icon: Music, tile: "ic-music", w: 720, h: 480 },
   trash: { id: "trash", name: "Trash", icon: Trash2, tile: "ic-trash", w: 560, h: 400 },
   launchpad: { id: "launchpad", name: "Launchpad", icon: LayoutGrid, tile: "ic-launchpad", w: 0, h: 0 },
-  recruiter: { id: "recruiter", name: "Recruiter Overview", mobileName: "30-sec", icon: Briefcase, tile: "ic-recruiter", w: 720, h: 600 },
+  recruiter: { id: "recruiter", name: "Recruiter Overview", mobileName: "Quick View", icon: Briefcase, tile: "ic-recruiter", w: 720, h: 600 },
   awards: { id: "awards", name: "Awards", icon: Trophy, tile: "ic-awards", w: 980, h: 640 },
   brands: { id: "brands", name: "Agency Work", mobileName: "Agency", icon: Clapperboard, tile: "ic-brands", w: 980, h: 640 },
 };
