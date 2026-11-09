@@ -12,7 +12,7 @@ export const profile = {
   subtitle: "Brand Marketing · GTM · Campaign Execution",
   // Owner-supplied wording (from his LinkedIn bio); not independently fetched.
   tagline: "Experience across 10+ brands spanning FMCG, consumer durables and fintech",
-  bio: "I’ve worked on brand transitions, product launches and customer engagement. At BizLearner, I helped carry Pureit’s brand transition across packaging, manuals and retail materials. At X Integrated, I managed social media queries for five client accounts.",
+  bio: "I’ve worked on brand transitions, product launches and customer engagement, with a practical interest in designing website and app interfaces. At BizLearner, I helped carry Pureit’s brand transition across packaging, manuals and retail materials. At X Integrated Marketing Agency, I managed social media queries for five client accounts.",
   location: "Dhaka, Bangladesh",
   email: "raihanmahin.work@gmail.com",
   linkedin: "https://bd.linkedin.com/in/raihan-mahin-150b7123a",
@@ -172,8 +172,8 @@ export const stats = [
   { value: "6.5x", label: "Digital sales (team)" },
 ];
 
-export type ProjectCategory = "★ Flagship" | "Brand Strategy & Transition" | "Client Engagement" | "Campaigns & Creative" | "Community & Leadership" | "Awards & Achievements";
-export const projectCategories: ProjectCategory[] = ["★ Flagship", "Brand Strategy & Transition", "Client Engagement", "Campaigns & Creative", "Community & Leadership"];
+export type ProjectCategory = "★ Flagship" | "Brand Strategy & Transition" | "X Integrated Marketing Agency" | "Co-Founder · Independent Agency" | "Legend International School" | "Campaigns & Creative" | "Community & Leadership" | "Awards & Achievements";
+export const projectCategories: ProjectCategory[] = ["★ Flagship", "Brand Strategy & Transition", "X Integrated Marketing Agency", "Co-Founder · Independent Agency", "Legend International School", "Campaigns & Creative", "Community & Leadership"];
 
 export type Project = {
   id: string; title: string; subtitle: string; role?: string;
@@ -181,6 +181,8 @@ export type Project = {
   images: string[]; captions?: string[]; metrics?: { value: string; label: string }[]; link?: string; linkLabel?: string; badge?: string;
   /** "Case brands" = competition case subjects (not clients); "Clients"/"Brands" = professional work. */
   brandRow?: { label: string; names: string[] };
+  /** Work thumbnail gradient; original images stay in `images`. */
+  gradient?: { from: string; to: string; tag: string; star?: boolean };
 };
 
 const behanceProjects = behanceWorks.map<Project>((w) => ({
@@ -189,40 +191,43 @@ const behanceProjects = behanceWorks.map<Project>((w) => ({
 
 export const projects: Project[] = [
   ...behanceProjects,
-  { id: "pureit-transition", title: "Pureit Brand Transition", subtitle: "BizLearner · Aug 2024 – Jun 2026", role: "Part-time Marketing · supporting Pureit", summary: pureitCases[0]?.contribution + " My contribution included campaign planning, packaging and CLDs, manuals, marketing collateral, POSM, Facebook creative, display ads and adapting e-commerce content, alongside PR and vendor coordination. I worked with brand managers, assistant managers and external agencies, not as a direct Unilever employee.", metrics: [{ value: "7+", label: "Touchpoints supported" }, { value: "2", label: "Markets researched" }, { value: "3", label: "Launches supported" }, { value: "300+", label: "Assets across three launches (team scope)" }], images: ["/media/behance/234564039.jpg"], brandRow: { label: "Pureit transition · through BizLearner", names: ["Unilever", "Pureit", "A. O. Smith"] } },
+  { id: "pureit-transition", title: "Pureit Brand Transition", subtitle: "BizLearner · Aug 2024 – Jun 2026", role: "Part-time Marketing · supporting Pureit", summary: pureitCases[0]?.contribution + " My contribution included campaign planning, packaging and CLDs, manuals, marketing collateral, POSM, Facebook creative, display ads and adapting e-commerce content, alongside PR and vendor coordination. I worked with brand managers, assistant managers and external agencies, not as a direct Unilever employee.", metrics: [{ value: "7+", label: "Touchpoints supported" }, { value: "2", label: "Markets researched" }, { value: "3", label: "Launches supported" }, { value: "300+", label: "Assets across three launches (team scope)" }], images: ["/media/behance/234564039.jpg"], gradient: { from: "#e2483d", to: "#4a1036", tag: "#BrandTransition", star: true }, brandRow: { label: "Pureit transition · through BizLearner", names: ["Unilever", "Pureit", "A. O. Smith"] } },
   ...awards.map<Project>((a) => ({
     id: `award-${a.id}`, title: `${a.title} — ${a.rank}`, subtitle: `${a.organizer} · ${a.year}`, ...(a.team ? { role: `Team ${a.team}` } : {}),
     summary: a.detail, images: a.images, captions: a.captions ?? a.images.map((_, i) => `${a.title} · ${a.rank}${a.team ? ` · Team ${a.team}` : ""} · Photo ${i + 1}`), badge: a.rank,
     ...(a.caseBrands ? { brandRow: { label: "Case subjects (competition, not clients)", names: a.caseBrands } } : {}),
     ...(a.link ? { link: a.link, linkLabel: "Read the LinkedIn post" } : {}),
   })),
-  { id: "agency", title: "Co-Founder", subtitle: `${agencyName} · Current`, role: "Co-Founder", summary: "I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove.", images: [], brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
+  { id: "agency", title: "Co-Founder", subtitle: `${agencyName} · Current`, role: "Co-Founder", summary: "I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove.", images: [], gradient: { from: "#ff6b00", to: "#4a1200", tag: "#IndependentAgency" }, brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
   ...agencyBrands.map<Project>((b) => ({ id: `agency-${b.id}`, title: b.brand, subtitle: "Agency work · Current", role: "Co-Founder", summary: b.description, images: b.thumbnail ? [b.thumbnail] : [] })),
-  { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023 – Oct 2024", role: "Junior Engagement Officer", metrics: [{ value: "Under 2 minutes", label: "Response target" }, { value: "90%", label: "On-time response" }, { value: "5", label: "Client accounts" }], summary: experience.find(e => e.id === "x-agency")?.bullets.join(" ") ?? "", images: [], brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
-  { id: "legend", title: "Legend International School", subtitle: "Marketing Officer · Oct – Nov 2024", role: "Marketing Officer (contract)", summary: "Promotional material and marketing execution on a short contract.", images: [] },
-  { id: "yes", title: "NSU Young Entrepreneurs Society", subtitle: "General Member · 2022 – 2023", role: "General Member", summary: "Helped with 2023 recruitment, the brand guideline and Admaker.", images: [] },
+  { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023 – Oct 2024", role: "Junior Engagement Officer", metrics: [{ value: "Under 2 minutes", label: "Response target" }, { value: "90%", label: "On-time response" }, { value: "5", label: "Client accounts" }], summary: experience.find(e => e.id === "x-agency")?.bullets.join(" ") ?? "", images: [], gradient: { from: "#2478e8", to: "#11264d", tag: "#ClientServicing" }, brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
+  { id: "legend", title: "Legend International School", subtitle: "Marketing Officer · Oct – Nov 2024", role: "Marketing Officer (contract)", summary: "As a contract Marketing Officer, I helped develop promotional materials for Legend International School and supported the execution of school-level communications. The work covered both preparing the materials and helping the school deliver its messages.", metrics: [{ value: "2", label: "Areas of support" }, { value: "Oct–Nov 2024", label: "Contract period" }], images: [], gradient: { from: "#c9a227", to: "#1b1b1b", tag: "#SchoolMarketing" } },
+  { id: "yes", title: "NSU Young Entrepreneurs Society", subtitle: "General Member · 2022 – 2023", role: "General Member", summary: "Helped with 2023 recruitment, the brand guideline and Admaker.", images: [], gradient: { from: "#00c7be", to: "#063b3a", tag: "#Leadership" } },
 ];
 
 export type PhotoAlbum = { id: string; title: string; ids: string[] };
-export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string; coverStyle?: "flagship" | "transition" };
+export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string; coverStyle?: "flagship" | "transition"; gradient?: Gradient };
+export type Gradient = { from: string; to: string; tag: string; star?: boolean };
 /** Single source of truth for the Photos hierarchy (desktop + phone). */
 export const photoRoots: PhotoRoot[] = [
-  { id: "★ Flagship", ids: ["pureit-transition", "x-agency"], coverStyle: "flagship" },
-  { id: "Brand Strategy & Transition", ids: ["pureit-transition"], coverStyle: "transition" },
-  { id: "Client Engagement", albums: [{ id: "agency", title: "Agency & Client Work", ids: ["x-agency", "agency", "legend"] }] },
-  { id: "Campaigns & Creative", cover: "/media/behance/242883541.jpg", albums: [
+  { id: "★ Flagship", ids: ["pureit-transition", "x-agency"], gradient: { from: "#e2483d", to: "#4a1036", tag: "#Flagship", star: true } },
+  { id: "Brand Strategy & Transition", ids: ["pureit-transition"], gradient: { from: "#ff2d55", to: "#1b0b3a", tag: "#BrandTransition" } },
+  { id: "X Integrated Marketing Agency", ids: ["x-agency"], gradient: { from: "#2478e8", to: "#11264d", tag: "#ClientServicing" } },
+  { id: "Co-Founder · Independent Agency", ids: ["agency"], gradient: { from: "#ff6b00", to: "#4a1200", tag: "#IndependentAgency" } },
+  { id: "Legend International School", ids: ["legend"], gradient: { from: "#c9a227", to: "#1b1b1b", tag: "#SchoolMarketing" } },
+  { id: "Campaigns & Creative", gradient: { from: "#00a651", to: "#05351c", tag: "#Campaigns" }, albums: [
     { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man"] },
     { id: "berger", title: "Berger & Outdoor", ids: ["bh-berger", "bh-billboard"] },
     { id: "packaging", title: "Packaging", ids: ["bh-parachute"] },
     { id: "campaigns", title: "Campaigns & Digital", ids: ["bh-skin", "bh-bankcard", "bh-promo-video", "bh-promo-social", "bh-social", "bh-social-brand"] },
     { id: "other", title: "Other Design", ids: ["bh-letterhead", "bh-brochure", "bh-oggy", "bh-hattori"] },
   ] },
-  { id: "Community & Leadership", ids: ["yes"] },
+  { id: "Community & Leadership", ids: ["yes"], gradient: { from: "#00c7be", to: "#063b3a", tag: "#Leadership" } },
   { id: "Awards & Achievements", ids: awards.map(a => `award-${a.id}`) },
 ];
 /** Old OS links continue to resolve without mixing achievements into work. */
 export function resolvePhotoCategory(value: string): ProjectCategory {
-  const aliases: Record<string, ProjectCategory> = { Featured: "★ Flagship", "Product Launches": "Brand Strategy & Transition", "Pureit & GTM": "Brand Strategy & Transition", "Brand Design": "Campaigns & Creative", Competitions: "Awards & Achievements", "More Work": "Client Engagement" };
+  const aliases: Record<string, ProjectCategory> = { Featured: "★ Flagship", "Product Launches": "Brand Strategy & Transition", "Pureit & GTM": "Brand Strategy & Transition", "Brand Design": "Campaigns & Creative", Competitions: "Awards & Achievements", "More Work": "X Integrated Marketing Agency", "Client Engagement": "X Integrated Marketing Agency", "Agency & Client Work": "X Integrated Marketing Agency" };
   return aliases[value] ?? projectCategories.find(c => c === value) ?? (value === "Awards & Achievements" ? value : "★ Flagship");
 }
 export const workRoots = photoRoots.filter(r => r.id !== "Awards & Achievements");
@@ -241,16 +246,16 @@ ${profile.headline} · ${profile.location}
 
 ${profile.bio}
 
-I previously worked at Ross.
-
-I also design website and app interfaces.
-
 ## At a glance
 - 10+ brands worked with across FMCG, consumer durables and fintech
 - Pureit brand transition (Unilever → A. O. Smith), via BizLearner
 - 7 competition podiums, incl. 3 championships, plus a Marico finalist spot
 
-${profile.email} · behance.net/raihanmahin` },
+## Contact
+- [Email](mailto:${profile.email})
+- [Behance](${profile.behance})
+- [LinkedIn](${profile.linkedin})
+- [Open Photos](app:photos)` },
   { id: "now", title: "Currently: Co-Founder", date: "Nov 2026", body: `# Co-Founder
 I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove.` },
   { id: "pureit", title: "Pureit Brand Transition", date: "Jun 2026", body: `# Pureit (via BizLearner) · Aug 2024 – Jun 2026
@@ -258,11 +263,11 @@ ${experience.find(e => e.id === "bizlearner")?.bullets.map(b => `- ${b}`).join("
   { id: "skills", title: "Core Skills", date: "Nov 2026", body: `# Skills\n${Object.entries(skills).map(([k, v]) => `## ${k}\n${v.map((s) => `- ${s}`).join("\n")}`).join("\n\n")}` },
   { id: "awards", title: "Competitions & awards", date: "2026", body: `# 7 podiums + 1 Marico finalist\n${awards.map((a) => `- ${a.rank} — ${a.title} (${a.organizer}): ${a.focus}${a.scale ? `, ${a.scale}` : ""}`).join("\n")}` },
   { id: "community", title: "Community & leadership", date: "2026", body: `# Leadership\n${leadership.map((l) => `- ${l.role}, ${l.org} (${l.period}) — ${l.detail}`).join("\n")}` },
-  { id: "insights", title: "Marketing Insights: Airtel → Cirkle", date: "2026", body: "# Marketing Insights\nMy LinkedIn take on the Airtel → Cirkle rebrand and what it means for long-term brand identity. Personal commentary, not a campaign I worked on.\n\n- Read: linkedin.com/posts/raihanmahin (From Airtel to Cirkle)" },
+  { id: "insights", title: "Marketing Insights: Airtel → Cirkle", date: "2026", body: `# Marketing Insights\nMy LinkedIn take on the Airtel → Cirkle rebrand and what it means for long-term brand identity. Personal commentary, not a campaign I worked on.\n\n- [My LinkedIn profile](${profile.linkedin})` },
   { id: "education", title: "Education", date: "2026", body: `# Education\n${education.map((e) => `- ${e.degree} — ${e.school}, ${e.period}`).join("\n")}` },
   { id: "experience", title: "Where I’ve Worked", date: "2026", body: `# Experience\n${experience.map((e) => `## ${e.role} — ${e.org}\n${e.period} · ${e.type}\n${e.bullets.map((b) => `- ${b}`).join("\n")}`).join("\n\n")}` },
   { id: "launches", title: "Pureit Product Launches", date: "Jun 2026", body: "# Pureit Product Launches\nWave, Marina and Ultima Pro: 300+ communication assets across the three launches. Ultima Pro included pre-to-post launch communications. Collaborative digital campaigns and e-commerce work contributed to 6.5x digital sales growth." },
-  { id: "x-accounts", title: "X Agency Accounts", date: "Oct 2024", body: `# X Agency Accounts\n${experience.find(e => e.id === "x-agency")?.bullets.join("\n\n")}` },
+  { id: "x-accounts", title: "X Integrated Marketing Agency Accounts", date: "Oct 2024", body: `# X Integrated Marketing Agency Accounts\n${experience.find(e => e.id === "x-agency")?.bullets.join("\n\n")}` },
   { id: "website", title: "About This Site", date: "Nov 2026", body: "# About This Site\nMahin OS is my career portfolio, inspired by desktop and phone interfaces. Not affiliated with Apple. Design work sits in a separate Behance gallery." },
 ];
 
@@ -270,7 +275,7 @@ export const qa = [
   { q: "What do you do?", a: `I'm a brand marketing & strategy professional. ${profile.bio}` },
   { q: "What are you working on now?", a: "I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove." },
   { q: "Tell me about Pureit", a: experience.find(e => e.id === "bizlearner")?.bullets.join(" ") ?? "" },
-  { q: "Agency & client work?", a: (experience.find(e => e.id === "x-agency")?.bullets.join(" ") ?? "") + " I also did a short marketing contract at Legend International School." },
+  { q: "X Integrated Marketing Agency work?", a: (experience.find(e => e.id === "x-agency")?.bullets.join(" ") ?? "") + " I also did a short marketing contract at Legend International School." },
   { q: "Competition wins?", a: "Seven podiums: champion at BizMetrics 2026, Nexus 2025 and Hult Prize at NSU 2026; 1st runner-up at Admaker Bangladesh, Marxcellence and Innovade 2026; 2nd runner-up at BrandAid 2026. I was also a finalist at Marico's Over the Wall 2025." },
   { q: "Your skills?", a: "GTM and launches, strategy, research, competitor benchmarking, consumer insights, campaign execution, agency client servicing, asset design (Photoshop, Illustrator, Canva, Figma) and stakeholder management." },
   { q: "Education?", a: "Final-year BBA in Marketing at North South University, expected December 2026. HSC Science from DRMC." },

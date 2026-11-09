@@ -129,7 +129,7 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
     case "messages": body = <Messages mobile onHome={home} payload={payload}/>; break;
     case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialAlbum={alb} initialPid={pid} />; break;
     case "awards": body = <IOSPhotos onHome={home} initial="Awards & Achievements" title="Awards" initialPid={pid} />; break;
-    case "brands": body = <IOSPhotos onHome={home} initialAlbum="agency" title="Agency Work" />; break;
+    case "brands": body = <IOSPhotos onHome={home} initial="Co-Founder · Independent Agency" title="Independent Agency" />; break;
     case "finder": body = <IOSFiles onHome={home} />; break;
     case "settings": body = <IOSSettings onHome={home} />; break;
     default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;
