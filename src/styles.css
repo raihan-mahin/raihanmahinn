@@ -251,3 +251,11 @@
 
 .photo-story > button { display: none; }
 .resume-sheet { --card: var(--logo-surface); --card-foreground: var(--logo-ink); color: var(--logo-ink); background: var(--logo-surface); }
+
+/* Single-page phone home and Photos-only input/safe-area treatment. */
+.ios-home-scroll::-webkit-scrollbar { display: none; }
+.ios-home-scroll:focus-visible, .photos-native .photos-scroll:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.photos-native .photos-item, .photos-native .photos-tab, .photos-native .photos-toolbar { -webkit-tap-highlight-color: transparent; }
+.photos-native .photos-bottom-bar { bottom: calc(max(env(safe-area-inset-bottom), 8px) + 24px); }
+
+.photos-native .photos-header { border: 0; }

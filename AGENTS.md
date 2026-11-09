@@ -43,4 +43,5 @@ use the editor.
 - Music links to external Spotify discovery searches only; no simulated playback or invented personal recordings.
 - Notes replace only exact known historical defaults and merge missing IDs; preserve all edited notes, with explicit Reset the only destructive restore.
 - ProjectStory owns shared work metrics and award photo viewing across desktop/mobile so captions, accessible navigation and case attribution stay identical.
+- Award concept slides use separate `concepts` data and the shared ProjectStory viewer, never `images`, so competition photo counts stay factual.
 - MOBILE_APPS defines phone-visible apps for home, Spotlight and Files; résumé and awards remain reachable as content without desktop-only tools.

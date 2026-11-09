@@ -26,3 +26,10 @@ Gallery order:
 6. `marico-season4-season3-finalist-portrait.jpg` — portrait beside the same Season 3 recognition display.
 
 The final two photos do not represent a Season 4 finalist placement.
+
+## Admaker Bangladesh 2026 · finale deck concepts (not award photos)
+
+- `admaker-ebl-ajke-tui-de.jpg` — page 74: proposed comedy series introducing Split & Collect.
+- `admaker-ebl-beyond-the-sky.jpg` — page 75: proposed EBL Sky Banking event activation.
+
+Both are original 800×450 JPEG slide crops from the selected Arc Crew finale submission; attachment names ended in `.png`, but JPEG bytes are preserved unchanged. They appear only as campaign concepts in Admaker's award detail and do not count as competition photographs or claim implementation.

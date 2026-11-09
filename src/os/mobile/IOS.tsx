@@ -99,9 +99,8 @@ function IOSHome() {
       {os.prefs.wallpaper === "image" ? <img src={wallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" /> : <div className={cn("absolute inset-0", `wp-${os.prefs.wallpaper}`)} />}
       <div className="relative flex min-h-0 flex-1 flex-col">
         <StatusBar light />
-        <div className="flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden pt-1 [scrollbar-width:none]"
-          >
-          <div className="flex w-full shrink-0 snap-center flex-col gap-3">
+        <div aria-label="Home apps" tabIndex={0} className="ios-home-scroll min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain pt-1 pb-4 [scrollbar-width:none]">
+          <div className="flex w-full flex-col gap-3">
             <section className="home-profile mx-5 rounded-[22px] p-4 text-chrome-foreground">
               <div className="flex items-center gap-3"><Portrait className="size-[58px]" /><div className="min-w-0"><h2 className="text-[22px] font-bold">{profile.shortName}</h2><p className="mt-0.5 text-[12px] leading-snug opacity-75">{profile.headline}</p></div></div>
               <div className="mt-4 grid grid-cols-3 gap-2"><Button className="h-11 px-0 text-xs" onClick={() => os.open("recruiter")}>Quick View</Button><Button variant="secondary" className="h-11 px-0 text-xs" onClick={() => os.open("preview")}>Resume</Button><Button variant="secondary" className="h-11 px-0 text-xs" asChild><a href={`mailto:${profile.email}`}>Email</a></Button></div>
@@ -110,8 +109,8 @@ function IOSHome() {
             <Grid ids={PAGE1} /><div className="px-6"><Button asChild variant="ghost" className="h-auto w-[64px] flex-col gap-1.5 p-0 text-chrome-foreground"><a href={profile.linkedin} target="_blank" rel="noreferrer"><span className="linkedin-icon">in</span><span className="text-[12px] font-medium">LinkedIn</span></a></Button></div>
           </div>
         </div>
-        <button onClick={() => os.setOverlay("spotlight")} className="glass mx-auto mb-3 flex min-h-9 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-foreground"><Search size={13} />Search</button>
-        <div className="glass mx-3 flex justify-around rounded-[2rem] px-3 py-3">
+        <button onClick={() => os.setOverlay("spotlight")} className="glass mx-auto mb-3 flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-foreground"><Search size={13} />Search</button>
+        <div className="glass mx-3 flex shrink-0 justify-around rounded-[2rem] px-3 py-3">
           {DOCK.map((id) => <button key={id} aria-label={`Open ${label(id)}`} onClick={() => os.open(id)} className="active:scale-90"><AppIcon id={id} className="size-[60px]" size={28} /></button>)}
         </div>
         <HomeIndicator light />

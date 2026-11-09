@@ -5,3 +5,7 @@
 - [x] Add six Marico photos, award stories and accessible photo viewing.
 - [x] Refine résumé Preview/folders, app choices and safe Notes seed updates.
 - [x] Verify desktop/phone flows and tests; save in a commit without publishing.
+- [ ] Fix single-page phone home scrolling at short heights and verify LinkedIn access.
+- [ ] Diagnose Photos rectangle and preserve scoped keyboard focus / safe-area chrome.
+- [ ] Add four curated award updates and exactly two local Admaker concept slides, separate from photo counts.
+- [ ] Verify targeted tests and desktop/phone navigation, then commit without publishing.
