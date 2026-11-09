@@ -1,3 +1,4 @@
+import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ExternalLink, Star, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -38,7 +39,7 @@ export function Photos({ payload }: { payload?: string | undefined }) {
                 <div key={k} className="rounded-xl bg-secondary p-3"><dt className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{k}</dt><dd className="mt-1 text-sm">{v}</dd></div>
               ))}
             </dl>
-            {current.brandRow && <div className="mt-3 rounded-xl bg-secondary p-3"><p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{current.brandRow.label}</p><div className="mt-2 flex flex-wrap gap-1.5">{current.brandRow.names.map((n) => <span key={n} className="rounded-md bg-card px-2 py-1 text-xs font-semibold ring-1 ring-border">{n}</span>)}</div></div>}
+            {current.brandRow && <BrandStrip className="mt-3 rounded-xl bg-secondary p-3" label={current.brandRow.label} names={current.brandRow.names} />}
             <h3 className="mt-5 text-sm font-bold">Gallery</h3>
             <div className="mt-2 grid grid-cols-3 gap-2">
               {[0, 1, 2].map((i) => <div key={i} className="aspect-square overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(current.id) + i + 1} src={current.images[i + 1]} label="Media coming soon" /></div>)}

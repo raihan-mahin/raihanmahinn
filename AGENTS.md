@@ -35,3 +35,4 @@ use the editor.
 - Below 768px the app renders a separate iOS shell (`src/os/mobile/IOS.tsx`) showing the top window full-screen; Notes/Photos/Awards/Brands/Files/Settings use native-style pages in `mobile/MobileApps.tsx` (IOSPage scaffold), others reuse desktop app bodies; same store and data.
 - Media files live in `public/media/` (behance covers named by Behance project id, award photos per `public/media/awards/README.md`); awards list expected files in `pendingImages` until uploaded, then move to `images`.
 - App icons are original SVG drawings in `src/os/icons.tsx` (illustration colours allowed there only).
+- Brand logos: files in `public/media/logos/`, mapped by brand name in `src/data/brandLogos.ts`, rendered only via `BrandLogo`/`BrandStrip` (text fallback); competition case brands never get logo entries.

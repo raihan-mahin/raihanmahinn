@@ -110,6 +110,8 @@ function IOSHome() {
                 {[stats[0], stats[3], stats[4], stats[5]].map((s) => s && (
                   <div key={s.label} className="rounded-xl bg-secondary px-1 py-1.5 text-center"><p className="text-base font-bold leading-tight">{s.value}</p><p className="text-[9px] leading-tight text-muted-foreground">{s.label}</p></div>))}
               </div>
+              <span role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); os.open("photos", "cat:Brand Design"); }}
+                className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-primary text-[13px] font-semibold text-primary-foreground">🎨 Explore Behance projects</span>
             </button>
             <Grid ids={PAGE1} />
           </div>

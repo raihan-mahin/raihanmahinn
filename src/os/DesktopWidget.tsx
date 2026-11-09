@@ -31,7 +31,8 @@ export function DesktopWidget() {
             </div>
           ))}
         </div>
-        <div className="mt-4 flex gap-2">
+        <button onClick={() => os.open("photos", "cat:Brand Design")} className="mt-3 w-full rounded-lg bg-accent py-2 text-xs font-semibold text-accent-foreground">🎨 Explore Behance projects (12 covers)</button>
+        <div className="mt-2 flex gap-2">
           <a href={`mailto:${profile.email}`} className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary py-2 text-xs font-semibold text-primary-foreground"><Mail size={14} />Email</a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-secondary py-2 text-xs font-semibold"><Linkedin size={14} />LinkedIn</a>
           <a href={profile.behance} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-secondary py-2 text-xs font-semibold">Bē Behance</a>

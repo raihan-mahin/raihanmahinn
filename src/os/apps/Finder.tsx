@@ -3,11 +3,12 @@ import { Briefcase, FolderOpen, Megaphone, Trophy, User, LayoutGrid, List, FileT
 import { cn } from "@/lib/utils";
 import { experience, projects, awards, agencyBrands, behanceWorks, notes } from "@/data/portfolio";
 import { useOS } from "../store";
+import { BrandStrip } from "../BrandLogo";
 import type { AppId } from "../apps-registry";
 
-type Entry = { id: string; name: string; kind: string; meta: string; detail: string; open: [AppId, string?] };
+type Entry = { id: string; name: string; kind: string; meta: string; detail: string; open: [AppId, string?]; brands?: string[] };
 const sections: { key: string; icon: typeof Folder; items: Entry[] }[] = [
-  { key: "Experience", icon: Briefcase, items: experience.map((e) => ({ id: e.id, name: `${e.role} — ${e.org}`, kind: e.type, meta: e.period, detail: e.bullets.join(" "), open: ["notes", "experience"] })) },
+  { key: "Experience", icon: Briefcase, items: experience.map((e) => ({ id: e.id, name: `${e.role} — ${e.org}`, kind: e.type, meta: e.period, detail: e.bullets.join(" "), open: ["notes", "experience"], ...(e.clients ? { brands: e.clients } : {}) })) },
   { key: "Projects", icon: FolderOpen, items: projects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ id: p.id, name: p.title, kind: (p.categories[0] ?? ""), meta: p.subtitle, detail: p.contribution, open: ["photos", p.id] })) },
   { key: "Brand Campaigns", icon: Megaphone, items: [
     ...agencyBrands.map((b) => ({ id: b.id, name: `${b.brand} — agency workstream`, kind: "Current work", meta: "Agency Lead", detail: b.description, open: ["photos", `agency-${b.id}`] as [AppId, string] })),
@@ -68,6 +69,7 @@ export function Finder() {
               <h3 className="mt-2 text-sm font-bold leading-snug">{cur.name}</h3>
               <p className="text-xs text-muted-foreground">{cur.kind} · {cur.meta}</p>
               <p className="mt-3 text-xs leading-relaxed">{cur.detail}</p>
+              {cur.brands && <BrandStrip className="mt-3" label="Brands" names={cur.brands} />}
               <button onClick={() => os.open(...cur.open)} className="mt-4 w-full rounded-md bg-primary py-1.5 text-xs font-semibold text-primary-foreground">Open</button>
             </aside>
           )}

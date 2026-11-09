@@ -1,3 +1,4 @@
+import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -110,7 +111,7 @@ function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: 
           {[["Role", p.role], ["Challenge", p.challenge], ["Contribution", p.contribution], ["Outcome", p.outcome]].map(([k, v]) => (
             <div key={k} className="px-4 py-3"><p className="text-[13px] text-muted-foreground">{k}</p><p className="text-[16px] leading-snug">{v}</p></div>))}
         </Group>
-        {p.brandRow && <Group><div className="px-4 py-3"><p className="text-[13px] text-muted-foreground">{p.brandRow.label}</p><div className="mt-2 flex flex-wrap gap-1.5">{p.brandRow.names.map((n) => <span key={n} className="rounded-md bg-secondary px-2 py-1 text-[13px] font-semibold">{n}</span>)}</div></div></Group>}
+        {p.brandRow && <Group><BrandStrip className="px-4 py-3" label={p.brandRow.label} names={p.brandRow.names} /></Group>}
         {p.link && <Group><Row title={p.linkLabel ?? "View on Behance"} href={p.link} chevron={false} right={<ExternalLink size={16} className="text-primary" />} /></Group>}
       </div>
     </IOSPage>
@@ -183,6 +184,16 @@ export function IOSFiles({ onHome }: { onHome: () => void }) {
   ];
   const cur = dirs.find((d) => d.key === dir);
   const fi = <Folder size={28} className="fill-primary/25 text-primary" />;
+  if (cur?.key === "Experience") return (
+    <IOSPage title="Experience" backLabel="Browse" onBack={() => setDir(null)}>
+      {experience.map((e) => (
+        <Group key={e.id}>
+          <Row title={`${e.role} — ${e.org}`} sub={`${e.period} · ${e.type}`} onClick={() => os.open("notes", "experience")} />
+          {e.clients && <BrandStrip className="px-4 py-3" label={e.id === "bizlearner" ? "Pureit · acquired by A. O. Smith" : e.id === "agency" ? "Current workstream brands" : "Accounts handled"} names={e.clients} />}
+        </Group>
+      ))}
+    </IOSPage>
+  );
   if (cur) return (
     <IOSPage title={cur.key} backLabel="Browse" onBack={() => setDir(null)}>
       <Group footer={`${cur.items.length} items`}>{cur.items.map((it) => <Row key={it.name} title={it.name} sub={it.sub} onClick={() => os.open(...it.open)} />)}</Group>

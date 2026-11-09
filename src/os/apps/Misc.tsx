@@ -1,3 +1,4 @@
+import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, SkipBack, SkipForward, RotateCcw, Trash2, Mail, Linkedin, FileText, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -191,6 +192,13 @@ export function Recruiter() {
         <li className="rounded-lg bg-secondary p-3"><b>Community:</b> {leadership[0]?.detail}</li>
         <li className="rounded-lg bg-secondary p-3"><b>Education:</b> {education[0]?.degree}, {education[0]?.school} ({education[0]?.period}).</li>
       </ul>
+      <h3 className="mt-5 text-sm font-bold">Professional brands</h3>
+      <div className="mt-2 grid gap-2 sm:grid-cols-2">
+        <BrandStrip className="rounded-lg bg-secondary p-3" label="BizLearner — Pureit (acquired by A. O. Smith)" names={["Pureit", "A. O. Smith"]} />
+        <BrandStrip className="rounded-lg bg-secondary p-3" label="X Integrated Marketing Agency — accounts" names={experience.find((e) => e.id === "x-agency")?.clients ?? []} />
+        <BrandStrip className="rounded-lg bg-secondary p-3" label="Current agency workstream" names={agencyBrands.map((b) => b.brand)} />
+      </div>
+      <p className="mt-1 text-[11px] text-muted-foreground">Competition case brands are listed only on each award card.</p>
       <h3 className="mt-5 text-sm font-bold">Experience</h3>
       <ol className="mt-2 border-l-2 border-primary/40 pl-4">
         {experience.map((e) => <li key={e.id} className="mb-2"><p className="text-sm font-semibold">{e.role} — {e.org}</p><p className="text-xs text-muted-foreground">{e.period} · {e.type}</p></li>)}
