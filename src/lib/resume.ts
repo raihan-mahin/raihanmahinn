@@ -20,7 +20,7 @@ export async function createResumePDF() {
   for (const section of resumeSections()) { y += 3; doc.setFont("helvetica", "bold"); write(section.title, 11); doc.setFont("helvetica", "normal"); for (const line of section.lines) write(line); }
   return doc;
 }
-export async function downloadResume() { (await createResumePDF()).save("Raihan_Mahin_Resume.pdf"); }
+export async function downloadResume() { (await createResumePDF()).save("Raihan-Mahin-Resume.pdf"); }
 export async function copyEmail() {
   try { await navigator.clipboard.writeText(profile.email); return true; }
   catch { const input = document.createElement("textarea"); input.value = profile.email; document.body.append(input); input.select(); const ok = document.execCommand("copy"); input.remove(); return ok; }

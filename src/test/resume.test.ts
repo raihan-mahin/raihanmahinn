@@ -8,7 +8,7 @@ describe("career export", () => {
     expect(doc.output()).toMatch(/^%PDF-/);
     expect(doc.output()).toContain("Abu Raihan Mahin");
   });
-  it("keeps recruiter metrics at 10+, 7, 3 and 200K", () => {
-    expect(recruiter.stats.map(s => s.value)).toEqual(["10+", "7", "3", "200K"]);
+  it("uses 2+ years of non-additive documented marketing experience", () => {
+    expect(recruiter.stats.map(s => s.value)).toEqual(["10+", "7", "3", "2+ years"]);
   });
 });

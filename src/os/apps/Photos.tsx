@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, findAlbum, projectById, type ProjectCategory, type Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { ProjectCover } from "../ProjectCover";
-import { BrandStrip } from "../BrandLogo";
+import { ProjectGallery, StoryText } from "../ProjectStory";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 
 const tone = (b?: string) => (b === "Champion" ? "gold" : "default") as "gold" | "default";
@@ -12,18 +12,12 @@ const tone = (b?: string) => (b === "Champion" ? "gold" : "default") as "gold" |
 export function ProjectArticle({ p }: { p: Project }) {
   return (
     <article className="mx-auto max-w-3xl animate-fade-up">
-      <div className="aspect-video overflow-hidden rounded-xl bg-secondary"><ProjectCover project={p} contain /></div>
+      <ProjectGallery project={p}/>
       <div className="mt-4 flex flex-wrap items-center gap-2">{p.badge && <Badge tone={tone(p.badge)}>{p.badge}</Badge>}<span className="text-xs text-muted-foreground">{p.subtitle}</span></div>
-      <h2 className="mt-1.5 text-2xl font-bold tracking-tight">{p.title}</h2>
-      {p.role && <p className="mt-1 text-sm font-medium text-muted-foreground">{p.role}</p>}
-      {p.summary && <p className="mt-3 text-[15px] leading-relaxed">{p.summary}</p>}
-      {p.brandRow && <BrandStrip className="mt-4" label={p.brandRow.label} names={p.brandRow.names} />}
-      {p.images.length > 1 && (
-        <div className="mt-5 grid grid-cols-3 gap-2">
-          {p.images.slice(1).map((src, i) => <div key={src} className="aspect-square overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(p.id) + i + 1} src={src} alt={`${p.title} photo ${i + 2}`} /></div>)}
-        </div>
-      )}
-      {p.link && <a href={p.link} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">{p.linkLabel ?? "View on Behance"} <ExternalLink size={14} /></a>}
+      <h2 className="mt-2 text-2xl font-bold">{p.title}</h2>
+      {p.role && <p className="mb-4 mt-1 text-sm text-muted-foreground">{p.role}</p>}
+      <StoryText project={p}/>
+
     </article>
   );
 }

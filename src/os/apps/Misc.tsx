@@ -55,7 +55,6 @@ const EVENTS: { date: string; title: string; tone: "primary" | "gold" | "success
   { date: "2024-08-01", title: "Started Marketing at BizLearner (Pureit)", tone: "primary" },
   { date: "2024-10-01", title: "Legend International School contract", tone: "primary" },
   { date: "2023-10-01", title: "Joined X Integrated Marketing Agency", tone: "primary" },
-  { date: "2020-01-01", title: "Founded Music That Heals", tone: "gold" },
 ];
 
 export function Calendar() {

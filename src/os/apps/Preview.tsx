@@ -1,17 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { downloadResume } from "@/lib/resume";
-import { Printer } from "lucide-react";
+import { Download, FileText } from "lucide-react";
+import { BrandStrip } from "../BrandLogo";
+import { useState } from "react";
 import { profile, experience, awards, leadership, education, skills } from "@/data/portfolio";
 
 export function Preview() {
+  const [error, setError] = useState("");
   return (
     <div className="flex h-full flex-col bg-muted">
       <div className="flex items-center justify-between border-b border-border bg-card px-3 py-1.5">
-        <p className="text-xs font-semibold text-muted-foreground">Raihan_Mahin_Resume.pdf</p>
-        <Button onClick={() => { void downloadResume(); }} className="flex items-center gap-1.5 rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground"><Printer size={13} />Download PDF</Button>
+        <p className="flex min-w-0 items-center gap-2 text-xs font-semibold text-muted-foreground"><FileText size={16} className="shrink-0"/><span className="truncate">Raihan-Mahin-Resume.pdf</span></p>
+        <Button onClick={() => { void downloadResume().catch(() => setError("Could not download PDF. Please try again.")); }} className="flex items-center gap-1.5 rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground"><Download size={16} />Download PDF</Button>
       </div>
-      <div className="min-h-0 flex-1 overflow-auto p-4">
-        <article className="print-area mx-auto max-w-[680px] rounded bg-card p-8 text-[12.5px] leading-relaxed text-card-foreground shadow-soft">
+      {error && <p role="status" className="p-2 text-sm">{error}</p>}
+      <div className="min-h-0 flex-1 overflow-auto p-3 sm:p-4">
+        <article className="print-area resume-sheet mx-auto max-w-[680px] rounded bg-card p-5 sm:p-8 text-[12.5px] leading-relaxed text-card-foreground shadow-soft">
           <header className="border-b-2 border-primary pb-3">
             <h1 className="text-2xl font-bold tracking-tight">{profile.fullName}</h1>
             <p className="font-semibold text-primary">{profile.headline}</p>
@@ -21,10 +25,10 @@ export function Preview() {
           <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Experience</h2>
           {experience.map((e) => (
             <div key={e.id} className="mt-2">
-              <div className="flex justify-between gap-2"><p className="font-bold">{e.role} — {e.org}</p><p className="shrink-0 text-xs">{e.period}</p></div>
+              <div className="flex flex-wrap justify-between gap-2"><p className="font-bold">{e.role} — {e.org}</p><p className="shrink-0 text-xs">{e.period}</p></div>
               {e.context && <p className="text-xs italic">{e.context} · {e.type}</p>}
               <ul className="ml-4 list-disc">{e.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
-              {e.clients && <p className="text-xs text-muted-foreground">Brands: {e.clients.join(" · ")}</p>}
+              {e.clients && <BrandStrip className="my-2" names={e.clients}/> }
             </div>
           ))}
           <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Competitions & Awards</h2>

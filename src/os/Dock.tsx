@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { APPS, DOCK, type AppId } from "./apps-registry";
 import { useOS } from "./store";
+import { profile } from "@/data/portfolio";
 import { AppIcon } from "./ui";
 
 export function Dock() {
@@ -35,7 +36,9 @@ export function Dock() {
           const s = scale(id);
           const isOpen = os.windows.some((w) => w.id === id);
           return (
-            <div key={id} className={cn("relative flex shrink-0 flex-col items-center", (id === "trash") && "ml-1 border-l border-foreground/20 pl-2")}>
+            <div key={id} className="flex items-end">
+            {id === "trash" && <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="Open LinkedIn" title="LinkedIn" className="mx-1 mb-1"><span className="linkedin-icon !size-12 !text-[32px]">in</span></a>}
+            <div className={cn("relative flex shrink-0 flex-col items-center", (id === "trash") && "ml-1 border-l border-foreground/20 pl-2")}>
               <button ref={(el) => { refs.current[id] = el; }} onClick={() => click(id)} aria-label={`Open ${APPS[id].name}`}
                 className={cn("group relative origin-bottom transition-[width,height] duration-100", bouncing === id && "animate-bounce-dock")}
                 style={{ width: base * s, height: base * s }}>
@@ -43,7 +46,7 @@ export function Dock() {
                 <span className="glass-strong pointer-events-none absolute -top-10 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-md px-2 py-0.5 text-xs font-medium text-foreground group-hover:block">{APPS[id].name}</span>
               </button>
               <span className={cn("mt-0.5 size-1 rounded-full", isOpen ? "bg-foreground/70" : "bg-transparent")} />
-            </div>
+            </div></div>
           );
         })}
       </div>

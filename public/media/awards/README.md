@@ -1,7 +1,6 @@
-# Award photo manifest (pending upload)
+# Award photo manifest
 
-The owner's competition photos were not received by the build yet. Drop each file here with the exact name
-below, then move its path from `pendingImages` to `images` for that award in `src/data/portfolio.ts`.
+All sixteen original photographs below are installed. Award records and captions are maintained in the shared portfolio data. Competition photos never appear in professional work feeds.
 
 | File to add | Award | Original upload name |
 |---|---|---|
@@ -16,4 +15,14 @@ below, then move its path from `pendingImages` to `images` for that award in `sr
 | hult-prize-nsu-2026-champion-group-stage.jpg | Hult Prize at NSU 2026 — Champion | Champion \| HULT PRIZE NSU 2026 \| Organized by NSU YEF.JPG |
 | nexus-2025-champion-group-stage.jpg | Nexus 2025 — Champion (Team Arctic Wolves) | Champion \| KBEC Nexus 2025 \| Organized by KUET Business Club.JPG |
 
-Over the Wall 2025 (Marico) — no photo provided; placeholder stays.
+## Over the Wall 2025 · Marico · Season 3 · Team Marketman · Finalist
+
+Gallery order:
+1. `marico-season3-team-presentation.jpg` — cover; team presenting at the Season 3 final.
+2. `marico-season3-final-stage.jpg` — final-stage presentation.
+3. `marico-season3-finalists-group.jpg` — Season 3 finalists.
+4. `marico-season3-marketman-banner.jpg` — Team Marketman banner.
+5. `marico-season4-season3-finalist-reunion.jpg` — reunion at a Season 4 event recognizing Season 3 finalists.
+6. `marico-season4-season3-finalist-portrait.jpg` — portrait beside the same Season 3 recognition display.
+
+The final two photos do not represent a Season 4 finalist placement.

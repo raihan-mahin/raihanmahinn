@@ -21,4 +21,7 @@ export const APPS: Record<AppId, AppMeta> = {
   brands: { id: "brands", name: "Agency Work", mobileName: "Agency", icon: Clapperboard, tile: "ic-brands", w: 980, h: 640 },
 };
 
-export const DOCK: AppId[] = ["finder", "launchpad", "notes", "messages", "photos", "preview", "terminal", "calendar", "music", "settings", "trash"];
+export const DOCK: AppId[] = ["finder", "launchpad", "notes", "messages", "photos", "music", "calendar", "preview", "terminal", "settings", "trash"];
+
+/** Phone applications exclude desktop-only tools; documents and awards remain content. */
+export const MOBILE_APPS: AppId[] = ["finder", "notes", "messages", "photos", "settings", "calendar", "recruiter", "music"];

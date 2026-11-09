@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, FileText, Trophy, Images, StickyNote } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { APPS, DOCK, type AppId } from "./apps-registry";
+import { APPS, DOCK, MOBILE_APPS, type AppId } from "./apps-registry";
 import { useOS } from "./store";
 import { AppIcon } from "./ui";
-import { notes, projects, awards } from "@/data/portfolio";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { notes, workProjects, awards, profile } from "@/data/portfolio";
 
 type Result = { key: string; label: string; sub: string; icon: React.ReactNode; run: () => void };
 
@@ -12,19 +13,21 @@ export function Spotlight() {
   const os = useOS();
   const [q, setQ] = useState("");
   const [sel, setSel] = useState(0);
+  const mobile = useIsMobile();
   const results = useMemo<Result[]>(() => {
     const s = q.toLowerCase().trim();
-    const appIds = [...DOCK, "recruiter"] as AppId[];
+    const appIds = mobile ? MOBILE_APPS : [...DOCK, "recruiter"] as AppId[];
     const all: Result[] = [
       ...appIds.map((id) => ({ key: `a-${id}`, label: APPS[id].name, sub: "Application", icon: <AppIcon id={id} className="size-6" size={13} />, run: () => os.open(id) })),
       ...notes.map((n) => ({ key: `n-${n.id}`, label: n.title, sub: "Note", icon: <StickyNote size={18} />, run: () => os.open("notes", n.id) })),
       ...awards.map((a) => ({ key: `w-${a.id}`, label: `${a.title} — ${a.rank}`, sub: "Competition", icon: <Trophy size={18} />, run: () => os.open("photos", `award-${a.id}`) })),
-      ...projects.filter((p) => !p.id.startsWith("award-")).map((p) => ({ key: `p-${p.id}`, label: p.title, sub: p.subtitle, icon: <Images size={18} />, run: () => os.open("photos", p.id) })),
+      ...workProjects.map((p) => ({ key: `p-${p.id}`, label: p.title, sub: p.subtitle, icon: <Images size={18} />, run: () => os.open("photos", p.id) })),
+      { key: "linkedin", label: "LinkedIn", sub: "Profile", icon: <span>in</span>, run: () => {window.open(profile.linkedin, "_blank", "noopener,noreferrer");os.setOverlay("none");} },
       { key: "resume", label: "Resume", sub: "Document", icon: <FileText size={18} />, run: () => os.open("preview") },
     ];
     if (!s) return all.slice(0, 8);
     return all.filter((r) => `${r.label} ${r.sub}`.toLowerCase().includes(s)).slice(0, 10);
-  }, [q, os]);
+  }, [q, os, mobile]);
 
   useEffect(() => setSel(0), [q]);
   return (

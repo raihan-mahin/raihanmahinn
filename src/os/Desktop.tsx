@@ -56,8 +56,8 @@ function Shell() {
   }, [os]);
 
   const icons: { label: string; icon: React.ReactNode; app: AppId; payload?: string | undefined }[] = [
-    { label: "Quick View", icon: <UserRound size={40} className="text-chrome-foreground" />, app: "recruiter" },
-    { label: "Resume.pdf", icon: <FileText size={40} className="text-chrome-foreground" />, app: "preview" },
+    { label: "For Recruiters", icon: <UserRound size={40} className="text-chrome-foreground" />, app: "recruiter" },
+    { label: "Resume PDF", icon: <FileText size={40} className="text-chrome-foreground" />, app: "preview" },
     { label: "Work", icon: <Folder size={44} className="fill-primary/60 text-primary" />, app: "photos", payload: "cat:★ Flagship" },
     { label: "Experience", icon: <Briefcase size={40} className="text-chrome-foreground" />, app: "finder" },
     { label: "Contact.txt", icon: <FileText size={40} className="text-chrome-foreground" />, app: "messages" },

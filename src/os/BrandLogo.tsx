@@ -7,11 +7,11 @@ export function BrandLogo({ name, className, logoOnly = true }: { name: string; 
   const logo = brandLogos[name];
   const [failed, setFailed] = useState(false);
   return (
-    <span title={name} className={cn("inline-flex h-9 items-center gap-1.5 rounded-lg bg-card px-2 text-xs font-semibold text-card-foreground ring-1 ring-border", className)}>
+    <span title={name} className={cn("inline-flex h-9 items-center gap-1.5 rounded-lg bg-logo-surface px-3 text-xs font-semibold text-logo-ink ring-1 ring-border", className)}>
       {logo && !failed && (
-        <span className="grid h-6 place-items-center rounded bg-background px-1">
+        <span className="grid h-6 place-items-center rounded bg-logo-surface px-1">
           <img src={logo.src} alt={`${name} logo`} loading="lazy" onError={() => setFailed(true)}
-            className={cn("h-5 object-contain", logo.wide ? "w-14" : "max-w-12")} />
+            className={cn("h-6 object-contain", logo.wide ? "w-14" : "max-w-12")} />
         </span>
       )}
       <span className={logoOnly && logo && !failed ? "sr-only" : undefined}>{name}</span>

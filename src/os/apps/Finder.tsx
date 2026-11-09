@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Briefcase, FolderOpen, Megaphone, Trophy, User, LayoutGrid, List, FileText, Folder } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { experience, projects, awards, agencyBrands, behanceWorks, notes } from "@/data/portfolio";
+import { experience, workProjects, awards, agencyBrands, behanceWorks, notes } from "@/data/portfolio";
 import { useOS } from "../store";
 import { BrandStrip } from "../BrandLogo";
 import type { AppId } from "../apps-registry";
 
 type Entry = { id: string; name: string; kind: string; meta: string; detail: string; open: [AppId, string?]; brands?: string[] };
 const sections: { key: string; icon: typeof Folder; items: Entry[] }[] = [
+  { key: "Documents", icon: Folder, items: [{ id: "resume-folder", name: "Resume", kind: "Folder", meta: "1 PDF", detail: "Public résumé", open: ["preview"] }] },
+  { key: "Resume", icon: FileText, items: [{ id: "resume-pdf", name: "Raihan-Mahin-Resume.pdf", kind: "PDF", meta: "Nov 2026", detail: "Sanitized public résumé", open: ["preview"] }] },
   { key: "Experience", icon: Briefcase, items: experience.map((e) => ({ id: e.id, name: `${e.role} — ${e.org}`, kind: e.type, meta: e.period, detail: e.bullets.join(" "), open: ["notes", "experience"], ...(e.clients ? { brands: e.clients } : {}) })) },
-  { key: "Projects", icon: FolderOpen, items: projects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ id: p.id, name: p.title, kind: "Project", meta: p.subtitle, detail: p.summary ?? "", open: ["photos", p.id] })) },
+  { key: "Projects", icon: FolderOpen, items: workProjects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ id: p.id, name: p.title, kind: "Project", meta: p.subtitle, detail: p.summary ?? "", open: ["photos", p.id] })) },
   { key: "Brand Campaigns", icon: Megaphone, items: [
     ...agencyBrands.map((b) => ({ id: b.id, name: `${b.brand} — agency workstream`, kind: "Current work", meta: "Co-Founder", detail: b.description, open: ["photos", `agency-${b.id}`] as [AppId, string] })),
     ...behanceWorks.map((w) => ({ id: w.id, name: w.title, kind: w.type, meta: "Behance", detail: "Design work published on Behance.", open: ["photos", `bh-${w.id}`] as [AppId, string] })),
@@ -23,13 +25,15 @@ export function Finder() {
   const [sec, setSec] = useState("Experience");
   const [view, setView] = useState<"list" | "grid">("list");
   const [sel, setSel] = useState<string | null>(null);
-  const s = sections.find((x) => x.key === sec) ?? sections[0]!;
+  const s = sections.find((x) => x.key === sec) ?? sections[0];
+  if (!s) return null;
+  const openEntry = (it: Entry) => { if (it.id === "resume-folder") {setSec("Resume");setSel(null);} else os.open(...it.open); };
   const cur = s.items.find((i) => i.id === sel);
   return (
     <div className="flex h-full flex-col md:flex-row">
       <aside className="flex shrink-0 gap-1 overflow-x-auto border-b border-border bg-secondary/50 p-2 md:w-52 md:flex-col md:border-b-0 md:border-r">
         <p className="hidden px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:block">Favourites</p>
-        {sections.map((x) => { const I = x.icon; return (
+        {sections.filter(x => x.key !== "Resume").map((x) => { const I = x.icon; return (
           <button key={x.key} onClick={() => { setSec(x.key); setSel(null); }} className={cn("flex shrink-0 items-center gap-2 rounded-md px-2.5 py-1.5 text-[13px] font-medium", sec === x.key ? "bg-accent text-accent-foreground" : "hover:bg-accent/60")}>
             <I size={15} className="text-primary" />{x.key}
           </button>); })}
@@ -48,15 +52,15 @@ export function Finder() {
               <table className="w-full text-[13px]">
                 <thead><tr className="text-left text-[11px] text-muted-foreground"><th className="px-2 py-1 font-semibold">Name</th><th className="hidden px-2 font-semibold sm:table-cell">Kind</th><th className="hidden px-2 font-semibold lg:table-cell">Info</th></tr></thead>
                 <tbody>{s.items.map((it, i) => (
-                  <tr key={it.id} onClick={() => setSel(it.id)} onDoubleClick={() => os.open(...it.open)} className={cn("cursor-default", sel === it.id ? "bg-primary text-primary-foreground" : i % 2 ? "bg-secondary/40" : "")}>
-                    <td className="flex items-center gap-2 rounded-l-md px-2 py-1.5"><FileText size={14} className="shrink-0 opacity-70" /><span className="truncate">{it.name}</span></td>
+                  <tr key={it.id} onClick={() => setSel(it.id)} onDoubleClick={() => openEntry(it)} className={cn("cursor-default", sel === it.id ? "bg-primary text-primary-foreground" : i % 2 ? "bg-secondary/40" : "")}>
+                    <td className="flex items-center gap-2 rounded-l-md px-2 py-1.5">{it.kind === "Folder" ? <Folder size={16}/> : <FileText size={16} className="shrink-0 opacity-70"/>}<span className="truncate">{it.name}</span></td>
                     <td className="hidden whitespace-nowrap px-2 sm:table-cell">{it.kind}</td><td className="hidden whitespace-nowrap rounded-r-md px-2 lg:table-cell">{it.meta}</td>
                   </tr>))}</tbody>
               </table>
             ) : (
               <div className="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2">
                 {s.items.map((it) => (
-                  <button key={it.id} onClick={() => setSel(it.id)} onDoubleClick={() => os.open(...it.open)} className={cn("flex flex-col items-center gap-1 rounded-lg p-2 text-center", sel === it.id && "bg-accent")}>
+                  <button key={it.id} onClick={() => setSel(it.id)} onDoubleClick={() => openEntry(it)} className={cn("flex flex-col items-center gap-1 rounded-lg p-2 text-center", sel === it.id && "bg-accent")}>
                     <Folder size={42} className="fill-primary/30 text-primary" /><span className="line-clamp-2 text-[11px] font-medium leading-tight">{it.name}</span>
                   </button>))}
               </div>
@@ -70,7 +74,7 @@ export function Finder() {
               <p className="text-xs text-muted-foreground">{cur.kind} · {cur.meta}</p>
               <p className="mt-3 text-xs leading-relaxed">{cur.detail}</p>
               {cur.brands && <BrandStrip className="mt-3" label="Brands" names={cur.brands} />}
-              <button onClick={() => os.open(...cur.open)} className="mt-4 w-full rounded-md bg-primary py-1.5 text-xs font-semibold text-primary-foreground">Open</button>
+              <button onClick={() => openEntry(cur)} className="mt-4 w-full rounded-md bg-primary py-1.5 text-xs font-semibold text-primary-foreground">Open</button>
             </aside>
           )}
         </div>

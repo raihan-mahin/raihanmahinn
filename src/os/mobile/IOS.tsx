@@ -5,7 +5,7 @@ import { Search, Wifi, BatteryFull, Signal, ChevronUp, Lock } from "lucide-react
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
 import { profile, highlights } from "@/data/portfolio";
-import { APPS, type AppId } from "../apps-registry";
+import { APPS, MOBILE_APPS, type AppId } from "../apps-registry";
 import { useOS } from "../store";
 import { useClock } from "../useClock";
 import { AppIcon } from "../ui";
@@ -14,8 +14,7 @@ import { AppBody } from "../Desktop";
 import { resolvePhotoCategory, type ProjectCategory } from "@/data/portfolio";
 import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings, IOSRecruiter } from "./MobileApps";
 
-const PAGE1: AppId[] = ["finder", "notes", "messages", "photos", "settings", "calendar", "recruiter", "music"];
-const PAGE2: AppId[] = ["brands", "awards", "preview", "terminal", "trash"];
+const PAGE1 = MOBILE_APPS;
 const DOCK: AppId[] = ["notes", "messages", "photos", "music"];
 const label = (id: AppId) => APPS[id].mobileName ?? APPS[id].name;
 const time = (d: Date | null) => (d ? d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(/\s?[AP]M/i, "") : "");
@@ -95,14 +94,13 @@ function Grid({ ids }: { ids: AppId[] }) {
 
 function IOSHome() {
   const os = useOS();
-  const [page, setPage] = useState(0);
   return (
     <div className="fixed inset-0 flex flex-col">
       {os.prefs.wallpaper === "image" ? <img src={wallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" /> : <div className={cn("absolute inset-0", `wp-${os.prefs.wallpaper}`)} />}
       <div className="relative flex min-h-0 flex-1 flex-col">
         <StatusBar light />
         <div className="flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden pt-1 [scrollbar-width:none]"
-          onScroll={(e) => setPage(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}>
+          >
           <div className="flex w-full shrink-0 snap-center flex-col gap-3">
             <section className="home-profile mx-5 rounded-[22px] p-4 text-chrome-foreground">
               <div className="flex items-center gap-3"><Portrait className="size-[58px]" /><div className="min-w-0"><h2 className="text-[22px] font-bold">{profile.shortName}</h2><p className="mt-0.5 text-[12px] leading-snug opacity-75">{profile.headline}</p></div></div>
@@ -111,20 +109,6 @@ function IOSHome() {
             <section className="mx-5 rounded-[20px] bg-sticky px-4 py-3 text-sticky-foreground"><h2 className="text-[19px] font-bold">Start here 👋</h2><div className="mt-2 flex gap-5">{highlights.map(h => <p key={h.value} className="flex-1 text-[12px] leading-snug"><strong className="mr-1 text-[19px]">{h.value}</strong>{h.label}</p>)}</div><Button className="mt-3 h-11 w-full bg-island text-chrome-foreground hover:bg-island/90" onClick={() => os.open("photos", "cat:Featured")}>See all projects →</Button></section>
             <Grid ids={PAGE1} /><div className="px-6"><Button asChild variant="ghost" className="h-auto w-[64px] flex-col gap-1.5 p-0 text-chrome-foreground"><a href={profile.linkedin} target="_blank" rel="noreferrer"><span className="linkedin-icon">in</span><span className="text-[12px] font-medium">LinkedIn</span></a></Button></div>
           </div>
-          <div className="flex w-full shrink-0 snap-center flex-col gap-3">
-            <div className="glass mx-6 rounded-3xl p-4 text-foreground">
-              <p className="text-sm font-bold">Say hello</p>
-              <div className="mt-2 grid grid-cols-3 gap-2 text-xs font-semibold">
-                <a href={`mailto:${profile.email}`} className="rounded-xl bg-primary py-2 text-center text-primary-foreground">Email</a>
-                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="rounded-xl bg-secondary py-2 text-center">LinkedIn</a>
-                <a href={profile.behance} target="_blank" rel="noreferrer" className="rounded-xl bg-secondary py-2 text-center">Behance</a>
-              </div>
-            </div>
-            <Grid ids={PAGE2} />
-          </div>
-        </div>
-        <div className="flex justify-center gap-2 py-2" aria-hidden>
-          {[0, 1].map((i) => <span key={i} className={cn("size-[7px] rounded-full", page === i ? "bg-chrome-foreground" : "bg-chrome-foreground/40")} />)}
         </div>
         <button onClick={() => os.setOverlay("spotlight")} className="glass mx-auto mb-3 flex min-h-9 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-foreground"><Search size={13} />Search</button>
         <div className="glass mx-3 flex justify-around rounded-[2rem] px-3 py-3">

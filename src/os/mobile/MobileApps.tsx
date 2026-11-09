@@ -1,6 +1,7 @@
 export { IOSNotes } from "./IOSNotes";
 export { IOSFiles } from "./IOSFiles";
 import { Button } from "@/components/ui/button";
+import { ProjectGallery, StoryText } from "../ProjectStory";
 import { ProjectCover } from "../ProjectCover";
 import { CollectionCover } from "../CollectionCover";
 import { RecruiterContent } from "../RecruiterContent";
@@ -81,21 +82,12 @@ function SearchField({ value, onChange, placeholder }: { value: string; onChange
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
   return (
     <IOSPage title="" backLabel={back} onBack={onBack} large={false} photos>
-      <div className="aspect-[4/3] w-full bg-secondary"><ProjectCover project={p} contain /></div>
-      <div className="px-4 pt-4">
-        <div className="flex flex-wrap items-center gap-1.5">{p.badge && <Badge tone={p.badge === "Champion" ? "gold" : "default"}>{p.badge}</Badge>}<span className="text-[13px] text-muted-foreground">{p.subtitle}</span></div>
-        <h2 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight">{p.title}</h2>
-        {p.role && <p className="text-[15px] text-muted-foreground">{p.role}</p>}
-      </div>
-      {p.images.length > 1 && (
-        <div className="mt-3 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none]">
-          {p.images.slice(1).map((src, i) => <div key={src} className="aspect-square w-28 shrink-0 overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(p.id) + i + 1} src={src} alt={`${p.title} photo ${i + 2}`} label="Pending" /></div>)}
-        </div>
-      )}
-      <div className="mt-4">
-        {p.summary && <Group><p className="px-4 py-3 text-[16px] leading-snug">{p.summary}</p></Group>}
-        {p.brandRow && <Group><BrandStrip className="px-4 py-3" label={p.brandRow.label} names={p.brandRow.names} /></Group>}
-        {p.link && <Group><Row title={p.linkLabel ?? "View on Behance"} href={p.link} chevron={false} right={<ExternalLink size={16} className="text-primary" />} /></Group>}
+      <div className="px-4 pb-12">
+        <ProjectGallery project={p}/>
+        <div className="mt-4 flex flex-wrap items-center gap-2">{p.badge && <Badge>{p.badge}</Badge>}<span className="text-xs text-muted-foreground">{p.subtitle}</span></div>
+        <h2 className="my-2 text-[26px] font-bold leading-tight">{p.title}</h2>
+        {p.role && <p className="mb-4 text-sm text-muted-foreground">{p.role}</p>}
+        <StoryText project={p}/>
       </div>
     </IOSPage>
   );

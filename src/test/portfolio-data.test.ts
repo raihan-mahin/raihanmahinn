@@ -45,12 +45,12 @@ describe("positioning", () => {
 });
 
 describe("media", () => {
-  it("12 Behance works have downloaded covers; Over the Wall has no photo", async () => {
+  it("preserves 12 Behance covers and adds six Marico photos", async () => {
     const { behanceWorks, awards } = await import("@/data/portfolio");
     expect(behanceWorks.filter((w) => w.thumbnail?.startsWith("/media/behance/"))).toHaveLength(12);
-    expect(awards.find((a) => a.id === "otw")?.pendingImages).toEqual([]);
-    expect(awards.find((a) => a.id === "otw")?.images).toEqual([]);
-    expect(awards.flatMap((a) => a.images)).toHaveLength(10);
+    expect(awards.find((a) => a.id === "otw")?.images).toHaveLength(6);
+    expect(awards.find((a) => a.id === "otw")?.images[0]).toBe("/media/awards/marico-season3-team-presentation.jpg");
+    expect(awards.flatMap((a) => a.images)).toHaveLength(16);
     for (const a of awards) expect(a.images).toEqual(a.pendingImages);
   });
 });
@@ -66,15 +66,16 @@ describe("work collections and achievements", () => {
     }
     expect(workProjects.filter(p => p.id.startsWith("award-"))).toHaveLength(0);
   });
-  it("keeps all eight achievements and ten documented photos", () => {
+  it("keeps all eight achievements and sixteen documented photos", () => {
     const r = photoRoots.find(r => r.id === "Awards & Achievements");
     expect(r && rootIds(r)).toEqual(awards.map(a => `award-${a.id}`));
-    expect(awards.flatMap(a => a.images)).toHaveLength(10);
+    expect(awards.flatMap(a => a.images)).toHaveLength(16);
     expect(awards.find(a => a.id === "admaker")?.images).toHaveLength(2);
     expect(awards.find(a => a.id === "marxcellence")?.images).toHaveLength(3);
   });
-  it("Flagship prioritizes transition, launches, servicing and community", () => {
-    expect(photoRoots.find(r => r.id === "★ Flagship")?.ids).toEqual(["pureit-transition", "pureit-launches", "x-agency", "mth"]);
+  it("Flagship prioritizes transition, launches and servicing without Music That Heals", () => {
+    expect(photoRoots.find(r => r.id === "★ Flagship")?.ids).toEqual(["pureit-transition", "pureit-launches", "x-agency"]);
+    expect(workProjects.some(p => p.id === "mth")).toBe(false);
   });
   it("each creative project occurs in only one creative folder", () => {
     const r = photoRoots.find(r => r.id === "Campaigns & Creative");
