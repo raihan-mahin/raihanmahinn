@@ -42,7 +42,7 @@ export function Notes({ payload }: { payload?: string | undefined }) {
           {filtered.map((n) => (
             <li key={n.id}><button onClick={() => { setSel(n.id); setEdit(false); }} className={cn("w-full rounded-lg px-3 py-2 text-left", cur?.id === n.id ? "bg-gold/30" : "hover:bg-accent")}>
               <p className="truncate text-[13px] font-bold">{n.title}</p>
-              <p className="truncate text-xs text-muted-foreground"><span className="font-semibold">{n.date}</span> {n.body.replace(/[#-]/g, "").slice(0, 60)}</p>
+              <p className="truncate text-xs text-muted-foreground"><span className="font-semibold">{n.date}</span> {n.body.replace(/^#+\s*|\n#*\s*-?\s*/gm, " ").slice(0, 60)}</p>
             </button></li>
           ))}
           {!filtered.length && <li className="p-3 text-xs text-muted-foreground">No notes match.</li>}

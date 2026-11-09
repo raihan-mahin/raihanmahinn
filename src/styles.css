@@ -45,6 +45,7 @@
   --color-terminal: var(--terminal);
   --color-terminal-foreground: var(--terminal-foreground);
   --color-bubble-me: var(--bubble-me);
+  --color-island: var(--island);
   --color-bubble-them: var(--bubble-them);
 }
 
@@ -82,6 +83,7 @@
   --success: oklch(0.65 0.17 150);
   --terminal: oklch(0.16 0.02 270 / 0.94);
   --terminal-foreground: oklch(0.88 0.12 150);
+  --island: oklch(0.08 0 0);
   --bubble-me: oklch(0.58 0.2 255);
   --bubble-them: oklch(0.9 0.01 270);
   --shadow-window: 0 30px 80px -20px oklch(0.1 0.08 270 / 0.55), 0 0 0 0.5px oklch(0.1 0.05 270 / 0.25);
@@ -167,6 +169,10 @@
 @utility ic-trash { background: linear-gradient(180deg, oklch(0.9 0.01 270 / 0.7), oklch(0.7 0.01 270 / 0.7)); color: oklch(0.35 0.01 270); }
 @utility ic-music { background: linear-gradient(180deg, oklch(0.72 0.2 15), oklch(0.6 0.24 0)); }
 @utility ic-launchpad { background: linear-gradient(180deg, oklch(0.6 0.05 270), oklch(0.35 0.05 270)); }
+@utility ic-awards { background: linear-gradient(180deg, oklch(0.85 0.16 85), oklch(0.68 0.17 60)); }
+@utility ic-brands { background: linear-gradient(180deg, oklch(0.7 0.2 350), oklch(0.5 0.22 300)); }
+@utility pt-safe { padding-top: max(env(safe-area-inset-top), 0px); }
+@utility pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 8px); }
 @utility ic-recruiter { background: linear-gradient(180deg, oklch(0.7 0.18 262), oklch(0.5 0.24 275)); }
 
 /* Media placeholders */
@@ -183,6 +189,10 @@
 @keyframes win-in { from { opacity: 0; transform: scale(0.94) translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes bounce-dock { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-14px); } }
+@keyframes ios-in { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes ios-zoom { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: none; } }
+@utility animate-ios-in { animation: ios-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@utility animate-ios-zoom { animation: ios-zoom 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
 @utility animate-win-in { animation: win-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
 @utility animate-fade-up { animation: fade-up 0.5s ease-out both; }
 @utility animate-bounce-dock { animation: bounce-dock 0.6s ease-in-out 2; }

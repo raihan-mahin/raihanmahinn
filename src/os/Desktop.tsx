@@ -16,9 +16,11 @@ import { Messages } from "./apps/Messages";
 import { Photos } from "./apps/Photos";
 import { Preview } from "./apps/Preview";
 import { Terminal } from "./apps/Terminal";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { IOSShell } from "./mobile/IOS";
 import { Settings, Calendar, Music, TrashApp, Recruiter } from "./apps/Misc";
 
-function AppBody({ id, payload }: { id: AppId; payload?: string | undefined }) {
+export function AppBody({ id, payload }: { id: AppId; payload?: string | undefined }) {
   switch (id) {
     case "finder": return <Finder />;
     case "notes": return <Notes payload={payload} />;
@@ -31,12 +33,15 @@ function AppBody({ id, payload }: { id: AppId; payload?: string | undefined }) {
     case "music": return <Music />;
     case "trash": return <TrashApp />;
     case "recruiter": return <Recruiter />;
+    case "awards": return <Photos payload={payload ?? "cat:Case Competitions"} />;
+    case "brands": return <Photos payload={payload ?? "cat:AI Brand Reels"} />;
     default: return null;
   }
 }
 
 function Shell() {
   const os = useOS();
+  const mobile = useIsMobile();
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       const mod = e.metaKey || e.ctrlKey;
@@ -55,6 +60,7 @@ function Shell() {
     { label: "Awards", icon: <Trophy size={40} className="text-gold" />, app: "photos", payload: "cat:Case Competitions" },
   ];
 
+  if (mobile) return <IOSShell />;
   return (
     <div className={cn("fixed inset-0 overflow-hidden", os.prefs.theme === "dark" && "dark")}>
       {os.prefs.wallpaper === "image"

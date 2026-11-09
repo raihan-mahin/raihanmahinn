@@ -9,7 +9,7 @@ export function DesktopWidget() {
   const champs = awards.filter((a) => a.rank === "Champion").length;
   const start: { emoji: string; title: string; sub: string; app: AppId; payload?: string | undefined }[] = [
     { emoji: "⚡", title: "30-second overview", sub: "For recruiters", app: "recruiter" },
-    { emoji: "🎬", title: `${agencyBrands.length} AI brand reels`, sub: "TRESemmé · Lifebuoy · Dove · Lux", app: "photos", payload: "cat:AI Brand Reels" },
+    { emoji: "🎬", title: `${agencyBrands.length} AI brand reels`, sub: agencyBrands.map((b) => b.brand).join(" · "), app: "photos", payload: "cat:AI Brand Reels" },
     { emoji: "🏆", title: `${awards.length} competition results`, sub: `${champs} championships`, app: "photos", payload: "cat:Case Competitions" },
     { emoji: "💧", title: `Pureit: ${launches} launches`, sub: "+ brand transition", app: "photos", payload: "cat:Pureit & GTM" },
   ];

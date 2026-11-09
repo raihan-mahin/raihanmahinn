@@ -32,3 +32,4 @@ use the editor.
 ## Project rules
 - All portfolio copy, projects, awards and image slots live in `src/data/portfolio.ts`; UI reads from it so content edits never touch components.
 - The macOS-style shell lives in `src/os/` (store = window manager + prefs in localStorage, one file per app under `apps/`); new apps register in `apps-registry.ts` and `AppBody` in `Desktop.tsx`.
+- Below 768px the app renders a separate iOS shell (`src/os/mobile/IOS.tsx`) that shows the top window full-screen; it reuses the same app bodies and store so content stays shared.

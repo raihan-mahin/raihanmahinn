@@ -30,7 +30,7 @@ export function Photos({ payload }: { payload?: string | undefined }) {
         {current ? (
           <article className="mx-auto max-w-3xl animate-fade-up">
             <button onClick={() => setOpenId(null)} className="mb-3 flex items-center gap-1 text-sm font-medium text-primary"><ArrowLeft size={15} /> {cat}</button>
-            <div className="aspect-video overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(current.id)} src={current.images[0]} alt={current.title} label="Photo to be added" /></div>
+            <div className="aspect-video overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(current.id)} src={current.images[0]} alt={current.title} label="Media coming soon" /></div>
             <div className="mt-4 flex flex-wrap items-center gap-2">{current.badge && <Badge tone={current.badge === "Champion" ? "gold" : "default"}>{current.badge}</Badge>}<Badge>{current.subtitle}</Badge></div>
             <h2 className="mt-2 text-2xl font-bold tracking-tight">{current.title}</h2>
             <dl className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -40,23 +40,23 @@ export function Photos({ payload }: { payload?: string | undefined }) {
             </dl>
             <h3 className="mt-5 text-sm font-bold">Gallery</h3>
             <div className="mt-2 grid grid-cols-3 gap-2">
-              {[0, 1, 2].map((i) => <div key={i} className="aspect-square overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(current.id) + i + 1} src={current.images[i + 1]} label="Add image" /></div>)}
+              {[0, 1, 2].map((i) => <div key={i} className="aspect-square overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(current.id) + i + 1} src={current.images[i + 1]} label="Media coming soon" /></div>)}
             </div>
-            {current.link && <a href={current.link} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">View on Behance <ExternalLink size={14} /></a>}
+            {current.link && <a href={current.link} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">{current.linkLabel ?? "View on Behance"} <ExternalLink size={14} /></a>}
           </article>
         ) : (
           <>
             <div className="mb-3 flex items-end justify-between">
-              <div><h2 className="text-xl font-bold tracking-tight">{cat}</h2><p className="text-xs text-muted-foreground">{list.length} items · images coming soon</p></div>
+              <div><h2 className="text-xl font-bold tracking-tight">{cat}</h2><p className="text-xs text-muted-foreground">{list.length} items · media coming soon</p></div>
               <span className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex"><Upload size={12} /> Image slots ready</span>
             </div>
-            {cat === "AI Brand Reels" && <p className="mb-3 rounded-lg bg-accent px-3 py-2 text-xs text-accent-foreground">Agency-side creative work for Unilever brands. Reel thumbnails/videos will be added later.</p>}
+            {cat === "AI Brand Reels" && <p className="mb-3 rounded-lg bg-accent px-3 py-2 text-xs text-accent-foreground">Agency-side AI-generated reels and short-form content for Lux, Lifebuoy and Dove under Unilever brand work. Recent work, added after the CV. Media coming soon.</p>}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
               {list.map((p) => (
                 <button key={p.id} onClick={() => setOpenId(p.id)} className="group overflow-hidden rounded-xl bg-card text-left shadow-soft ring-1 ring-border transition hover:-translate-y-0.5">
                   <div className={cn("relative overflow-hidden", p.categories.includes("AI Brand Reels") ? "aspect-[4/5]" : "aspect-[4/3]")}>
                     <MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title}
-                      label={p.categories.includes("AI Brand Reels") ? "Add reel later" : p.categories.includes("Case Competitions") ? "Photo to be added" : "Images coming soon"} />
+                      label="Media coming soon" />
                     {p.badge && <span className="absolute left-2 top-2"><Badge tone={p.badge === "Champion" ? "gold" : p.badge === "Current work" ? "success" : "default"}>{p.badge === "Champion" && <Star size={10} className="mr-1" />}{p.badge}</Badge></span>}
                   </div>
                   <div className="p-2.5"><p className="line-clamp-2 text-[13px] font-semibold leading-snug">{p.title}</p><p className="mt-0.5 truncate text-[11px] text-muted-foreground">{p.subtitle}</p></div>

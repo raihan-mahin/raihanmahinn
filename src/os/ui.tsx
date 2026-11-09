@@ -12,7 +12,7 @@ export function AppIcon({ id, className, size = 22 }: { id: AppId; className?: s
   );
 }
 
-export function MediaPlaceholder({ seed = 0, label = "Images coming soon", className, src, alt }: { seed?: number; label?: string; className?: string; src?: string | undefined; alt?: string }) {
+export function MediaPlaceholder({ seed = 0, label = "Media coming soon", className, src, alt }: { seed?: number; label?: string; className?: string; src?: string | undefined; alt?: string }) {
   if (src) return <img src={src} alt={alt ?? ""} loading="lazy" className={cn("h-full w-full object-cover", className)} />;
   return (
     <div className={cn(`ph-${Math.abs(seed) % 6}`, "relative grid h-full w-full place-items-center overflow-hidden text-primary-foreground", className)}>

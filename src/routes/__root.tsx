@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     // twitter:image here: every page without its own would inherit the root's preview image.
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Mahin OS | Raihan Mahin — Brand Marketing & Creative Portfolio" },
       { name: "description", content: "Portfolio of Raihan Mahin — brand marketer, creative strategist and AI content creator." },
       { name: "author", content: "Abu Raihan Mahin" },
