@@ -48,5 +48,8 @@ describe("media", () => {
     const { behanceWorks, awards } = await import("@/data/portfolio");
     expect(behanceWorks.filter((w) => w.thumbnail?.startsWith("/media/behance/"))).toHaveLength(12);
     expect(awards.find((a) => a.id === "otw")?.pendingImages).toEqual([]);
+    expect(awards.find((a) => a.id === "otw")?.images).toEqual([]);
+    expect(awards.flatMap((a) => a.images)).toHaveLength(10);
+    for (const a of awards) expect(a.images).toEqual(a.pendingImages);
   });
 });

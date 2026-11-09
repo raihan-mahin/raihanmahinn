@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ImagePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { AppId } from "./apps-registry";
@@ -8,7 +9,8 @@ export function AppIcon({ id, className }: { id: AppId; className?: string; size
 }
 
 export function MediaPlaceholder({ seed = 0, label = "Media coming soon", className, src, alt }: { seed?: number; label?: string; className?: string; src?: string | undefined; alt?: string }) {
-  if (src) return <img src={src} alt={alt ?? ""} loading="lazy" className={cn("h-full w-full object-cover", className)} />;
+  const [failed, setFailed] = useState<string | null>(null);
+  if (src && failed !== src) return <img key={src} src={src} alt={alt ?? ""} loading="lazy" onError={() => setFailed(src)} className={cn("h-full w-full object-cover", className)} />;
   return (
     <div className={cn(`ph-${Math.abs(seed) % 6}`, "relative grid h-full w-full place-items-center overflow-hidden text-primary-foreground", className)}>
       <div className="ph-stripes absolute inset-0" />

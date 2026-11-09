@@ -106,6 +106,11 @@ function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: 
         <div className="flex flex-wrap gap-1.5">{p.badge && <Badge tone={p.badge === "Champion" ? "gold" : p.badge === "Current work" ? "success" : "default"}>{p.badge}</Badge>}<Badge>{p.subtitle}</Badge></div>
         <h2 className="mt-2 text-[28px] font-bold leading-tight tracking-tight">{p.title}</h2>
       </div>
+      {p.images.length > 1 && (
+        <div className="mt-3 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none]">
+          {p.images.slice(1).map((src, i) => <div key={src} className="aspect-square w-28 shrink-0 overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(p.id) + i + 1} src={src} alt={`${p.title} photo ${i + 2}`} label="Media soon" /></div>)}
+        </div>
+      )}
       <div className="mt-4">
         <Group>
           {[["Role", p.role], ["Challenge", p.challenge], ["Contribution", p.contribution], ["Outcome", p.outcome]].map(([k, v]) => (
