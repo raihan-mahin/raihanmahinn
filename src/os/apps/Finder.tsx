@@ -10,7 +10,7 @@ const sections: { key: string; icon: typeof Folder; items: Entry[] }[] = [
   { key: "Experience", icon: Briefcase, items: experience.map((e) => ({ id: e.id, name: `${e.role} — ${e.org}`, kind: e.type, meta: e.period, detail: e.bullets.join(" "), open: ["notes", "experience"] })) },
   { key: "Projects", icon: FolderOpen, items: projects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ id: p.id, name: p.title, kind: (p.categories[0] ?? ""), meta: p.subtitle, detail: p.contribution, open: ["photos", p.id] })) },
   { key: "Brand Campaigns", icon: Megaphone, items: [
-    ...agencyBrands.map((b) => ({ id: b.id, name: `${b.brand} — AI reels`, kind: "Current work", meta: "Agency-side", detail: b.description, open: ["photos", `reel-${b.id}`] as [AppId, string] })),
+    ...agencyBrands.map((b) => ({ id: b.id, name: `${b.brand} — agency workstream`, kind: "Current work", meta: "Agency Lead", detail: b.description, open: ["photos", `agency-${b.id}`] as [AppId, string] })),
     ...behanceWorks.map((w) => ({ id: w.id, name: w.title, kind: w.type, meta: "Behance", detail: "Design work published on Behance.", open: ["photos", `bh-${w.id}`] as [AppId, string] })),
   ] },
   { key: "Competitions/Awards", icon: Trophy, items: awards.map((a) => ({ id: a.id, name: `${a.title} — ${a.rank}`, kind: a.rank, meta: a.organizer, detail: a.focus, open: ["photos", `award-${a.id}`] })) },

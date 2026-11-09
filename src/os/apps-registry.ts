@@ -18,7 +18,7 @@ export const APPS: Record<AppId, AppMeta> = {
   launchpad: { id: "launchpad", name: "Launchpad", icon: LayoutGrid, tile: "ic-launchpad", w: 0, h: 0 },
   recruiter: { id: "recruiter", name: "Recruiter Overview", mobileName: "30-sec", icon: Briefcase, tile: "ic-recruiter", w: 720, h: 600 },
   awards: { id: "awards", name: "Awards", icon: Trophy, tile: "ic-awards", w: 980, h: 640 },
-  brands: { id: "brands", name: "Brand Reels", mobileName: "Brands", icon: Clapperboard, tile: "ic-brands", w: 980, h: 640 },
+  brands: { id: "brands", name: "Agency Work", mobileName: "Agency", icon: Clapperboard, tile: "ic-brands", w: 980, h: 640 },
 };
 
 export const DOCK: AppId[] = ["finder", "launchpad", "notes", "messages", "photos", "preview", "terminal", "calendar", "music", "settings", "trash"];

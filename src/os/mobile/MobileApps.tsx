@@ -96,7 +96,7 @@ export function IOSNotes({ onHome, payload }: { onHome: () => void; payload?: st
 }
 
 /* ---------- Photos / Awards / Brands ---------- */
-const cardAlbums: ProjectCategory[] = ["AI Brand Reels", "Case Competitions"];
+const cardAlbums: ProjectCategory[] = ["Agency Work", "Case Competitions"];
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
   return (
     <IOSPage title="" backLabel={back} onBack={onBack} large={false}>
@@ -110,6 +110,7 @@ function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: 
           {[["Role", p.role], ["Challenge", p.challenge], ["Contribution", p.contribution], ["Outcome", p.outcome]].map(([k, v]) => (
             <div key={k} className="px-4 py-3"><p className="text-[13px] text-muted-foreground">{k}</p><p className="text-[16px] leading-snug">{v}</p></div>))}
         </Group>
+        {p.brandRow && <Group><div className="px-4 py-3"><p className="text-[13px] text-muted-foreground">{p.brandRow.label}</p><div className="mt-2 flex flex-wrap gap-1.5">{p.brandRow.names.map((n) => <span key={n} className="rounded-md bg-secondary px-2 py-1 text-[13px] font-semibold">{n}</span>)}</div></div></Group>}
         {p.link && <Group><Row title={p.linkLabel ?? "View on Behance"} href={p.link} chevron={false} right={<ExternalLink size={16} className="text-primary" />} /></Group>}
       </div>
     </IOSPage>
@@ -126,7 +127,7 @@ export function IOSPhotos({ onHome, initial, initialPid, title = "Photos" }: { o
     const cards = cardAlbums.includes(album);
     return (
       <IOSPage title={initial ? title : album} backLabel={initial ? "Home" : "Albums"} onBack={() => (initial ? onHome() : setAlbum(null))}>
-        {album === "AI Brand Reels" && <p className="mx-4 mb-4 rounded-xl bg-accent p-3 text-[14px] leading-snug text-accent-foreground">Agency-side AI-generated reels and short-form content for {agencyBrands.map((b) => b.brand).join(", ")} under Unilever brand work. Recent work, added after the CV.</p>}
+        {album === "Agency Work" && <p className="mx-4 mb-4 rounded-xl bg-accent p-3 text-[14px] leading-snug text-accent-foreground">I currently run an agency. One of our current workstreams is producing AI-generated content for Lux, Lifebuoy and Dove. Media coming soon.</p>}
         {cards ? (
           <div className="grid grid-cols-1 gap-3 px-4">
             {items.map((x) => (
@@ -176,7 +177,7 @@ export function IOSFiles({ onHome }: { onHome: () => void }) {
   const dirs: { key: string; items: { name: string; sub: string; open: [AppId, string?] }[] }[] = [
     { key: "Experience", items: experience.map((e) => ({ name: `${e.role} — ${e.org}`, sub: `${e.period} · ${e.type}`, open: ["notes", "experience"] })) },
     { key: "Projects", items: projects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ name: p.title, sub: p.subtitle, open: ["photos", p.id] })) },
-    { key: "Brand Campaigns", items: [...agencyBrands.map((b) => ({ name: `${b.brand} — AI reels`, sub: "Current agency work", open: ["brands"] as [AppId] })), ...behanceWorks.map((w) => ({ name: w.title, sub: `${w.type} · Behance`, open: ["photos", "cat:Brand Design"] as [AppId, string] }))] },
+    { key: "Brand Campaigns", items: [...agencyBrands.map((b) => ({ name: `${b.brand} — agency workstream`, sub: "Current agency work", open: ["brands"] as [AppId] })), ...behanceWorks.map((w) => ({ name: w.title, sub: `${w.type} · Behance`, open: ["photos", "cat:Brand Design"] as [AppId, string] }))] },
     { key: "Competitions/Awards", items: awards.map((a) => ({ name: `${a.title} — ${a.rank}`, sub: a.organizer, open: ["awards"] })) },
     { key: "About", items: seedNotes.map((n) => ({ name: `${n.title}.txt`, sub: n.date, open: ["notes", n.id] })) },
   ];

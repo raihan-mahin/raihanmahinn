@@ -176,6 +176,7 @@ export function Recruiter() {
       <p className="text-xs font-semibold uppercase tracking-widest text-primary">30-second overview</p>
       <h2 className="mt-1 text-3xl font-bold tracking-tight">{profile.shortName}</h2>
       <p className="font-semibold text-muted-foreground">{profile.headline} · {profile.location}</p>
+      <p className="text-xs text-muted-foreground">{profile.tagline}</p>
       <p className="mt-3 text-sm leading-relaxed">{profile.bio}</p>
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {stats.filter((s) => s.label !== "Launch projects" && s.label !== "Brand touchpoints").slice(0, 4).map((s) => (
@@ -183,8 +184,9 @@ export function Recruiter() {
       </div>
       <h3 className="mt-5 text-sm font-bold">Highlights</h3>
       <ul className="mt-2 space-y-2 text-sm">
-        <li className="rounded-lg bg-accent p-3"><b>Now:</b> agency-side AI reels & short-form content for {agencyBrands.map((b) => b.brand).join(", ")} (Unilever brands).</li>
-        <li className="rounded-lg bg-secondary p-3"><b>Pureit (BizLearner):</b> brand transition across 7+ touchpoints, 300+ assets for 3 launches, part of a team that drove 6.5x digital sales.</li>
+        <li className="rounded-lg bg-secondary p-3"><b>Pureit (BizLearner):</b> contributed to the brand transition across 7+ touchpoints and 300+ assets for 3 launches; worked with brand, media and agency teams contributing to 6.5x digital sales.</li>
+        <li className="rounded-lg bg-secondary p-3"><b>X Integrated Marketing Agency:</b> customer response strategy for Upay, City Bank, IDLC, Break Station and Petal; 90% on-time response.</li>
+        <li className="rounded-lg bg-secondary p-3"><b>Agency Lead (current):</b> running an agency; one workstream is AI-generated content for {agencyBrands.map((b) => b.brand).join(", ")}.</li>
         <li className="rounded-lg bg-secondary p-3"><b>{awards.length} competition results</b>, {champs.length} championships: {champs.map((c) => c.title).join(", ")}.</li>
         <li className="rounded-lg bg-secondary p-3"><b>Community:</b> {leadership[0]?.detail}</li>
         <li className="rounded-lg bg-secondary p-3"><b>Education:</b> {education[0]?.degree}, {education[0]?.school} ({education[0]?.period}).</li>

@@ -34,7 +34,7 @@ export function AppBody({ id, payload }: { id: AppId; payload?: string | undefin
     case "trash": return <TrashApp />;
     case "recruiter": return <Recruiter />;
     case "awards": return <Photos payload={payload ?? "cat:Case Competitions"} />;
-    case "brands": return <Photos payload={payload ?? "cat:AI Brand Reels"} />;
+    case "brands": return <Photos payload={payload ?? "cat:Agency Work"} />;
     default: return null;
   }
 }

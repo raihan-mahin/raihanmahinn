@@ -81,8 +81,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Mahin OS | Raihan Mahin — Brand Marketing & Creative Portfolio" },
-      { name: "description", content: "Portfolio of Raihan Mahin — brand marketer, creative strategist and AI content creator." },
+      { title: "Raihan Mahin | Brand Marketing & Strategy" },
+      { name: "description", content: "Portfolio of Raihan Mahin — Brand Marketing & Strategy Professional." },
       { name: "author", content: "Abu Raihan Mahin" },
       { property: "og:title", content: "Mahin OS" },
       { property: "og:description", content: "Raihan Mahin — brand marketing & creative portfolio." },

@@ -38,6 +38,7 @@ export function Photos({ payload }: { payload?: string | undefined }) {
                 <div key={k} className="rounded-xl bg-secondary p-3"><dt className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{k}</dt><dd className="mt-1 text-sm">{v}</dd></div>
               ))}
             </dl>
+            {current.brandRow && <div className="mt-3 rounded-xl bg-secondary p-3"><p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{current.brandRow.label}</p><div className="mt-2 flex flex-wrap gap-1.5">{current.brandRow.names.map((n) => <span key={n} className="rounded-md bg-card px-2 py-1 text-xs font-semibold ring-1 ring-border">{n}</span>)}</div></div>}
             <h3 className="mt-5 text-sm font-bold">Gallery</h3>
             <div className="mt-2 grid grid-cols-3 gap-2">
               {[0, 1, 2].map((i) => <div key={i} className="aspect-square overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(current.id) + i + 1} src={current.images[i + 1]} label="Media coming soon" /></div>)}
@@ -50,11 +51,11 @@ export function Photos({ payload }: { payload?: string | undefined }) {
               <div><h2 className="text-xl font-bold tracking-tight">{cat}</h2><p className="text-xs text-muted-foreground">{list.length} items · media coming soon</p></div>
               <span className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex"><Upload size={12} /> Image slots ready</span>
             </div>
-            {cat === "AI Brand Reels" && <p className="mb-3 rounded-lg bg-accent px-3 py-2 text-xs text-accent-foreground">Agency-side AI-generated reels and short-form content for Lux, Lifebuoy and Dove under Unilever brand work. Recent work, added after the CV. Media coming soon.</p>}
+            {cat === "Agency Work" && <p className="mb-3 rounded-lg bg-accent px-3 py-2 text-xs text-accent-foreground">I currently run an agency. One of our current workstreams is producing AI-generated content for Lux, Lifebuoy and Dove. Media coming soon.</p>}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
               {list.map((p) => (
                 <button key={p.id} onClick={() => setOpenId(p.id)} className="group overflow-hidden rounded-xl bg-card text-left shadow-soft ring-1 ring-border transition hover:-translate-y-0.5">
-                  <div className={cn("relative overflow-hidden", p.categories.includes("AI Brand Reels") ? "aspect-[4/5]" : "aspect-[4/3]")}>
+                  <div className={cn("relative overflow-hidden", "aspect-[4/3]")}>
                     <MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title}
                       label="Media coming soon" />
                     {p.badge && <span className="absolute left-2 top-2"><Badge tone={p.badge === "Champion" ? "gold" : p.badge === "Current work" ? "success" : "default"}>{p.badge === "Champion" && <Star size={10} className="mr-1" />}{p.badge}</Badge></span>}

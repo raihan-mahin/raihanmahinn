@@ -22,6 +22,7 @@ export function Preview() {
               <div className="flex justify-between gap-2"><p className="font-bold">{e.role} — {e.org}</p><p className="shrink-0 text-xs">{e.period}</p></div>
               {e.context && <p className="text-xs italic">{e.context} · {e.type}</p>}
               <ul className="ml-4 list-disc">{e.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
+              {e.clients && <p className="text-xs text-muted-foreground">Brands: {e.clients.join(" · ")}</p>}
             </div>
           ))}
           <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Competitions & Awards</h2>
