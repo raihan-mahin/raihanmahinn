@@ -125,7 +125,7 @@ function AlbumGrid({ items, onOpen }: { items: { id: string; title: string; coun
     <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-4">
       {items.map((c) => (
         <button key={c.id} onClick={() => onOpen(c.id)} className="text-left active:opacity-70">
-          <div className="aspect-square overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(c.id)} src={c.cover} alt={`${c.title} album`} label="Pending" /></div>
+          <div className="aspect-square overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(c.id)} src={c.cover} alt={`${c.title} album`} label={c.title} /></div>
           <p className="mt-1.5 text-[15px] font-medium leading-tight">{c.title}</p><p className="text-[13px] text-muted-foreground">{c.count}</p>
         </button>))}
     </div>

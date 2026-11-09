@@ -30,7 +30,7 @@ function Tile({ p, onOpen }: { p: Project; onOpen: () => void }) {
   return (
     <button onClick={onOpen} className="group text-left">
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg ring-1 ring-border transition group-hover:ring-2 group-hover:ring-primary">
-        <MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title} label="Photo pending" />
+        <MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title} label={p.title} />
         {p.badge && <span className="absolute left-2 top-2"><Badge tone={tone(p.badge)}>{p.badge === "Champion" && <Star size={10} className="mr-1" />}{p.badge}</Badge></span>}
       </div>
       <p className="mt-1.5 line-clamp-1 text-[12px] font-semibold">{p.title}</p>
