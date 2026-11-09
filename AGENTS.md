@@ -33,4 +33,5 @@ use the editor.
 - All portfolio copy, projects, awards and image slots live in `src/data/portfolio.ts`; UI reads from it so content edits never touch components.
 - The macOS-style shell lives in `src/os/` (store = window manager + prefs in localStorage, one file per app under `apps/`); new apps register in `apps-registry.ts` and `AppBody` in `Desktop.tsx`.
 - Below 768px the app renders a separate iOS shell (`src/os/mobile/IOS.tsx`) showing the top window full-screen; Notes/Photos/Awards/Brands/Files/Settings use native-style pages in `mobile/MobileApps.tsx` (IOSPage scaffold), others reuse desktop app bodies; same store and data.
+- Media files live in `public/media/` (behance covers named by Behance project id, award photos per `public/media/awards/README.md`); awards list expected files in `pendingImages` until uploaded, then move to `images`.
 - App icons are original SVG drawings in `src/os/icons.tsx` (illustration colours allowed there only).

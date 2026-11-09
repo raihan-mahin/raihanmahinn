@@ -78,16 +78,16 @@ export const agencyBrands: AgencyBrand[] = [
   { id: "lux", brand: "Lux", tagline: "Glamour in motion", description: "AI-generated reels for Lux with a premium, beauty-forward visual direction for social platforms." },
 ];
 
-export type Award = { id: string; rank: string; title: string; organizer: string; year: string; focus: string; detail: string; scale?: string; images: string[]; link?: string };
+export type Award = { id: string; rank: string; title: string; organizer: string; year: string; focus: string; detail: string; scale?: string; images: string[]; link?: string; team?: string; pendingImages?: string[] };
 export const awards: Award[] = [
-  { id: "bizmetrics", rank: "Champion", title: "BizMetrics 2026", organizer: "BTM, IUT", year: "2026", focus: "GTM for a new product concept", detail: "Developed a new product concept and its go-to-market plan.", images: [] },
-  { id: "nexus", rank: "Champion", title: "Nexus 2025", organizer: "KUET Business Club", year: "2025", focus: "Strategic cases — Polar & NCC Bank", detail: "Solved strategic business cases for Polar and NCC Bank.", images: [] },
-  { id: "hult", rank: "Champion", title: "Hult Prize at NSU 2026", organizer: "NSU YEF", year: "2026", focus: "SDG-aligned concept & full GTM", detail: "Built an SDG-aligned venture concept with a complete go-to-market strategy.", images: [] },
-  { id: "admaker", rank: "1st Runner-Up", title: "Admaker Bangladesh 2026", organizer: "NSU YES!", year: "2026", focus: "Marketing strategy & OVC — Maya + EBL", detail: "Marketing strategy and online video commercial for Maya and EBL.", scale: "1000+ teams", images: [] },
-  { id: "marxcellence", rank: "1st Runner-Up", title: "Marxcellence 2026", organizer: "NSU MIBC", year: "2026", focus: "Brand strategy & OVC — Vertika + Dhaka Bank", detail: "Brand strategy and online video commercial for Vertika and Dhaka Bank.", scale: "1000+ teams", images: [], link: "https://www.linkedin.com/posts/raihanmahin_first-runner-up-marxcellence-two-competitions-activity-7496950896132521984-LnjI" },
-  { id: "innovade", rank: "1st Runner-Up", title: "Innovade 2026", organizer: "NSU MIBC", year: "2026", focus: "International Yamaha smart-tech case", detail: "Tackled an international smart-technology case for Yamaha.", images: [] },
-  { id: "brandaid", rank: "2nd Runner-Up", title: "BrandAid 2026", organizer: "EWU Business Club", year: "2026", focus: "Repositioning — Monno Ceramics & ZenFresh", detail: "Repositioning strategy for Monno Ceramics and ZenFresh.", images: [] },
-  { id: "otw", rank: "Finalist", title: "Over the Wall 2025", organizer: "Marico", year: "2025", focus: "Product concept & GTM", detail: "Product concept and go-to-market plan.", scale: "1850+ teams", images: [] },
+  { id: "bizmetrics", rank: "Champion", title: "BizMetrics 2026", organizer: "BTM, IUT", year: "2026", focus: "GTM for a new product concept", detail: "Developed a new product concept and its go-to-market plan.", pendingImages: ["/media/awards/bizmetrics-2026-champion-group-stage.jpg"], images: [] },
+  { id: "nexus", rank: "Champion", title: "Nexus 2025", organizer: "KUET Business Club", year: "2025", focus: "Strategic cases — Polar & NCC Bank", detail: "Solved strategic business cases for Polar and NCC Bank.", team: "Arctic Wolves", pendingImages: ["/media/awards/nexus-2025-champion-group-stage.jpg"], images: [] },
+  { id: "hult", rank: "Champion", title: "Hult Prize at NSU 2026", organizer: "NSU YEF", year: "2026", focus: "SDG-aligned concept & full GTM", detail: "Built an SDG-aligned venture concept with a complete go-to-market strategy.", pendingImages: ["/media/awards/hult-prize-nsu-2026-champion-group-stage.jpg"], images: [] },
+  { id: "admaker", rank: "1st Runner-Up", title: "Admaker Bangladesh 2026", organizer: "NSU YES!", year: "2026", focus: "Marketing strategy & OVC — Maya + EBL", detail: "Marketing strategy and online video commercial for Maya and EBL.", scale: "1000+ teams", team: "Arc Crew", pendingImages: ["/media/awards/admaker-2026-runner-up-solo-award.jpg", "/media/awards/admaker-2026-runner-up-group-stage.jpg"], images: [] },
+  { id: "marxcellence", rank: "1st Runner-Up", title: "Marxcellence 2026", organizer: "NSU MIBC", year: "2026", focus: "Brand strategy & OVC — Vertika + Dhaka Bank", detail: "Brand strategy and online video commercial for Vertika and Dhaka Bank.", scale: "1000+ teams", team: "Arc Crew", pendingImages: ["/media/awards/marxcellence-2026-runner-up-solo-stage.jpg", "/media/awards/marxcellence-2026-runner-up-seated-trophy.jpg", "/media/awards/marxcellence-2026-runner-up-group-candid.jpg"], images: [], link: "https://www.linkedin.com/posts/raihanmahin_first-runner-up-marxcellence-two-competitions-activity-7496950896132521984-LnjI" },
+  { id: "innovade", rank: "1st Runner-Up", title: "Innovade 2026", organizer: "NSU MIBC", year: "2026", focus: "International Yamaha smart-tech case", detail: "Tackled an international smart-technology case for Yamaha.", team: "Arctic Wolves", pendingImages: ["/media/awards/innovade-2026-runner-up-group.jpg"], images: [] },
+  { id: "brandaid", rank: "2nd Runner-Up", title: "BrandAid 2026", organizer: "EWU Business Club", year: "2026", focus: "Repositioning — Monno Ceramics & ZenFresh", detail: "Repositioning strategy for Monno Ceramics and ZenFresh.", team: "Marketman", pendingImages: ["/media/awards/brandaid-2026-2nd-runner-up-group.jpg"], images: [] },
+  { id: "otw", rank: "Finalist", title: "Over the Wall 2025", organizer: "Marico", year: "2025", focus: "Product concept & GTM", detail: "Product concept and go-to-market plan.", scale: "1850+ teams", pendingImages: [], images: [] },
 ];
 
 export type PureitCase = { id: string; title: string; kind: string; challenge: string; contribution: string; outcome: string; images: string[] };
@@ -101,18 +101,18 @@ export const pureitCases: PureitCase[] = [
 const BH = profile.behance;
 export type BehanceWork = { id: string; title: string; type: string; url: string; verified: boolean; thumbnail?: string };
 export const behanceWorks: BehanceWork[] = [
-  { id: "skin", title: "Skin Care Branding | Confidence Breakthrough Campaign", type: "Campaign", url: BH, verified: false },
-  { id: "berger", title: "Billboard Design | Berger Sealer Campaign", type: "Billboard", url: BH, verified: false },
-  { id: "pureit-cat", title: "Product Catalogue | Pureit", type: "Print", url: BH, verified: false },
-  { id: "pureit-man", title: "Product Manual Design | Brand – Pureit", type: "Print", url: BH, verified: false },
-  { id: "billboard", title: "Eye-Catching Billboard Design | Outdoor Advertising", type: "Billboard", url: BH, verified: false },
-  { id: "bankcard", title: "Bank Card Branding & OVC – Creative Fintech Campaign", type: "Campaign", url: BH, verified: false },
-  { id: "parachute", title: "Parachute Just for Baby | Baby Care Brand | Packaging", type: "Packaging", url: "https://www.behance.net/gallery/215718967/Parachute-Just-for-Baby-Baby-Care-Brand-Packaging", verified: true },
-  { id: "letterhead", title: "Letterhead Design | Pad", type: "Stationery", url: "https://www.behance.net/gallery/210532369/Letterhead-Design-Pad", verified: true },
-  { id: "promo-video", title: "Brand Promotion Video", type: "Video", url: BH, verified: false },
-  { id: "promo-social", title: "Brand Promotion | Social Media Post", type: "Social", url: BH, verified: false },
-  { id: "social", title: "Social Media Post", type: "Social", url: BH, verified: false },
-  { id: "social-brand", title: "Social Media Post | Branding", type: "Social", url: BH, verified: false },
+  { id: "skin", title: "Skin Care Branding | Confidence Breakthrough Campaign", type: "Campaign", url: "https://www.behance.net/gallery/242883541/Skin-Care-Branding-Confidence-Breakthrough-Campaign", verified: true, thumbnail: "/media/behance/242883541.jpg" },
+  { id: "berger", title: "Billboard Design | Berger Sealer Campaign", type: "Billboard", url: "https://www.behance.net/gallery/239452045/Billboard-Design-Berger-Sealer-Campaign", verified: true, thumbnail: "/media/behance/239452045.png" },
+  { id: "pureit-cat", title: "Product Catalogue | Pureit", type: "Print", url: "https://www.behance.net/gallery/234564039/Product-Catalogue-Pureit", verified: true, thumbnail: "/media/behance/234564039.jpg" },
+  { id: "pureit-man", title: "Product Manual Design | Brand – Pureit", type: "Print", url: "https://www.behance.net/gallery/234562973/Product-Manual-Design-Brand-Pureit", verified: true, thumbnail: "/media/behance/234562973.jpg" },
+  { id: "billboard", title: "Eye-Catching Billboard Design | Outdoor Advertising", type: "Billboard", url: "https://www.behance.net/gallery/234553883/Eye-Catching-Billboard-Design-Outdoor-Advertising", verified: true, thumbnail: "/media/behance/234553883.png" },
+  { id: "bankcard", title: "Bank Card Branding & OVC – Creative Fintech Campaign", type: "Campaign", url: "https://www.behance.net/gallery/234546863/Bank-Card-Branding-OVC-Creative-Fintech-Campaign", verified: true, thumbnail: "/media/behance/234546863.png" },
+  { id: "parachute", title: "Parachute Just for Baby | Baby Care Brand | Packaging", type: "Packaging", url: "https://www.behance.net/gallery/215718967/Parachute-Just-for-Baby-Baby-Care-Brand-Packaging", verified: true, thumbnail: "/media/behance/215718967.png" },
+  { id: "letterhead", title: "Letterhead Design | Pad", type: "Stationery", url: "https://www.behance.net/gallery/210532369/Letterhead-Design-Pad", verified: true, thumbnail: "/media/behance/210532369.jpg" },
+  { id: "promo-video", title: "Brand Promotion Video", type: "Video", url: "https://www.behance.net/gallery/186704511/Brand-Promotion-Video", verified: true, thumbnail: "/media/behance/186704511.png" },
+  { id: "promo-social", title: "Brand Promotion | Social Media Post", type: "Social", url: "https://www.behance.net/gallery/186372427/Brand-Promotion-Social-Media-Post", verified: true, thumbnail: "/media/behance/186372427.jpg" },
+  { id: "social", title: "Social Media Post", type: "Social", url: "https://www.behance.net/gallery/183253499/Social-Media-Post", verified: true, thumbnail: "/media/behance/183253499.jpeg" },
+  { id: "social-brand", title: "Social Media Post | Branding", type: "Social", url: "https://www.behance.net/gallery/183014205/Social-Media-Post-Branding", verified: true, thumbnail: "/media/behance/183014205.jpg" },
   { id: "oggy", title: "Cartoon Character Oggy Vector Art", type: "Illustration", url: "https://www.behance.net/gallery/181839773/Cartoon-Character-Oggy-Vector-Art", verified: true },
   { id: "hattori", title: "Cartoon Art Ninja Hattori Vector Art", type: "Illustration", url: "https://www.behance.net/gallery/181917209/Cartoon-Art-Ninja-Hattori-Vector-Art", verified: true },
   { id: "brochure", title: "Square Tri-Fold Threefold brochure", type: "Print", url: "https://www.behance.net/gallery/181822017/Square-Tri-Fold-Threefold-brochure", verified: true },
@@ -168,7 +168,7 @@ export const projects: Project[] = [
   })),
   ...awards.map<Project>((a) => ({
     id: `award-${a.id}`, title: `${a.title} — ${a.rank}`, subtitle: a.organizer, categories: a.rank === "Champion" ? ["Case Competitions", "Featured"] : ["Case Competitions"],
-    role: "Team member / strategist", challenge: a.focus, contribution: a.detail, outcome: `${a.rank}${a.scale ? ` among ${a.scale}` : ""}`, images: a.images, badge: a.rank, ...(a.link ? { link: a.link, linkLabel: "View LinkedIn post" } : {}),
+    role: a.team ? `Team ${a.team} — team member / strategist` : "Team member / strategist", challenge: a.focus, contribution: a.detail, outcome: `${a.rank}${a.scale ? ` among ${a.scale}` : ""}`, images: a.images, badge: a.rank, ...(a.link ? { link: a.link, linkLabel: "View LinkedIn post" } : {}),
   })),
   ...behanceWorks.map<Project>((w) => ({
     id: `bh-${w.id}`, title: w.title, subtitle: w.type, categories: ["Brand Design"], role: "Designer",

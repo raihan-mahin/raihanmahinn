@@ -18,3 +18,11 @@ describe("portfolio content rules", () => {
     expect(pureitCases.filter((c) => c.kind === "Brand transition")).toHaveLength(1);
   });
 });
+
+describe("media", () => {
+  it("12 Behance works have downloaded covers; Over the Wall has no photo", async () => {
+    const { behanceWorks, awards } = await import("@/data/portfolio");
+    expect(behanceWorks.filter((w) => w.thumbnail?.startsWith("/media/behance/"))).toHaveLength(12);
+    expect(awards.find((a) => a.id === "otw")?.pendingImages).toEqual([]);
+  });
+});
