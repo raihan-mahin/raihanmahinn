@@ -242,3 +242,5 @@
 .photos-native { --background: oklch(0 0 0); --card: oklch(.18 0 0); --secondary: oklch(.24 0 0); }
 .photos-toolbar { background: var(--card); box-shadow: 0 0 0 1px var(--border); }
 .photos-tab[aria-selected="true"] { background: var(--secondary); color: var(--primary); }
+.photos-native .photos-scroll { scrollbar-width: none; }
+.photos-native .photos-scroll::-webkit-scrollbar { display: none; width: 0; }

@@ -38,6 +38,7 @@ use the editor.
 - Brand logos: files in `public/media/logos/`, mapped by brand name in `src/data/brandLogos.ts`, rendered only via `BrandLogo`/`BrandStrip` (text fallback); competition case brands never get logo entries.
 - Photos work taxonomy and separate achievements collection are defined in `photoRoots`; `workRoots` and `workProjects` exclude awards, and legacy category payloads resolve centrally so existing shortcuts keep working.
 - ProjectCover renders actual project imagery or verified branded/neutral covers so work without photographs remains distinct from award media.
+- CollectionCover reads collection-level cover styles from the shared taxonomy to distinguish designed career covers from project and award imagery.
 - RecruiterContent is shared across desktop and the native phone page to keep career facts and actions identical; sanitized PDFs are generated on demand in the browser from portfolio data, never from private CV fields.
 - Music links to external Spotify discovery searches only; no simulated playback or invented personal recordings.
 - Notes merge missing seed IDs into stored user notes without overwriting saved edits; explicit Reset remains the only destructive seed restore.

@@ -16,7 +16,7 @@ import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings, IOSRecruiter } fro
 
 const PAGE1: AppId[] = ["finder", "notes", "messages", "photos", "settings", "calendar", "recruiter", "music"];
 const PAGE2: AppId[] = ["brands", "awards", "preview", "terminal", "trash"];
-const DOCK: AppId[] = ["messages", "photos", "notes", "preview"];
+const DOCK: AppId[] = ["notes", "messages", "photos", "music"];
 const label = (id: AppId) => APPS[id].mobileName ?? APPS[id].name;
 const time = (d: Date | null) => (d ? d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(/\s?[AP]M/i, "") : "");
 

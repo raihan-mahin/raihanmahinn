@@ -62,7 +62,7 @@ export function Photos({ payload }: { payload?: string | undefined }) {
     <div className="flex min-w-0 flex-1 flex-col">
       <header className="flex min-h-14 shrink-0 items-center gap-2 border-b border-border px-4">
         {(current || a) && <Button variant="ghost" size="icon" aria-label="Back to albums" onClick={() => current ? setOpenId(null) : setAlbum(null)}><ChevronLeft /></Button>}
-        <div className="min-w-0 flex-1"><h2 className="truncate text-lg font-bold">{heading}</h2>{!current && <p className="text-xs text-muted-foreground">{items.length} items</p>}</div>
+        <div className="min-w-0 flex-1"><h2 className="truncate text-lg font-bold">{heading}</h2>{!current && <p className="text-xs text-muted-foreground">{items.length} {items.length === 1 ? "item" : "items"}</p>}</div>
         <label className="flex w-40 items-center gap-2 rounded-md bg-secondary px-2"><Search size={14}/><input aria-label="Search Photos" placeholder="Search" value={q} onChange={e => { setQ(e.target.value); setOpenId(null); }} className="h-8 min-w-0 w-full bg-transparent text-xs outline-none" /></label>
       </header>
       <div className="min-h-0 flex-1 overflow-auto p-5">
@@ -70,7 +70,7 @@ export function Photos({ payload }: { payload?: string | undefined }) {
           {!isAwards && view === "Collections" && <div className="mb-5 flex flex-wrap gap-1">{workRoots.map(x => <Button key={x.id} size="sm" variant={root === x.id ? "secondary" : "ghost"} className="text-[11px]" onClick={() => select(x.id)}>{x.id}</Button>)}</div>}
           {r.albums && !a && !q && view === "Collections" ? <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">{r.albums.map(x => {
             const cover = albumItems(x.ids)[0];
-            return <Button key={x.id} variant="ghost" onClick={() => setAlbum(x.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className="aspect-square overflow-hidden rounded-lg">{cover && <ProjectCover project={cover}/>}</div><p className="mt-2 text-sm font-semibold">{x.title}</p><p className="text-xs text-muted-foreground">{x.ids.length} items</p></Button>;
+            return <Button key={x.id} variant="ghost" onClick={() => setAlbum(x.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className="aspect-square overflow-hidden rounded-lg">{cover && <ProjectCover project={cover}/>}</div><p className="mt-2 text-sm font-semibold">{x.title}</p><p className="text-xs text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
           })}</div> : <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">{items.map(p => <Button key={p.id} variant="ghost" onClick={() => setOpenId(p.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className="relative aspect-square overflow-hidden rounded-lg"><ProjectCover project={p}/>{p.badge && <span className="absolute bottom-2 left-2"><Badge tone={tone(p.badge)}>{p.badge}</Badge></span>}</div><p className="mt-2 line-clamp-2 text-sm font-semibold">{p.title}</p><p className="text-xs text-muted-foreground">{p.subtitle}</p></Button>)}</div>}
           {!items.length && <p className="py-12 text-center text-sm text-muted-foreground">No matching work.</p>}
         </>}

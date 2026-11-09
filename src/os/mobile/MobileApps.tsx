@@ -2,21 +2,22 @@ export { IOSNotes } from "./IOSNotes";
 export { IOSFiles } from "./IOSFiles";
 import { Button } from "@/components/ui/button";
 import { ProjectCover } from "../ProjectCover";
+import { CollectionCover } from "../CollectionCover";
 import { RecruiterContent } from "../RecruiterContent";
 import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star, Layers, PanelsTopLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
-import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, albumCover, findAlbum, projectById, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project } from "@/data/portfolio";
+import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, albumCover, findAlbum, projectById, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project, type PhotoRoot } from "@/data/portfolio";
 import { useOS, type Wallpaper } from "../store";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 import { Render } from "../apps/Notes";
 import type { AppId } from "../apps-registry";
 
 /* ---------- iOS page scaffold: blurred nav bar, large title, edge-swipe back ---------- */
-export function IOSPage({ title, backLabel, onBack, right, children, large = true, inset = true }:
-  { title: string; backLabel: string; onBack: () => void; right?: ReactNode; children: ReactNode; large?: boolean; inset?: boolean }) {
+export function IOSPage({ title, backLabel, onBack, right, children, large = true, inset = true, photos = false }:
+  { title: string; backLabel: string; onBack: () => void; right?: ReactNode; children: ReactNode; large?: boolean; inset?: boolean; photos?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const x0 = useRef<number | null>(null);
   const [dx, setDx] = useState(0);
@@ -30,12 +31,12 @@ export function IOSPage({ title, backLabel, onBack, right, children, large = tru
         <div className="h-11" aria-hidden />
         <div className="relative flex h-11 items-center px-1">
           <button onClick={onBack} className="flex min-h-11 items-center pr-3 text-[17px] text-primary"><ChevronLeft size={28} strokeWidth={2.4} /><span className="-ml-0.5 max-w-28 truncate">{backLabel}</span></button>
-          <h1 className={cn("pointer-events-none absolute inset-x-24 truncate text-center text-[17px] font-semibold transition-opacity", large && !scrolled ? "opacity-0" : "opacity-100")}>{title}</h1>
+          {photos && large ? <div aria-hidden className={cn("pointer-events-none absolute inset-x-24 truncate text-center text-[17px] font-semibold", !scrolled && "opacity-0")}>{title}</div> : <h1 className={cn("pointer-events-none absolute inset-x-24 truncate text-center text-[17px] font-semibold transition-opacity", large && !scrolled ? "opacity-0" : "opacity-100")}>{title}</h1>}
           <div className="ml-auto flex items-center pr-3">{right}</div>
         </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 30)}>
-        {large && <h2 className="px-4 pb-2 pt-1 text-[34px] font-bold leading-tight tracking-tight">{title}</h2>}
+      <div className={cn("min-h-0 flex-1 overflow-y-auto overscroll-contain", photos && "photos-scroll")} tabIndex={photos ? 0 : undefined} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 30)}>
+        {large && (photos ? <h1 className="px-4 pb-2 pt-1 text-[34px] font-bold leading-tight">{title}</h1> : <h2 className="px-4 pb-2 pt-1 text-[34px] font-bold leading-tight tracking-tight">{title}</h2>)}
         <div className={cn(inset && "pb-10")}>{children}</div>
       </div>
     </div>
@@ -79,7 +80,7 @@ function SearchField({ value, onChange, placeholder }: { value: string; onChange
 /* ---------- Photos / Awards / Brands ---------- */
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
   return (
-    <IOSPage title="" backLabel={back} onBack={onBack} large={false}>
+    <IOSPage title="" backLabel={back} onBack={onBack} large={false} photos>
       <div className="aspect-[4/3] w-full bg-secondary"><ProjectCover project={p} contain /></div>
       <div className="px-4 pt-4">
         <div className="flex flex-wrap items-center gap-1.5">{p.badge && <Badge tone={p.badge === "Champion" ? "gold" : "default"}>{p.badge}</Badge>}<span className="text-[13px] text-muted-foreground">{p.subtitle}</span></div>
@@ -112,18 +113,18 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHom
   const a = r?.albums?.find(x => x.id === album);
   const p = pid ? projectById(pid) : undefined;
   const back = () => { if (searching) { setSearching(false); setQ(""); } else if (pid) setPid(null); else if (album) setAlbum(null); else if (root) setRoot(null); else onHome(); };
-  const itemGrid = (items: Project[], countPhotos = false) => <div className="grid grid-cols-2 gap-x-3 gap-y-6">{items.map(x => <Button key={x.id} variant="ghost" className="h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => setPid(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]"><ProjectCover project={x}/></div><p className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p><p className="mt-1 text-[13px] text-muted-foreground">{countPhotos ? `${x.images.length} photos · ${x.badge}` : x.subtitle}</p></Button>)}</div>;
-  const collections = (entries: { id: string; title: string; ids: string[]; cover?: string | undefined }[], open: (id: string) => void) => <div className="grid grid-cols-2 gap-x-3 gap-y-7">{entries.map(x => {
-    const cover = albumItems(x.ids)[0];
-    return <Button key={x.id} variant="ghost" className="h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => open(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]">{x.cover ? <MediaPlaceholder src={x.cover} alt={x.title}/> : cover && <ProjectCover project={cover}/>}</div><p className="mt-2 text-[15px] font-semibold leading-snug">{x.title}</p><p className="mt-1 text-[13px] text-muted-foreground">{x.ids.length} items</p></Button>;
+  const itemGrid = (items: Project[], countPhotos = false) => <div className="grid grid-cols-2 gap-x-3 gap-y-6">{items.map(x => <Button key={x.id} variant="ghost" className="h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => setPid(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]"><ProjectCover project={x}/></div><p className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p><p className="mt-1 text-[13px] text-muted-foreground">{countPhotos ? x.images.length ? `${x.images.length} ${x.images.length === 1 ? "photo" : "photos"} · ${x.badge}` : x.badge : x.subtitle}</p></Button>)}</div>;
+  const collections = (entries: { id: string; title: string; ids: string[]; cover?: string | undefined; coverStyle?: PhotoRoot["coverStyle"] }[], open: (id: string) => void) => <div className="grid grid-cols-2 gap-x-3 gap-y-7">{entries.map(x => {
+    return <Button key={x.id} variant="ghost" className="h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => open(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]"><CollectionCover collection={x}/></div><p className="mt-2 text-[15px] font-semibold leading-snug">{x.title}</p><p className="mt-1 text-[13px] text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
   })}</div>;
   const source = root === "Awards & Achievements" ? albumItems(r ? rootIds(r) : []) : workProjects;
   const results = source.filter(x => `${x.title} ${x.subtitle} ${x.summary ?? ""}`.toLowerCase().includes(q.toLowerCase()));
   return <div className="native-dark photos-native absolute inset-0">
-    {p ? <ProjectDetail p={p} back={a?.title ?? r?.id ?? tab} onBack={back}/> : <IOSPage title={searching ? "Search" : a?.title ?? r?.id ?? tab} backLabel={root ? "Collections" : "Home"} onBack={back}>
+    {p ? <ProjectDetail p={p} back={a?.title ?? r?.id ?? tab} onBack={back}/> : <IOSPage title={searching ? "Search" : a?.title ?? r?.id ?? tab} backLabel={root ? "Collections" : "Home"} onBack={back} photos>
       <div className="px-4 pb-36">
         {searching ? <><label className="mb-5 flex h-11 items-center gap-2 rounded-lg bg-secondary px-3"><Search size={18}/><input autoFocus aria-label="Search Photos" placeholder={root === "Awards & Achievements" ? "Search awards" : "Search work"} value={q} onChange={e => setQ(e.target.value)} className="min-w-0 flex-1 bg-transparent outline-none" /></label>{itemGrid(results, root === "Awards & Achievements")}{!results.length && <p className="py-10 text-center text-muted-foreground">No results</p>}</> : r ? r.albums && !a ? collections(r.albums, setAlbum) : itemGrid(albumItems(a?.ids ?? rootIds(r)), root === "Awards & Achievements") : tab === "Library" ? itemGrid(workProjects) : <>
-          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover })), id => setRoot(resolvePhotoCategory(id)))}
+          <div className="mb-3 flex items-center justify-between"><h2 className="text-[20px] font-semibold">Projects</h2><Button variant="ghost" className="h-11 px-0 text-primary" onClick={() => { setTab("Library"); setRoot(null); setAlbum(null); }}>See All <ChevronRight size={18}/></Button></div>
+          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover, coverStyle: x.coverStyle })), id => setRoot(resolvePhotoCategory(id)))}
           <h3 className="mb-5 mt-12 text-[25px] font-bold leading-tight">Awards & Achievements</h3>
           {itemGrid(albumItems(awards.map(x => `award-${x.id}`)), true)}
           <p className="mt-6 text-[13px] text-muted-foreground">7 national podiums · 1 Marico finalist</p>

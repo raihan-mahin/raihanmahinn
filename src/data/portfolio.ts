@@ -207,14 +207,14 @@ export const projects: Project[] = [
 ];
 
 export type PhotoAlbum = { id: string; title: string; ids: string[] };
-export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string };
+export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string; coverStyle?: "flagship" | "transition" };
 /** Single source of truth for the Photos hierarchy (desktop + phone). */
 export const photoRoots: PhotoRoot[] = [
-  { id: "★ Flagship", ids: ["pureit-transition", "pureit-launches", "x-agency", "mth"], cover: "/media/behance/234564039.jpg" },
-  { id: "Brand Strategy & Transition", ids: ["pureit-transition", "insight-cirkle"], cover: "/media/behance/234564039.jpg" },
+  { id: "★ Flagship", ids: ["pureit-transition", "pureit-launches", "x-agency", "mth"], coverStyle: "flagship" },
+  { id: "Brand Strategy & Transition", ids: ["pureit-transition", "insight-cirkle"], coverStyle: "transition" },
   { id: "Product Launches", ids: ["pureit-launches"], cover: "/media/behance/234562973.jpg" },
   { id: "Client Engagement", albums: [{ id: "agency", title: "Agency & Client Work", ids: ["x-agency", "agency", "legend"] }] },
-  { id: "Campaigns & Creative", albums: [
+  { id: "Campaigns & Creative", cover: "/media/behance/242883541.jpg", albums: [
     { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man"] },
     { id: "berger", title: "Berger & Outdoor", ids: ["bh-berger", "bh-billboard"] },
     { id: "packaging", title: "Packaging", ids: ["bh-parachute"] },
