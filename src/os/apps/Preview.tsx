@@ -3,7 +3,8 @@ import { downloadResume } from "@/lib/resume";
 import { Download, FileText } from "lucide-react";
 import { BrandStrip } from "../BrandLogo";
 import { useState } from "react";
-import { profile, experience, awards, leadership, education, skills } from "@/data/portfolio";
+import { profile } from "@/data/portfolio";
+import { resumeContent } from "@/data/resume";
 
 export function Preview() {
   const [error, setError] = useState("");
@@ -21,24 +22,15 @@ export function Preview() {
             <p className="font-semibold text-primary">{profile.headline}</p>
             <p className="mt-1 text-xs">{profile.location} · {profile.email} · linkedin.com/in/raihan-mahin-150b7123a · behance.net/raihanmahin</p>
           </header>
-          <p className="mt-3">{profile.bio}</p>
-          <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Experience</h2>
-          {experience.map((e) => (
-            <div key={e.id} className="mt-2">
-              <div className="flex flex-wrap justify-between gap-2"><p className="font-bold">{e.role} — {e.org}</p><p className="shrink-0 text-xs">{e.period}</p></div>
-              {e.context && <p className="text-xs italic">{e.context} · {e.type}</p>}
-              <ul className="ml-4 list-disc">{e.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
-              {e.clients && <BrandStrip className="my-2" names={e.clients}/> }
-            </div>
-          ))}
-          <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Competitions & Awards</h2>
-          <ul className="ml-4 mt-1 list-disc">{awards.map((a) => <li key={a.id}><b>{a.rank}</b>, {a.title} ({a.organizer}) — {a.focus}{a.scale ? `, ${a.scale}` : ""}</li>)}</ul>
-          <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Leadership</h2>
-          <ul className="ml-4 mt-1 list-disc">{leadership.map((l) => <li key={l.id}><b>{l.role}, {l.org}</b> ({l.period}) — {l.detail}</li>)}</ul>
-          <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Education</h2>
-          {education.map((e) => <p key={e.id}><b>{e.degree}</b>, {e.school} · {e.period}</p>)}
-          <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">Skills</h2>
-          {Object.entries(skills).map(([k, v]) => <p key={k}><b>{k}:</b> {v.join(", ")}</p>)}
+          {resumeContent.map(section => <section key={section.title}>
+            <h2 className="mt-4 text-xs font-bold uppercase tracking-widest text-primary">{section.title}</h2>
+            {section.entries.map((entry, i) => <div key={i} className="mt-2">
+              {entry.text && <p className={entry.date ? "font-bold" : ""}>{entry.text}</p>}
+              {entry.date && <p className="text-xs">{entry.date}</p>}
+              {entry.bullets && <ul className="ml-4 list-disc">{entry.bullets.map(line => <li key={line}>{line}</li>)}</ul>}
+              {entry.brands && <BrandStrip className="my-2" names={entry.brands}/>}
+            </div>)}
+          </section>)}
         </article>
       </div>
     </div>

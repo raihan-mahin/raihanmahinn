@@ -1,11 +1,3 @@
-- [x] Integrate chosen portrait and compact reference desktop arrangement.
-- [x] Separate professional work collections from all eight awards across Photos and Files.
-- [x] Align shared career copy and verify desktop/iPhone interactions and media.
-- [x] Correct collaborative career attribution and recruiter metrics throughout shared content.
-- [x] Add six Marico photos, award stories and accessible photo viewing.
-- [x] Refine résumé Preview/folders, app choices and safe Notes seed updates.
-- [x] Verify desktop/phone flows and tests; save in a commit without publishing.
-- [x] Fix single-page phone home scrolling at short heights and verify LinkedIn access.
-- [x] Diagnose Photos rectangle and preserve scoped keyboard focus / safe-area chrome.
-- [x] Add four curated award updates and exactly two local Admaker concept slides, separate from photo counts.
-- [x] Verify targeted tests and desktop/phone navigation, then commit without publishing.
+- [x] Update awards, gallery removals, shared copy, email and safe Notes migration.
+- [x] Separate verbatim CV content for Preview and PDF; align mobile LinkedIn tile.
+- [x] Run targeted tests and desktop/phone checks, then commit without publishing.

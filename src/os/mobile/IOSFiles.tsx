@@ -10,7 +10,7 @@ import { IOSPage } from "./MobileApps";
 type Entry = { name: string; kind: "PDF" | "NOTE" | "PROJECT"; date: string; app: AppId; payload?: string };
 const documents: Entry[] = [{ name: "Raihan-Mahin-Resume.pdf", kind: "PDF", date: "Nov 2026", app: "preview" }, ...notes.map(n => ({ name: n.title, kind: "NOTE" as const, date: n.date, app: "notes" as const, payload: n.id }))];
 const projectFiles: Entry[] = projects.map(p => ({ name: p.title, kind: "PROJECT", date: p.subtitle, app: "photos", payload: p.id }));
-const recents = [documents[0], documents.find(d => d.payload === "about"), ...["pureit-transition", "award-admaker", "award-marxcellence", "pureit-launches"].map(id => projectFiles.find(p => p.payload === id))].filter((e): e is Entry => Boolean(e));
+const recents = [documents[0], documents.find(d => d.payload === "about"), ...["pureit-transition", "award-admaker", "award-marxcellence"].map(id => projectFiles.find(p => p.payload === id))].filter((e): e is Entry => Boolean(e));
 export function IOSFiles({ onHome }: { onHome: () => void }) {
   const os = useOS(); const [tab, setTab] = useState<"Recents" | "Browse">("Recents"); const [path, setPath] = useState<string[]>([]); const [search, setSearch] = useState(false); const [q, setQ] = useState("");
   const dir = path.at(-1); const title = search ? "Search" : dir ?? tab;

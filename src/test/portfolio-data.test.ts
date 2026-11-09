@@ -13,8 +13,8 @@ describe("portfolio content rules", () => {
     expect(awards).toHaveLength(8);
     expect(awards.filter((a) => a.rank === "Champion")).toHaveLength(3);
   });
-  it("keeps the Pureit transition plus 3 launches", () => {
-    expect(pureitCases.filter((c) => c.kind === "Product launch")).toHaveLength(3);
+  it("keeps launch contributions within the Pureit transition", () => {
+    expect(pureitCases.filter((c) => c.kind === "Product launch")).toHaveLength(0);
     expect(pureitCases.filter((c) => c.kind === "Brand transition")).toHaveLength(1);
   });
 });
@@ -56,8 +56,8 @@ describe("media", () => {
 });
 
 describe("work collections and achievements", () => {
-  it("keeps the six owner-selected career categories in order", () => {
-    expect(workRoots.map(r => r.id)).toEqual(["★ Flagship", "Brand Strategy & Transition", "Product Launches", "Client Engagement", "Campaigns & Creative", "Community & Leadership"]);
+  it("keeps the remaining career categories in order", () => {
+    expect(workRoots.map(r => r.id)).toEqual(["★ Flagship", "Brand Strategy & Transition", "Client Engagement", "Campaigns & Creative", "Community & Leadership"]);
   });
   it("excludes all competition records and photos from work collections", () => {
     for (const r of workRoots) for (const p of albumItems(rootIds(r))) {
@@ -73,8 +73,8 @@ describe("work collections and achievements", () => {
     expect(awards.find(a => a.id === "admaker")?.images).toHaveLength(2);
     expect(awards.find(a => a.id === "marxcellence")?.images).toHaveLength(3);
   });
-  it("Flagship prioritizes transition, launches and servicing without Music That Heals", () => {
-    expect(photoRoots.find(r => r.id === "★ Flagship")?.ids).toEqual(["pureit-transition", "pureit-launches", "x-agency"]);
+  it("Flagship prioritizes transition and servicing without Music That Heals", () => {
+    expect(photoRoots.find(r => r.id === "★ Flagship")?.ids).toEqual(["pureit-transition", "x-agency"]);
     expect(workProjects.some(p => p.id === "mth")).toBe(false);
   });
   it("each creative project occurs in only one creative folder", () => {

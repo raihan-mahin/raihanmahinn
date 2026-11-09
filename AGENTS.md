@@ -30,7 +30,7 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project rules
-- All portfolio copy, projects, awards and image slots live in `src/data/portfolio.ts`; UI reads from it so content edits never touch components.
+- Website copy, projects, awards and image slots live in `src/data/portfolio.ts`; verbatim public CV content lives separately in `src/data/resume.ts` so website rewrites never alter the CV.
 - The macOS-style shell lives in `src/os/` (store = window manager + prefs in localStorage, one file per app under `apps/`); new apps register in `apps-registry.ts` and `AppBody` in `Desktop.tsx`.
 - Below 768px the app renders a separate iOS shell showing the top window full-screen; native Files and editable Notes have separate modules, while Photos/Settings/Recruiter use the IOSPage scaffold, preserving one window store and content source.
 - Media files live in `public/media/` (behance covers named by Behance project id, award photos per `public/media/awards/README.md`); award `images` point at their expected file paths (same as `pendingImages`); `MediaPlaceholder` falls back to a placeholder when a file is missing.
@@ -39,9 +39,8 @@ use the editor.
 - Photos work taxonomy and separate achievements collection are defined in `photoRoots`; `workRoots` and `workProjects` exclude awards, and legacy category payloads resolve centrally so existing shortcuts keep working.
 - ProjectCover renders actual project imagery or verified branded/neutral covers so work without photographs remains distinct from award media.
 - CollectionCover reads collection-level cover styles from the shared taxonomy to distinguish designed career covers from project and award imagery.
-- RecruiterContent is shared across desktop and the native phone page to keep career facts and actions identical; sanitized PDFs are generated on demand in the browser from portfolio data, never from private CV fields.
+- RecruiterContent is shared across desktop and the native phone page to keep career facts and actions identical; sanitized PDFs and Preview read the same separate verbatim CV content source, never private CV fields.
 - Music links to external Spotify discovery searches only; no simulated playback or invented personal recordings.
 - Notes replace only exact known historical defaults and merge missing IDs; preserve all edited notes, with explicit Reset the only destructive restore.
 - ProjectStory owns shared work metrics and award photo viewing across desktop/mobile so captions, accessible navigation and case attribution stay identical.
-- Award concept slides use separate `concepts` data and the shared ProjectStory viewer, never `images`, so competition photo counts stay factual.
 - MOBILE_APPS defines phone-visible apps for home, Spotlight and Files; résumé and awards remain reachable as content without desktop-only tools.

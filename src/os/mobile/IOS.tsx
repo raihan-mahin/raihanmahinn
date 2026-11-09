@@ -80,16 +80,12 @@ function IOSLock() {
 
 function Grid({ ids }: { ids: AppId[] }) {
   const os = useOS();
-  return (
-    <div className="grid w-full shrink-0 snap-center grid-cols-4 content-start gap-x-4 gap-y-4 px-6">
-      {ids.map((id, i) => (
-        <button key={id} onClick={() => os.open(id)} className="flex flex-col items-center gap-1.5 animate-ios-zoom active:scale-90" style={{ animationDelay: `${i * 20}ms` }}>
-          <AppIcon id={id} className="size-[56px]" />
-          <span className="text-shadow-soft max-w-full truncate text-[12px] font-medium text-chrome-foreground">{label(id)}</span>
-        </button>
-      ))}
-    </div>
-  );
+  const tileClass = "flex h-auto min-h-[80px] min-w-0 flex-col items-center justify-start gap-1.5 rounded-none p-0 animate-ios-zoom active:scale-90 hover:bg-transparent [&_svg]:size-[56px]";
+  const tileLabel = "text-shadow-soft max-w-full truncate text-[12px] font-medium text-chrome-foreground";
+  return <div className="grid w-full shrink-0 snap-center grid-cols-4 content-start gap-x-4 gap-y-4 px-6">
+    {ids.map(id => <Button variant="ghost" key={id} onClick={() => os.open(id)} className={tileClass}><AppIcon id={id} className="size-[56px] shrink-0" /><span className={tileLabel}>{label(id)}</span></Button>)}
+    <Button variant="ghost" asChild className={tileClass}><a aria-label="LinkedIn" href={profile.linkedin} target="_blank" rel="noreferrer"><span aria-hidden="true" className="flex size-[56px] shrink-0 items-center justify-center"><span className="linkedin-icon">in</span></span><span className={tileLabel}>LinkedIn</span></a></Button>
+  </div>;
 }
 
 function IOSHome() {
@@ -106,7 +102,7 @@ function IOSHome() {
               <div className="mt-4 grid grid-cols-3 gap-2"><Button className="h-11 px-0 text-xs" onClick={() => os.open("recruiter")}>Quick View</Button><Button variant="secondary" className="h-11 px-0 text-xs" onClick={() => os.open("preview")}>Resume</Button><Button variant="secondary" className="h-11 px-0 text-xs" asChild><a href={`mailto:${profile.email}`}>Email</a></Button></div>
             </section>
             <section className="mx-5 rounded-[20px] bg-sticky px-4 py-3 text-sticky-foreground"><h2 className="text-[19px] font-bold">Start here 👋</h2><div className="mt-2 flex gap-5">{highlights.map(h => <p key={h.value} className="flex-1 text-[12px] leading-snug"><strong className="mr-1 text-[19px]">{h.value}</strong>{h.label}</p>)}</div><Button className="mt-3 h-11 w-full bg-island text-chrome-foreground hover:bg-island/90" onClick={() => os.open("photos", "cat:Featured")}>See all projects →</Button></section>
-            <Grid ids={PAGE1} /><div className="px-6"><Button asChild variant="ghost" className="h-auto w-[64px] flex-col gap-1.5 p-0 text-chrome-foreground"><a href={profile.linkedin} target="_blank" rel="noreferrer"><span className="linkedin-icon">in</span><span className="text-[12px] font-medium">LinkedIn</span></a></Button></div>
+            <Grid ids={PAGE1} />
           </div>
         </div>
         <button onClick={() => os.setOverlay("spotlight")} className="glass mx-auto mb-3 flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-foreground"><Search size={13} />Search</button>

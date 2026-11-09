@@ -1,23 +1,24 @@
-import { profile, experience, awards, leadership, education, skills } from "@/data/portfolio";
-export const resumeSections = () => [
-  { title: "Experience", lines: experience.flatMap(e => [`${e.role} — ${e.org} | ${e.period}${e.type === e.period ? "" : ` | ${e.type}`}`, ...(e.context ? [e.context] : []), ...e.bullets]) },
-  { title: "Competitions", lines: awards.map(a => `${a.rank} — ${a.title} (${a.organizer})${a.scale ? ` | ${a.scale}` : ""}`) },
-  { title: "Leadership", lines: leadership.map(l => `${l.role}, ${l.org}: ${l.detail}`) },
-  { title: "Education", lines: education.map(e => `${e.degree}, ${e.school} | ${e.period}`) },
-  { title: "Skills", lines: Object.entries(skills).map(([k,v]) => `${k}: ${v.join(", ")}`) },
-];
+import { profile } from "@/data/portfolio";
+import { resumeContent } from "@/data/resume";
+export const resumeSections = () => resumeContent.map(section => ({ title: section.title, lines: section.entries.flatMap(entry => [...(entry.text ? [entry.text + (entry.date ? ` | ${entry.date}` : "")] : []), ...(entry.bullets ?? []).map(line => `• ${line}`)]) }));
 export async function createResumePDF() {
   const { jsPDF } = await import("jspdf");
+  const { resumeFonts } = await import("./resume-fonts");
   const doc = new jsPDF(); let y = 17;
+  doc.addFileToVFS("resume.ttf", resumeFonts.regular.split(",")[1] ?? "");
+  doc.addFileToVFS("resume-bold.ttf", resumeFonts.bold.split(",")[1] ?? "");
+  doc.addFont("resume.ttf", "resume", "normal");
+  doc.addFont("resume-bold.ttf", "resume", "bold");
+  doc.setFont("resume", "normal");
   const write = (text: string, size = 9) => {
     doc.setFontSize(size);
-    const lines: string[] = doc.splitTextToSize(text.replaceAll("→", "to").replaceAll("—", "-").replaceAll("–", "-"), 178);
+    const lines: string[] = doc.splitTextToSize(text, 178);
     if (y + lines.length * 4 > 282) { doc.addPage(); y = 17; }
     doc.text(lines, 16, y); y += lines.length * 4 + 2;
   };
   write(profile.fullName, 19); write(profile.headline, 11);
-  write(`${profile.location} | ${profile.email}`); write(profile.linkedin); write(profile.bio);
-  for (const section of resumeSections()) { y += 3; doc.setFont("helvetica", "bold"); write(section.title, 11); doc.setFont("helvetica", "normal"); for (const line of section.lines) write(line); }
+  write(`${profile.location} | ${profile.email}`); write(profile.linkedin);
+  for (const section of resumeSections()) { y += 3; doc.setFont("resume", "bold"); write(section.title, 11); doc.setFont("resume", "normal"); for (const line of section.lines) write(line); }
   return doc;
 }
 export async function downloadResume() { (await createResumePDF()).save("Raihan-Mahin-Resume.pdf"); }
