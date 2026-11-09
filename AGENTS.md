@@ -36,3 +36,4 @@ use the editor.
 - Media files live in `public/media/` (behance covers named by Behance project id, award photos per `public/media/awards/README.md`); award `images` point at their expected file paths (same as `pendingImages`); `MediaPlaceholder` falls back to a placeholder when a file is missing.
 - App icons are original SVG drawings in `src/os/icons.tsx` (illustration colours allowed there only).
 - Brand logos: files in `public/media/logos/`, mapped by brand name in `src/data/brandLogos.ts`, rendered only via `BrandLogo`/`BrandStrip` (text fallback); competition case brands never get logo entries.
+- Photos hierarchy (4 roots, nested albums, covers) is defined once in `photoRoots` in `src/data/portfolio.ts`; desktop and iOS Photos and all "cat:<root>" / "album:<id>" payloads read from it.

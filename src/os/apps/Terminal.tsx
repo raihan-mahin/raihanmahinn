@@ -35,7 +35,7 @@ export function Terminal() {
       case "help": out = HELP; break;
       case "about": case "whoami": out = `${profile.fullName} (${profile.shortName})\n${profile.headline}\n${profile.location}\n\n${profile.bio}`; break;
       case "experience": out = experience.map((e) => `• ${e.period.padEnd(20)} ${e.role} — ${e.org}`).join("\n"); break;
-      case "projects": out = projects.filter((p) => !p.id.startsWith("award-")).map((p) => `• ${p.title}  [${(p.categories[0] ?? "")}]`).join("\n"); break;
+      case "projects": out = projects.filter((p) => !p.id.startsWith("award-")).map((p) => `• ${p.title}  [${p.subtitle}]`).join("\n"); break;
       case "awards": out = awards.map((a) => `🏆 ${a.rank.padEnd(14)} ${a.title} — ${a.organizer}`).join("\n"); break;
       case "skills": out = Object.entries(skills).map(([k, v]) => `${k}: ${v.join(", ")}`).join("\n"); break;
       case "contact": out = `email     ${profile.email}\nlinkedin  ${profile.linkedin}\nbehance   ${profile.behance}`; break;

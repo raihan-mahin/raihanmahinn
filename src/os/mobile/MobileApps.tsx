@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
-import { notes as seedNotes, projects, projectCategories, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project } from "@/data/portfolio";
+import { photoRoots, rootIds, albumItems, albumCover, findAlbum, projectById, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project } from "@/data/portfolio";
 import { useOS, type Wallpaper } from "../store";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 import { Render } from "../apps/Notes";
@@ -97,25 +97,22 @@ export function IOSNotes({ onHome, payload }: { onHome: () => void; payload?: st
 }
 
 /* ---------- Photos / Awards / Brands ---------- */
-const cardAlbums: ProjectCategory[] = ["Agency Work", "Case Competitions"];
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
   return (
     <IOSPage title="" backLabel={back} onBack={onBack} large={false}>
-      <div className="aspect-[4/3] w-full"><MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title} label="Media coming soon" /></div>
+      <div className="aspect-[4/3] w-full bg-secondary"><MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title} className="object-contain" /></div>
       <div className="px-4 pt-4">
-        <div className="flex flex-wrap gap-1.5">{p.badge && <Badge tone={p.badge === "Champion" ? "gold" : p.badge === "Current work" ? "success" : "default"}>{p.badge}</Badge>}<Badge>{p.subtitle}</Badge></div>
-        <h2 className="mt-2 text-[28px] font-bold leading-tight tracking-tight">{p.title}</h2>
+        <div className="flex flex-wrap items-center gap-1.5">{p.badge && <Badge tone={p.badge === "Champion" ? "gold" : "default"}>{p.badge}</Badge>}<span className="text-[13px] text-muted-foreground">{p.subtitle}</span></div>
+        <h2 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight">{p.title}</h2>
+        {p.role && <p className="text-[15px] text-muted-foreground">{p.role}</p>}
       </div>
       {p.images.length > 1 && (
         <div className="mt-3 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none]">
-          {p.images.slice(1).map((src, i) => <div key={src} className="aspect-square w-28 shrink-0 overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(p.id) + i + 1} src={src} alt={`${p.title} photo ${i + 2}`} label="Media soon" /></div>)}
+          {p.images.slice(1).map((src, i) => <div key={src} className="aspect-square w-28 shrink-0 overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(p.id) + i + 1} src={src} alt={`${p.title} photo ${i + 2}`} label="Pending" /></div>)}
         </div>
       )}
       <div className="mt-4">
-        <Group>
-          {[["Role", p.role], ["Challenge", p.challenge], ["Contribution", p.contribution], ["Outcome", p.outcome]].map(([k, v]) => (
-            <div key={k} className="px-4 py-3"><p className="text-[13px] text-muted-foreground">{k}</p><p className="text-[16px] leading-snug">{v}</p></div>))}
-        </Group>
+        {p.summary && <Group><p className="px-4 py-3 text-[16px] leading-snug">{p.summary}</p></Group>}
         {p.brandRow && <Group><BrandStrip className="px-4 py-3" label={p.brandRow.label} names={p.brandRow.names} /></Group>}
         {p.link && <Group><Row title={p.linkLabel ?? "View on Behance"} href={p.link} chevron={false} right={<ExternalLink size={16} className="text-primary" />} /></Group>}
       </div>
@@ -123,55 +120,63 @@ function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: 
   );
 }
 
-export function IOSPhotos({ onHome, initial, initialPid, title = "Photos" }: { onHome: () => void; initial?: ProjectCategory | undefined; initialPid?: string | undefined; title?: string }) {
-  const [album, setAlbum] = useState<ProjectCategory | null>(initial ?? null);
+function AlbumGrid({ items, onOpen }: { items: { id: string; title: string; count: number; cover: string | undefined }[]; onOpen: (id: string) => void }) {
+  return (
+    <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-4">
+      {items.map((c) => (
+        <button key={c.id} onClick={() => onOpen(c.id)} className="text-left active:opacity-70">
+          <div className="aspect-square overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(c.id)} src={c.cover} alt={`${c.title} album`} label="Pending" /></div>
+          <p className="mt-1.5 text-[15px] font-medium leading-tight">{c.title}</p><p className="text-[13px] text-muted-foreground">{c.count}</p>
+        </button>))}
+    </div>
+  );
+}
+
+export function IOSPhotos({ onHome, initial, initialAlbum, initialPid, title = "Photos" }: { onHome: () => void; initial?: ProjectCategory | undefined; initialAlbum?: string | undefined; initialPid?: string | undefined; title?: string }) {
+  const found = initialAlbum ? findAlbum(initialAlbum) : undefined;
+  const [root, setRoot] = useState<ProjectCategory | null>(found?.root ?? initial ?? null);
+  const [album, setAlbum] = useState<string | null>(found?.album.id ?? null);
   const [pid, setPid] = useState<string | null>(initialPid ?? null);
-  const items = useMemo(() => (album ? projects.filter((p) => p.categories.includes(album)) : []), [album]);
-  const p = projects.find((x) => x.id === pid);
-  if (p) return <ProjectDetail p={p} back={initial ? title : album ?? title} onBack={() => (album ? setPid(null) : onHome())} />;
-  if (album) {
-    const cards = cardAlbums.includes(album);
+  const entry = initialAlbum ? "album" : initial ? "root" : "home";
+  const r = photoRoots.find((x) => x.id === root);
+  const a = r?.albums?.find((x) => x.id === album);
+  const p = pid ? projectById(pid) : undefined;
+  if (p) return <ProjectDetail p={p} back={a?.title ?? r?.id ?? title} onBack={() => (a || r ? setPid(null) : onHome())} />;
+  if (r && (a || !r.albums)) {
+    const items = albumItems(a ? a.ids : rootIds(r));
+    const leaveToHome = entry === "album" || (entry === "root" && !a);
+    const awardsList = r.id === "Competitions";
     return (
-      <IOSPage title={initial ? title : album} backLabel={initial ? "Home" : "Albums"} onBack={() => (initial ? onHome() : setAlbum(null))}>
-        {album === "Agency Work" && <p className="mx-4 mb-4 rounded-xl bg-accent p-3 text-[14px] leading-snug text-accent-foreground">I currently run an agency. One of our current workstreams is producing AI-generated content for Lux, Lifebuoy and Dove. Media coming soon.</p>}
-        {cards ? (
-          <div className="grid grid-cols-1 gap-3 px-4">
+      <IOSPage title={a ? a.title : entry === "root" ? title : r.id} backLabel={leaveToHome ? "Home" : a ? r.id : "Albums"} onBack={() => (leaveToHome ? onHome() : a ? setAlbum(null) : setRoot(null))}>
+        {awardsList ? (
+          <Group footer="7 podium finishes + 1 Marico finalist. Award photos pending upload.">
             {items.map((x) => (
-              <button key={x.id} onClick={() => setPid(x.id)} className="flex overflow-hidden rounded-2xl bg-card text-left shadow-soft active:scale-[0.98]">
-                <div className="w-28 shrink-0"><MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="Media soon" /></div>
-                <div className="min-w-0 flex-1 p-3">
-                  {x.badge && <Badge tone={x.badge === "Champion" ? "gold" : x.badge === "Current work" ? "success" : "default"}>{x.badge === "Champion" && <Star size={10} className="mr-1" />}{x.badge}</Badge>}
-                  <p className="mt-1 text-[16px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p>
-                  <p className="text-[13px] text-muted-foreground">{x.subtitle}</p>
-                  <p className="mt-1 line-clamp-2 text-[13px]">{x.challenge}</p>
-                </div>
+              <button key={x.id} onClick={() => setPid(x.id)} className="flex w-full items-center gap-3 px-4 py-2.5 text-left active:bg-accent">
+                <div className="size-14 shrink-0 overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="" /></div>
+                <div className="min-w-0 flex-1"><p className="truncate text-[16px] font-semibold">{x.title.replace(/ — .*$/, "")}</p><p className="truncate text-[13px] text-muted-foreground">{x.badge} · {x.subtitle}</p></div>
               </button>))}
-          </div>
+          </Group>
         ) : (
           <div className="grid grid-cols-3 gap-0.5">
             {items.map((x) => (
               <button key={x.id} onClick={() => setPid(x.id)} className="relative aspect-square overflow-hidden" aria-label={x.title}>
-                <MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="Soon" />
-                <span className="absolute inset-x-0 bottom-0 truncate bg-chrome px-1.5 py-1 text-[10px] font-semibold text-chrome-foreground">{x.title}</span>
+                <MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="" />
+                {!x.images[0] && <span className="absolute inset-x-0 bottom-0 truncate bg-chrome px-1.5 py-1 text-[10px] font-semibold text-chrome-foreground">{x.title}</span>}
               </button>))}
           </div>
         )}
-        <p className="pt-4 text-center text-[13px] text-muted-foreground">{items.length} items · media coming soon</p>
+        <p className="pt-4 text-center text-[13px] text-muted-foreground">{items.length} items</p>
       </IOSPage>
     );
   }
+  if (r?.albums) return (
+    <IOSPage title={r.id} backLabel={entry === "root" ? "Home" : "Albums"} onBack={() => (entry === "root" ? onHome() : setRoot(null))}>
+      <AlbumGrid items={r.albums.map((x) => ({ id: x.id, title: x.title, count: x.ids.length, cover: albumCover(x.ids) }))} onOpen={setAlbum} />
+    </IOSPage>
+  );
   return (
     <IOSPage title="Albums" backLabel="Home" onBack={onHome}>
-      <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-4">
-        {projectCategories.map((c) => {
-          const n = projects.filter((x) => x.categories.includes(c)).length;
-          return (
-            <button key={c} onClick={() => setAlbum(c)} className="text-left active:opacity-70">
-              <div className="aspect-square overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(c)} label="Media coming soon" /></div>
-              <p className="mt-1.5 text-[15px] font-medium leading-tight">{c}</p><p className="text-[13px] text-muted-foreground">{n}</p>
-            </button>);
-        })}
-      </div>
+      <AlbumGrid items={photoRoots.map((x) => ({ id: x.id, title: x.id, count: rootIds(x).length, cover: x.cover ?? albumCover(rootIds(x)) }))} onOpen={(id) => setRoot(id as ProjectCategory)} />
     </IOSPage>
   );
 }
@@ -183,7 +188,7 @@ export function IOSFiles({ onHome }: { onHome: () => void }) {
   const dirs: { key: string; items: { name: string; sub: string; open: [AppId, string?] }[] }[] = [
     { key: "Experience", items: experience.map((e) => ({ name: `${e.role} — ${e.org}`, sub: `${e.period} · ${e.type}`, open: ["notes", "experience"] })) },
     { key: "Projects", items: projects.filter((p) => !p.id.startsWith("award-") && !p.id.startsWith("bh-")).map((p) => ({ name: p.title, sub: p.subtitle, open: ["photos", p.id] })) },
-    { key: "Brand Campaigns", items: [...agencyBrands.map((b) => ({ name: `${b.brand} — agency workstream`, sub: "Current agency work", open: ["brands"] as [AppId] })), ...behanceWorks.map((w) => ({ name: w.title, sub: `${w.type} · Behance`, open: ["photos", "cat:Brand Design"] as [AppId, string] }))] },
+    { key: "Brand Campaigns", items: [...agencyBrands.map((b) => ({ name: `${b.brand} — agency workstream`, sub: "Current agency work", open: ["brands"] as [AppId] })), ...behanceWorks.map((w) => ({ name: w.title, sub: `${w.type} · Behance`, open: ["photos", `bh-${w.id}`] as [AppId, string] }))] },
     { key: "Competitions/Awards", items: awards.map((a) => ({ name: `${a.title} — ${a.rank}`, sub: a.organizer, open: ["awards"] })) },
     { key: "About", items: seedNotes.map((n) => ({ name: `${n.title}.txt`, sub: n.date, open: ["notes", n.id] })) },
   ];

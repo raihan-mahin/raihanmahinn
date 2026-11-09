@@ -19,7 +19,7 @@ export function Spotlight() {
       ...appIds.map((id) => ({ key: `a-${id}`, label: APPS[id].name, sub: "Application", icon: <AppIcon id={id} className="size-6" size={13} />, run: () => os.open(id) })),
       ...notes.map((n) => ({ key: `n-${n.id}`, label: n.title, sub: "Note", icon: <StickyNote size={18} />, run: () => os.open("notes", n.id) })),
       ...awards.map((a) => ({ key: `w-${a.id}`, label: `${a.title} — ${a.rank}`, sub: "Competition", icon: <Trophy size={18} />, run: () => os.open("photos", `award-${a.id}`) })),
-      ...projects.filter((p) => !p.id.startsWith("award-")).map((p) => ({ key: `p-${p.id}`, label: p.title, sub: (p.categories[0] ?? ""), icon: <Images size={18} />, run: () => os.open("photos", p.id) })),
+      ...projects.filter((p) => !p.id.startsWith("award-")).map((p) => ({ key: `p-${p.id}`, label: p.title, sub: p.subtitle, icon: <Images size={18} />, run: () => os.open("photos", p.id) })),
       { key: "resume", label: "Resume", sub: "Document", icon: <FileText size={18} />, run: () => os.open("preview") },
     ];
     if (!s) return all.slice(0, 8);

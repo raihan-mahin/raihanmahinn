@@ -16,7 +16,7 @@ export function MediaPlaceholder({ seed = 0, label = "Media coming soon", classN
       <div className="ph-stripes absolute inset-0" />
       <div className="relative flex flex-col items-center gap-1.5 text-center text-chrome-foreground">
         <ImagePlus size={22} className="opacity-90" />
-        <span className="rounded-full bg-chrome px-2.5 py-0.5 text-[11px] font-semibold tracking-wide backdrop-blur">{label}</span>
+        {label && <span className="rounded-full bg-chrome px-2.5 py-0.5 text-[11px] font-semibold tracking-wide backdrop-blur">{label}</span>}
       </div>
     </div>
   );

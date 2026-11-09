@@ -41,6 +41,9 @@
   --color-tl-yellow: var(--tl-yellow);
   --color-tl-green: var(--tl-green);
   --color-gold: var(--gold);
+  --color-sticky: var(--sticky);
+  --color-sticky-foreground: var(--sticky-foreground);
+  --color-sticky-chip: var(--sticky-chip);
   --color-success: var(--success);
   --color-terminal: var(--terminal);
   --color-terminal-foreground: var(--terminal-foreground);
@@ -80,6 +83,9 @@
   --tl-yellow: oklch(0.83 0.16 85);
   --tl-green: oklch(0.72 0.19 145);
   --gold: oklch(0.8 0.15 80);
+  --sticky: oklch(0.93 0.11 95);
+  --sticky-foreground: oklch(0.25 0.04 80);
+  --sticky-chip: oklch(0.88 0.13 92);
   --success: oklch(0.65 0.17 150);
   --terminal: oklch(0.16 0.02 270 / 0.94);
   --terminal-foreground: oklch(0.88 0.12 150);

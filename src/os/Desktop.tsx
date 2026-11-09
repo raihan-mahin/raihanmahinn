@@ -33,8 +33,8 @@ export function AppBody({ id, payload }: { id: AppId; payload?: string | undefin
     case "music": return <Music />;
     case "trash": return <TrashApp />;
     case "recruiter": return <Recruiter />;
-    case "awards": return <Photos payload={payload ?? "cat:Case Competitions"} />;
-    case "brands": return <Photos payload={payload ?? "cat:Agency Work"} />;
+    case "awards": return <Photos payload={payload ?? "cat:Competitions"} />;
+    case "brands": return <Photos payload={payload ?? "album:agency"} />;
     default: return null;
   }
 }
@@ -57,7 +57,7 @@ function Shell() {
   const icons: { label: string; icon: React.ReactNode; app: AppId; payload?: string | undefined }[] = [
     { label: "Resume.pdf", icon: <FileText size={40} className="text-chrome-foreground" />, app: "preview" },
     { label: "Projects", icon: <Folder size={44} className="fill-primary/60 text-primary" />, app: "finder" },
-    { label: "Awards", icon: <Trophy size={40} className="text-gold" />, app: "photos", payload: "cat:Case Competitions" },
+    { label: "Awards", icon: <Trophy size={40} className="text-gold" />, app: "photos", payload: "cat:Competitions" },
   ];
 
   if (mobile) return <IOSShell />;

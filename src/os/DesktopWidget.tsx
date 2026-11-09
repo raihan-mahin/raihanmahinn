@@ -1,55 +1,32 @@
-import { ArrowUpRight, Mail, Linkedin } from "lucide-react";
-import { profile, stats, awards, pureitCases } from "@/data/portfolio";
+import { X } from "lucide-react";
+import { highlights, photoRoots, rootIds } from "@/data/portfolio";
 import { useOS } from "./store";
-import type { AppId } from "./apps-registry";
 
+/** Sticky-note "Start here" widget, modelled on the reference desktop. */
 export function DesktopWidget() {
   const os = useOS();
-  const launches = pureitCases.filter((c) => c.kind === "Product launch").length;
-  const champs = awards.filter((a) => a.rank === "Champion").length;
-  const start: { emoji: string; title: string; sub: string; app: AppId; payload?: string | undefined }[] = [
-    { emoji: "⚡", title: "30-second overview", sub: "For recruiters", app: "recruiter" },
-    { emoji: "🤝", title: "Agency & client work", sub: "X Agency · 5 accounts", app: "photos", payload: "cat:Agency & Client Work" },
-    { emoji: "🎨", title: "Behance design work", sub: "Billboards · print · packaging", app: "photos", payload: "cat:Brand Design" },
-    { emoji: "🎵", title: "Music That Heals", sub: "200K-member community", app: "photos", payload: "cat:Community" },
-    { emoji: "🏆", title: `${awards.length} competition results`, sub: `${champs} championships`, app: "photos", payload: "cat:Case Competitions" },
-    { emoji: "💧", title: `Pureit: ${launches} launches`, sub: "+ brand transition", app: "photos", payload: "cat:Pureit & GTM" },
-  ];
   return (
-    <aside className="pointer-events-auto absolute left-6 top-12 hidden w-[340px] flex-col gap-3 lg:flex" aria-label="Intro widget">
-      <div className="glass shadow-soft rounded-2xl p-5 text-foreground animate-fade-up">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Welcome</p>
-        <h2 className="mt-1 text-3xl font-bold tracking-tight">Hi, I'm Mahin</h2>
-        <p className="mt-1 text-sm font-semibold text-primary">{profile.headline}</p>
-        <p className="mt-0.5 text-xs text-muted-foreground">{profile.tagline}</p>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{profile.bio}</p>
-        <div className="mt-4 grid grid-cols-3 gap-2">
-          {stats.slice(0, 6).map((s) => (
-            <div key={s.label} className="rounded-xl bg-secondary px-2 py-2 text-center">
-              <div className="text-lg font-bold leading-tight">{s.value}</div>
-              <div className="text-[10px] font-medium leading-tight text-muted-foreground">{s.label}</div>
-            </div>
-          ))}
-        </div>
-        <button onClick={() => os.open("photos", "cat:Brand Design")} className="mt-3 w-full rounded-lg bg-accent py-2 text-xs font-semibold text-accent-foreground">🎨 Explore Behance projects (12 covers)</button>
-        <div className="mt-2 flex gap-2">
-          <a href={`mailto:${profile.email}`} className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary py-2 text-xs font-semibold text-primary-foreground"><Mail size={14} />Email</a>
-          <a href={profile.linkedin} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-secondary py-2 text-xs font-semibold"><Linkedin size={14} />LinkedIn</a>
-          <a href={profile.behance} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-secondary py-2 text-xs font-semibold">Bē Behance</a>
-        </div>
+    <aside aria-label="Start here"
+      className="pointer-events-auto absolute left-6 top-12 hidden w-[272px] -rotate-1 rounded-sm bg-sticky p-4 text-sticky-foreground shadow-soft animate-fade-up lg:block">
+      <button onClick={() => os.setPrefs({ showWidget: false })} aria-label="Close widget" className="absolute right-2 top-2 grid size-6 place-items-center rounded opacity-60 hover:opacity-100"><X size={14} /></button>
+      <h2 className="text-lg font-bold">Start here 👋</h2>
+      <p className="mt-0.5 text-[13px] leading-snug">Brand marketing & strategy work, case competitions and design.</p>
+      <dl className="mt-3 grid grid-cols-2 gap-1.5">
+        {highlights.map((h) => (
+          <div key={h.label} title={h.note} className="rounded-md bg-sticky-chip px-2 py-1.5">
+            <dt className="text-[15px] font-bold leading-tight">{h.value}</dt>
+            <dd className="text-[10.5px] font-medium leading-tight opacity-80">{h.label}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        {photoRoots.map((r) => (
+          <button key={r.id} onClick={() => os.open("photos", `cat:${r.id}`)} className="rounded-full bg-sticky-chip px-2.5 py-1 text-[12px] font-semibold hover:brightness-95">
+            {r.id === "Featured" ? "★ " : ""}{r.id} <span className="opacity-60">{rootIds(r).length}</span>
+          </button>
+        ))}
       </div>
-      <div className="glass shadow-soft rounded-2xl p-3 text-foreground animate-fade-up" style={{ animationDelay: "120ms" }}>
-        <p className="px-2 pb-2 text-sm font-bold">Start here 👋</p>
-        <div className="grid grid-cols-3 gap-1.5">
-          {start.map((s) => (
-            <button key={s.title} onClick={() => os.open(s.app, s.payload)} className="group rounded-xl bg-secondary p-2 text-left transition hover:bg-accent">
-              <div className="flex items-start justify-between"><span className="text-xl">{s.emoji}</span><ArrowUpRight size={14} className="opacity-50 group-hover:opacity-100" /></div>
-              <div className="mt-1 text-[12px] font-bold leading-tight">{s.title}</div>
-              <div className="text-[10px] leading-tight text-muted-foreground">{s.sub}</div>
-            </button>
-          ))}
-        </div>
-      </div>
+      <button onClick={() => os.open("photos", "cat:Featured")} className="mt-3 w-full rounded-lg bg-foreground py-2 text-[13px] font-semibold text-background hover:opacity-90">See all projects →</button>
     </aside>
   );
 }

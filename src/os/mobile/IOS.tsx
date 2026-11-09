@@ -2,7 +2,7 @@ import { useRef, useState, type TouchEvent } from "react";
 import { Search, Wifi, BatteryFull, Signal, ChevronUp, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
-import { profile, stats } from "@/data/portfolio";
+import { profile, highlights } from "@/data/portfolio";
 import { APPS, type AppId } from "../apps-registry";
 import { useOS } from "../store";
 import { useClock } from "../useClock";
@@ -106,12 +106,12 @@ function IOSHome() {
               <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Portfolio</p>
               <p className="text-2xl font-bold tracking-tight">Hi, I'm Mahin 👋</p>
               <p className="text-xs font-semibold text-primary">{profile.headline}</p>
-              <div className="mt-3 grid grid-cols-4 gap-1.5">
-                {[stats[0], stats[3], stats[4], stats[5]].map((s) => s && (
-                  <div key={s.label} className="rounded-xl bg-secondary px-1 py-1.5 text-center"><p className="text-base font-bold leading-tight">{s.value}</p><p className="text-[9px] leading-tight text-muted-foreground">{s.label}</p></div>))}
+              <div className="mt-3 grid grid-cols-2 gap-1.5">
+                {highlights.map((s) => (
+                  <div key={s.label} className="rounded-xl bg-secondary px-1 py-1.5 text-center"><p className="text-base font-bold leading-tight">{s.value}</p><p className="text-[11px] leading-tight text-muted-foreground">{s.label}</p></div>))}
               </div>
               <span role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); os.open("photos", "cat:Brand Design"); }}
-                className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-primary text-[13px] font-semibold text-primary-foreground">🎨 Explore Behance projects</span>
+                className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-primary text-[13px] font-semibold text-primary-foreground">Explore brand design</span>
             </button>
             <Grid ids={PAGE1} />
           </div>
@@ -144,13 +144,14 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
   const os = useOS();
   const home = () => os.closeAll();
   const cat = payload?.startsWith("cat:") ? (payload.slice(4) as ProjectCategory) : undefined;
-  const pid = payload && !payload.startsWith("cat:") ? payload : undefined;
+  const alb = payload?.startsWith("album:") ? payload.slice(6) : undefined;
+  const pid = payload && !payload.startsWith("cat:") && !alb ? payload : undefined;
   let body: React.ReactNode;
   switch (id) {
     case "notes": body = <IOSNotes onHome={home} payload={payload} />; break;
-    case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialPid={pid} />; break;
-    case "awards": body = <IOSPhotos onHome={home} initial="Case Competitions" title="Awards" initialPid={pid} />; break;
-    case "brands": body = <IOSPhotos onHome={home} initial="Agency Work" title="Agency Work" />; break;
+    case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialAlbum={alb} initialPid={pid} />; break;
+    case "awards": body = <IOSPhotos onHome={home} initial="Competitions" title="Awards" initialPid={pid} />; break;
+    case "brands": body = <IOSPhotos onHome={home} initialAlbum="agency" title="Agency Work" />; break;
     case "finder": body = <IOSFiles onHome={home} />; break;
     case "settings": body = <IOSSettings onHome={home} />; break;
     default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;

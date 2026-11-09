@@ -9,7 +9,7 @@ export const profile = {
   subtitle: "Brand Marketing · GTM · Campaign Execution",
   // Owner-supplied wording (from his LinkedIn bio); not independently fetched.
   tagline: "Experience across 10+ brands spanning FMCG, consumer durables and fintech",
-  bio: "I work across brand strategy, go-to-market planning, product launches, agency client servicing, campaign execution and creative communication. My experience includes Pureit's brand transition and launches, multi-brand customer engagement, and building marketing solutions across sectors.",
+  bio: "I've worked across product launches, brand transitions and agency campaigns. Seven competition podium finishes have shaped how I approach brand challenges.",
   location: "Dhaka, Bangladesh",
   email: "raihanmahin.ubl@gmail.com",
   linkedin: "https://bd.linkedin.com/in/raihan-mahin-150b7123a",
@@ -36,7 +36,7 @@ export const experience: Experience[] = [
     type: "Current",
     clients: ["Lux", "Lifebuoy", "Dove"],
     bullets: [
-      "I currently run an agency. One of our current workstreams is producing AI-generated content for Lux, Lifebuoy and Dove.",
+      "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.",
     ],
   },
   {
@@ -48,11 +48,10 @@ export const experience: Experience[] = [
     type: "Part-time",
     clients: ["Pureit", "A. O. Smith"],
     bullets: [
-      "Contributed to the Pureit brand transition and logo rollout across 7+ touchpoints.",
-      "Market and competitor benchmarking for Bangladesh and Sri Lanka.",
-      "Over 300 marketing assets across 3 launches: Pureit Wave, Marina and Ultima Pro.",
-      "Supported Ultima Pro end-to-end communications.",
-      "Collaborated with brand, media and agency teams, contributing to a 6.5x increase in digital sales.",
+      "Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints.",
+      "Benchmarked the market and competitors in Bangladesh and Sri Lanka.",
+      "Created 300+ launch assets across Pureit Wave, Marina and Ultima Pro, including Ultima Pro's end-to-end communications.",
+      "Worked with brand, media and agency teams on digital growth that reached a 6.5x increase in digital sales.",
     ],
   },
   {
@@ -71,28 +70,28 @@ export const experience: Experience[] = [
     type: "Part-time",
     clients: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"],
     bullets: [
-      "Customer response strategy for 5 accounts: Upay, City Bank, IDLC, Break Station and Petal.",
-      "Maintained a 90% on-time response rate and supported agency research.",
+      "Handled engagement across five client accounts — Upay, City Bank, IDLC, Break Station and Petal — with a 90% on-time response rate.",
+      "Supported agency research.",
     ],
   },
 ];
 
 export type AgencyBrand = { id: string; brand: string; tagline: string; description: string; thumbnail?: string; video?: string };
 export const agencyBrands: AgencyBrand[] = [
-  { id: "lux", brand: "Lux", tagline: "Current agency workstream", description: "AI-generated content for Lux, produced as part of the agency's current work." },
-  { id: "lifebuoy", brand: "Lifebuoy", tagline: "Current agency workstream", description: "AI-generated content for Lifebuoy, produced as part of the agency's current work." },
-  { id: "dove", brand: "Dove", tagline: "Current agency workstream", description: "AI-generated content for Dove, produced as part of the agency's current work." },
+  { id: "lux", brand: "Lux", tagline: "Current agency workstream", description: "AI-generated content for Lux." },
+  { id: "lifebuoy", brand: "Lifebuoy", tagline: "Current agency workstream", description: "AI-generated content for Lifebuoy." },
+  { id: "dove", brand: "Dove", tagline: "Current agency workstream", description: "AI-generated content for Dove." },
 ];
 
 export type Award = { id: string; rank: string; title: string; organizer: string; year: string; focus: string; detail: string; scale?: string; images: string[]; link?: string; team?: string; pendingImages?: string[]; caseBrands?: string[] };
 export const awards: Award[] = [
   { id: "bizmetrics", rank: "Champion", title: "BizMetrics 2026", organizer: "BTM, IUT", year: "2026", focus: "GTM for a new product concept", detail: "Developed a new product concept and its go-to-market plan.", pendingImages: ["/media/awards/bizmetrics-2026-champion-group-stage.jpg"], images: ["/media/awards/bizmetrics-2026-champion-group-stage.jpg"] },
-  { id: "nexus", caseBrands: ["Polar", "NCC Bank"], rank: "Champion", title: "Nexus 2025", organizer: "KUET Business Club", year: "2025", focus: "Strategic cases — Polar & NCC Bank", detail: "Strategic business cases with Polar and NCC Bank as case subjects.", team: "Arctic Wolves", pendingImages: ["/media/awards/nexus-2025-champion-group-stage.jpg"], images: ["/media/awards/nexus-2025-champion-group-stage.jpg"] },
+  { id: "nexus", caseBrands: ["Polar", "NCC Bank"], rank: "Champion", title: "Nexus 2025", organizer: "KUET Business Club", year: "2025", focus: "Strategic cases — Polar & NCC Bank", detail: "Strategy cases for Polar and NCC Bank (competition cases).", team: "Arctic Wolves", pendingImages: ["/media/awards/nexus-2025-champion-group-stage.jpg"], images: ["/media/awards/nexus-2025-champion-group-stage.jpg"] },
   { id: "hult", rank: "Champion", title: "Hult Prize at NSU 2026", organizer: "NSU YEF", year: "2026", focus: "SDG-aligned concept & full GTM", detail: "Built an SDG-aligned venture concept with a complete go-to-market strategy.", pendingImages: ["/media/awards/hult-prize-nsu-2026-champion-group-stage.jpg"], images: ["/media/awards/hult-prize-nsu-2026-champion-group-stage.jpg"] },
-  { id: "admaker", caseBrands: ["Maya", "EBL"], rank: "1st Runner-Up", title: "Admaker Bangladesh 2026", organizer: "NSU YES!", year: "2026", focus: "Marketing strategy & OVC — Maya + EBL", detail: "Marketing strategy and online video commercial (OVC) with Maya and EBL as case subjects.", scale: "1000+ teams", team: "Arc Crew", pendingImages: ["/media/awards/admaker-2026-runner-up-solo-award.jpg", "/media/awards/admaker-2026-runner-up-group-stage.jpg"], images: ["/media/awards/admaker-2026-runner-up-solo-award.jpg", "/media/awards/admaker-2026-runner-up-group-stage.jpg"] },
-  { id: "marxcellence", caseBrands: ["Vertika", "Dhaka Bank"], rank: "1st Runner-Up", title: "Marxcellence 2026", organizer: "NSU MIBC", year: "2026", focus: "Brand strategy & OVC — Vertika + Dhaka Bank", detail: "Brand strategy and online video commercial (OVC) with Vertika and Dhaka Bank as case subjects.", scale: "1000+ teams", team: "Arc Crew", pendingImages: ["/media/awards/marxcellence-2026-runner-up-solo-stage.jpg", "/media/awards/marxcellence-2026-runner-up-seated-trophy.jpg", "/media/awards/marxcellence-2026-runner-up-group-candid.jpg"], images: ["/media/awards/marxcellence-2026-runner-up-solo-stage.jpg", "/media/awards/marxcellence-2026-runner-up-seated-trophy.jpg", "/media/awards/marxcellence-2026-runner-up-group-candid.jpg"], link: "https://www.linkedin.com/posts/raihanmahin_first-runner-up-marxcellence-two-competitions-activity-7496950896132521984-LnjI" },
-  { id: "innovade", caseBrands: ["Yamaha"], rank: "1st Runner-Up", title: "Innovade 2026", organizer: "NSU MIBC", year: "2026", focus: "International Yamaha smart-tech case", detail: "International smart-technology case with Yamaha as the case subject.", team: "Arctic Wolves", pendingImages: ["/media/awards/innovade-2026-runner-up-group.jpg"], images: ["/media/awards/innovade-2026-runner-up-group.jpg"] },
-  { id: "brandaid", caseBrands: ["Monno Ceramics", "ZenFresh"], rank: "2nd Runner-Up", title: "BrandAid 2026", organizer: "EWU Business Club", year: "2026", focus: "Repositioning — Monno Ceramics & ZenFresh", detail: "Repositioning strategy with Monno Ceramics and ZenFresh as case subjects.", team: "Marketman", pendingImages: ["/media/awards/brandaid-2026-2nd-runner-up-group.jpg"], images: ["/media/awards/brandaid-2026-2nd-runner-up-group.jpg"] },
+  { id: "admaker", caseBrands: ["Maya", "EBL"], rank: "1st Runner-Up", title: "Admaker Bangladesh 2026", organizer: "NSU YES!", year: "2026", focus: "Marketing strategy & OVC — Maya + EBL", detail: "Marketing strategy and OVC for Maya and EBL (competition case).", scale: "1000+ teams", team: "Arc Crew", pendingImages: ["/media/awards/admaker-2026-runner-up-solo-award.jpg", "/media/awards/admaker-2026-runner-up-group-stage.jpg"], images: ["/media/awards/admaker-2026-runner-up-solo-award.jpg", "/media/awards/admaker-2026-runner-up-group-stage.jpg"] },
+  { id: "marxcellence", caseBrands: ["Vertika", "Dhaka Bank"], rank: "1st Runner-Up", title: "Marxcellence 2026", organizer: "NSU MIBC", year: "2026", focus: "Brand strategy & OVC — Vertika + Dhaka Bank", detail: "Brand strategy and OVC for Vertika and Dhaka Bank (competition case).", scale: "1000+ teams", team: "Arc Crew", pendingImages: ["/media/awards/marxcellence-2026-runner-up-solo-stage.jpg", "/media/awards/marxcellence-2026-runner-up-seated-trophy.jpg", "/media/awards/marxcellence-2026-runner-up-group-candid.jpg"], images: ["/media/awards/marxcellence-2026-runner-up-solo-stage.jpg", "/media/awards/marxcellence-2026-runner-up-seated-trophy.jpg", "/media/awards/marxcellence-2026-runner-up-group-candid.jpg"], link: "https://www.linkedin.com/posts/raihanmahin_first-runner-up-marxcellence-two-competitions-activity-7496950896132521984-LnjI" },
+  { id: "innovade", caseBrands: ["Yamaha"], rank: "1st Runner-Up", title: "Innovade 2026", organizer: "NSU MIBC", year: "2026", focus: "International Yamaha smart-tech case", detail: "International smart-tech case for Yamaha (competition case).", team: "Arctic Wolves", pendingImages: ["/media/awards/innovade-2026-runner-up-group.jpg"], images: ["/media/awards/innovade-2026-runner-up-group.jpg"] },
+  { id: "brandaid", caseBrands: ["Monno Ceramics", "ZenFresh"], rank: "2nd Runner-Up", title: "BrandAid 2026", organizer: "EWU Business Club", year: "2026", focus: "Repositioning — Monno Ceramics & ZenFresh", detail: "Repositioning for Monno Ceramics and ZenFresh (competition case).", team: "Marketman", pendingImages: ["/media/awards/brandaid-2026-2nd-runner-up-group.jpg"], images: ["/media/awards/brandaid-2026-2nd-runner-up-group.jpg"] },
   { id: "otw", rank: "Finalist", title: "Over the Wall 2025", organizer: "Marico", year: "2025", focus: "Product concept & GTM", detail: "Product concept and go-to-market plan.", scale: "1850+ teams", pendingImages: [], images: [] },
 ];
 
@@ -141,89 +140,125 @@ export const skills = {
   Business: ["Agency client servicing", "Campaign execution", "Stakeholder management", "Campaign planning"],
 };
 
-export const stats = (() => {
-  const championships = awards.filter((a) => a.rank === "Champion").length;
-  return [
-    { value: "300+", label: "Marketing assets" },
-    { value: String(pureitCases.filter((c) => c.kind === "Product launch").length), label: "Launch projects" },
-    { value: "7+", label: "Brand touchpoints" },
-    { value: "6.5x", label: "Digital sales (team)" },
-    { value: "200K", label: "Community members" },
-    { value: String(awards.length), label: "Competition results" },
-    { value: String(championships), label: "Championships" },
-  ];
-})();
+// Detailed metrics (300+ assets, 6.5x, 7+ touchpoints, 3 launches) live in experience, case studies and the resume.
+export const podiums = awards.filter((a) => a.rank !== "Finalist").length;
+export const championships = awards.filter((a) => a.rank === "Champion").length;
+/** Exactly four homepage highlights, in order (desktop + phone). */
+export const highlights = [
+  { value: "10+", label: "Brands Worked With", note: "Owner-supplied (LinkedIn summary)" },
+  { value: String(podiums), label: "Competition Podiums", note: "3 Champion · 3 1st Runner-Up · 1 2nd Runner-Up" },
+  { value: String(awards.filter((a) => a.rank === "Finalist" && a.organizer === "Marico").length), label: "Marico Competition Finalist", note: "Over the Wall 2025" },
+  { value: "Pureit", label: "Unilever → A. O. Smith", note: "Brand transition, via BizLearner" },
+];
+/** Kept for detailed views (e.g. resume); not shown on the homepage. */
+export const stats = [
+  { value: "300+", label: "Marketing assets" },
+  { value: String(pureitCases.filter((c) => c.kind === "Product launch").length), label: "Launch projects" },
+  { value: "7+", label: "Brand touchpoints" },
+  { value: "6.5x", label: "Digital sales (team)" },
+];
 
-export type ProjectCategory = "Featured" | "Agency Work" | "Pureit & GTM" | "Brand Design" | "Case Competitions" | "Agency & Client Work" | "Community";
-export const projectCategories: ProjectCategory[] = ["Featured", "Pureit & GTM", "Agency & Client Work", "Case Competitions", "Brand Design", "Agency Work", "Community"];
+export type ProjectCategory = "Featured" | "Brand Design" | "Competitions" | "More Work";
+export const projectCategories: ProjectCategory[] = ["Featured", "Brand Design", "Competitions", "More Work"];
 
 export type Project = {
-  id: string; title: string; subtitle: string; categories: ProjectCategory[]; role: string;
-  challenge: string; contribution: string; outcome: string; images: string[]; link?: string; linkLabel?: string; badge?: string;
-  /** "Case brands" = competition case subjects (not clients); "Clients" = professional work. */
+  id: string; title: string; subtitle: string; role?: string;
+  challenge?: string; contribution?: string; outcome?: string; summary?: string;
+  images: string[]; link?: string; linkLabel?: string; badge?: string;
+  /** "Case brands" = competition case subjects (not clients); "Clients"/"Brands" = professional work. */
   brandRow?: { label: string; names: string[] };
 };
 
+const behanceProjects = behanceWorks.map<Project>((w) => ({
+  id: `bh-${w.id}`, title: w.title, subtitle: `${w.type} · Behance`, images: w.thumbnail ? [w.thumbnail] : [], link: w.url,
+}));
+
 export const projects: Project[] = [
-  ...pureitCases.map<Project>((c, i) => ({
-    id: c.id, title: c.title, subtitle: c.kind, categories: i <= 1 ? ["Pureit & GTM", "Featured"] : ["Pureit & GTM"],
-    role: "Marketing — BizLearner on Pureit", challenge: c.challenge, contribution: c.contribution, outcome: c.outcome, images: c.images,
-    brandRow: { label: "Brands", names: ["Pureit", "A. O. Smith"] },
-  })),
+  ...behanceProjects,
+  { id: "pureit-transition", title: "Pureit Brand Transition", subtitle: "BizLearner · Aug 2024 – Jun 2026", role: "Marketing (BizLearner)", summary: "Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints. Benchmarked the market and competitors in Bangladesh and Sri Lanka.", images: ["/media/behance/234564039.jpg"], brandRow: { label: "Brands", names: ["Pureit", "A. O. Smith"] } },
+  { id: "pureit-launches", title: "Pureit Wave, Marina & Ultima Pro", subtitle: "3 product launches", role: "Marketing (BizLearner)", summary: "Created launch materials across Wave, Marina and Ultima Pro — 300+ assets in total — and supported Ultima Pro's end-to-end communications. Working with brand, media and agency teams, digital sales grew 6.5x.", images: ["/media/behance/234562973.jpg"], brandRow: { label: "Brands", names: ["Pureit", "A. O. Smith"] } },
   ...awards.map<Project>((a) => ({
-    id: `award-${a.id}`, title: `${a.title} — ${a.rank}`, subtitle: a.organizer, categories: a.rank === "Champion" ? ["Case Competitions", "Featured"] : ["Case Competitions"], ...(a.caseBrands ? { brandRow: { label: "Case brands (competition case subjects, not clients)", names: a.caseBrands } } : {}),
-    role: a.team ? `Team ${a.team} — team member / strategist` : "Team member / strategist", challenge: a.focus, contribution: a.detail, outcome: `${a.rank}${a.scale ? ` among ${a.scale}` : ""}`, images: a.images, badge: a.rank, ...(a.link ? { link: a.link, linkLabel: "View LinkedIn post" } : {}),
+    id: `award-${a.id}`, title: `${a.title} — ${a.rank}`, subtitle: `${a.organizer} · ${a.year}`, ...(a.team ? { role: `Team ${a.team}` } : {}),
+    summary: `${a.detail}${a.scale ? ` ${a.scale}.` : ""}`, images: a.images, badge: a.rank,
+    ...(a.caseBrands ? { brandRow: { label: "Case subjects (competition, not clients)", names: a.caseBrands } } : {}),
+    ...(a.link ? { link: a.link, linkLabel: "View LinkedIn post" } : {}),
   })),
-  ...behanceWorks.map<Project>((w) => ({
-    id: `bh-${w.id}`, title: w.title, subtitle: w.type, categories: w.id === "pureit-cat" || w.id === "berger" ? ["Brand Design", "Featured"] : ["Brand Design"], role: "Designer",
-    challenge: "Visual design work published on Behance.", contribution: `${w.type} design.`, outcome: w.verified ? "View the full project on Behance." : "Find it on the Behance profile.",
-    images: w.thumbnail ? [w.thumbnail] : [], link: w.url,
-  })),
-  { id: "agency", title: "Agency Lead — Current Work", subtitle: "Independent agency · Current", categories: ["Agency Work", "Agency & Client Work", "Featured"], role: "Agency Lead", challenge: "Running an agency.", contribution: "One of our current workstreams is producing AI-generated content for Lux, Lifebuoy and Dove.", outcome: "Ongoing — media coming soon.", images: [], brandRow: { label: "Current workstream brands", names: agencyBrands.map((b) => b.brand) } },
-  ...agencyBrands.map<Project>((b) => ({
-    id: `agency-${b.id}`, title: b.brand, subtitle: "Current agency workstream", categories: ["Agency Work"], role: "Agency Lead",
-    challenge: "AI-generated content workstream.", contribution: b.description, outcome: "Ongoing — media coming soon.", images: b.thumbnail ? [b.thumbnail] : [],
-  })),
-  { id: "x-agency", title: "Multi-brand Customer Engagement", subtitle: "X Integrated Marketing Agency", categories: ["Agency & Client Work", "Featured"], brandRow: { label: "Professional clients", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] }, role: "Junior Engagement Officer", challenge: "Consistent, timely responses across 5 brand accounts.", contribution: "Response strategy for Upay, City Bank, IDLC, Break Station and Petal; agency research.", outcome: "90% on-time response rate.", images: [] },
-  { id: "legend", title: "School Promotions", subtitle: "Legend International School", categories: ["Agency & Client Work"], role: "Marketing Officer (contract)", challenge: "Short marketing contract for the school.", contribution: "Supported promotional material and marketing execution.", outcome: "Contract completed (Oct – Nov 2024).", images: [] },
-  { id: "mth", title: "Music That Heals", subtitle: "Community · 2020 – Present", categories: ["Community", "Featured"], role: "Founder & Admin", challenge: "Grow a music community with real engagement.", contribution: "Built and led the community and organised live events.", outcome: "200K-member community.", images: [] },
-  { id: "insight-cirkle", title: "From Airtel to Cirkle — Rebrand Analysis", subtitle: "LinkedIn thought piece · Marketing Insights", categories: ["Community"], role: "Author (personal commentary)", challenge: "Is the Airtel → Cirkle rebrand a sound long-term brand identity move?", contribution: "Wrote a public LinkedIn post analysing the rebrand and long-term brand identity strategy. Personal commentary — not a campaign he worked on.", outcome: "Published on LinkedIn.", images: [], link: "https://www.linkedin.com/posts/raihanmahin_from-airtel-to-cirkle-a-meaningless-rebrand-activity-7496206091739967488-a0Tp", linkLabel: "Read on LinkedIn" },
-  { id: "yes", title: "NSU Young Entrepreneurs Society", subtitle: "2022 – 2023", categories: ["Community"], role: "General Member", challenge: "Support club growth and flagship events.", contribution: "2023 recruitment, brand guideline and Admaker support.", outcome: "Contributed to recruitment and Admaker.", images: [] },
+  { id: "agency", title: "Agency Lead", subtitle: "Independent agency · Current", role: "Agency Lead", summary: "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.", images: [], brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
+  ...agencyBrands.map<Project>((b) => ({ id: `agency-${b.id}`, title: b.brand, subtitle: "Agency work · Current", role: "Agency Lead", summary: b.description, images: b.thumbnail ? [b.thumbnail] : [] })),
+  { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023 – Oct 2024", role: "Junior Engagement Officer", summary: "Handled engagement across five client accounts with a 90% on-time response rate, and supported agency research.", images: [], brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
+  { id: "legend", title: "Legend International School", subtitle: "Marketing Officer · Oct – Nov 2024", role: "Marketing Officer (contract)", summary: "Promotional material and marketing execution on a short contract.", images: [] },
+  { id: "mth", title: "Music That Heals", subtitle: "Founder & Admin · 2020 – Present", role: "Founder & Admin", summary: "Built and led a 200K-member music community and organised live events.", images: [] },
+  { id: "yes", title: "NSU Young Entrepreneurs Society", subtitle: "General Member · 2022 – 2023", role: "General Member", summary: "Helped with 2023 recruitment, the brand guideline and Admaker.", images: [] },
+  { id: "insight-cirkle", title: "From Airtel to Cirkle", subtitle: "LinkedIn thought piece", role: "Author", summary: "A personal LinkedIn post on the Airtel → Cirkle rebrand and long-term brand identity. Commentary, not a campaign he worked on.", images: [], link: "https://www.linkedin.com/posts/raihanmahin_from-airtel-to-cirkle-a-meaningless-rebrand-activity-7496206091739967488-a0Tp", linkLabel: "Read on LinkedIn" },
 ];
+
+export type PhotoAlbum = { id: string; title: string; ids: string[] };
+export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string };
+/** Single source of truth for the Photos hierarchy (desktop + phone). */
+export const photoRoots: PhotoRoot[] = [
+  { id: "Featured", cover: "/media/behance/242883541.jpg", ids: ["bh-pureit-cat", "bh-berger", "bh-skin", "bh-parachute", "bh-bankcard", "pureit-transition", "award-bizmetrics", "award-admaker"] },
+  { id: "Brand Design", albums: [
+    { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man", "pureit-transition", "pureit-launches"] },
+    { id: "berger", title: "Berger & Outdoor", ids: ["bh-berger", "bh-billboard"] },
+    { id: "packaging", title: "Packaging", ids: ["bh-parachute"] },
+    { id: "campaigns", title: "Campaigns & Digital", ids: ["bh-skin", "bh-bankcard", "bh-promo-video", "bh-promo-social", "bh-social", "bh-social-brand"] },
+    { id: "other", title: "Other Design", ids: ["bh-letterhead", "bh-brochure", "bh-oggy", "bh-hattori"] },
+  ] },
+  { id: "Competitions", ids: awards.map((a) => `award-${a.id}`) },
+  { id: "More Work", albums: [
+    { id: "agency", title: "Agency & Clients", ids: ["agency", "agency-lux", "agency-lifebuoy", "agency-dove", "x-agency", "legend"] },
+    { id: "community", title: "Community & Writing", ids: ["mth", "yes", "insight-cirkle"] },
+  ] },
+];
+export const projectById = (id: string) => projects.find((p) => p.id === id);
+export const albumItems = (ids: string[]) => ids.map(projectById).filter((p): p is Project => !!p);
+export const rootIds = (r: PhotoRoot) => r.ids ?? (r.albums ?? []).flatMap((a) => a.ids);
+export const findAlbum = (id: string) => photoRoots.flatMap((r) => (r.albums ?? []).map((a) => ({ root: r.id, album: a }))).find((x) => x.album.id === id);
+/** First real image in an album (used as its cover). */
+export const albumCover = (ids: string[]) => albumItems(ids).flatMap((p) => p.images)[0];
 
 export type Note = { id: string; title: string; date: string; body: string };
 export const notes: Note[] = [
-  { id: "about", title: "About Mahin", date: "Nov 2026", body: `# Hi, I'm Raihan Mahin 👋\n${profile.headline}\n${profile.tagline}\n\n${profile.bio}\n\nBased in ${profile.location}. Final-year BBA Marketing student at North South University.\n\n- Email: ${profile.email}\n- Behance: behance.net/raihanmahin` },
-  { id: "now", title: "Currently: Agency Lead", date: "Nov 2026", body: `# Current work
-I currently run an agency. One of our current workstreams is producing AI-generated content for:
+  { id: "about", title: "Hi, I'm Mahin 👋", date: "Nov 2026", body: `# Hi, I'm Mahin 👋
+${profile.headline} · ${profile.location}
 
-- Lux
-- Lifebuoy
-- Dove
+${profile.bio}
 
-Media will be added here later.` },
-  { id: "pureit", title: "Pureit — transition & 3 launches", date: "Jun 2026", body: `# Pureit (BizLearner) · Aug 2024 – Jun 2026
-Pureit (formerly Unilever) was acquired by A. O. Smith.
+## At a glance
+- 10+ brands worked with across FMCG, consumer durables and fintech
+- Pureit brand transition (Unilever → A. O. Smith), via BizLearner
+- 7 competition podiums, incl. 3 championships, plus a Marico finalist spot
 
-- Contributed to the brand transition and logo rollout across 7+ touchpoints
-- Market and competitor benchmarking for Bangladesh and Sri Lanka
-- Over 300 marketing assets across 3 launches: Wave, Marina and Ultima Pro
-- Supported Ultima Pro end-to-end communications
-- Collaborated with brand, media and agency teams, contributing to a 6.5x increase in digital sales` },
+## Explore this computer
+- Photos: brand design, competitions and more work
+- Finder: experience, projects and awards
+- Preview: my resume
+- Messages: ask me anything
+
+${profile.email} · behance.net/raihanmahin` },
+  { id: "now", title: "Currently: Agency Lead", date: "Nov 2026", body: `# Agency Lead
+I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.` },
+  { id: "pureit", title: "Pureit — transition & launches", date: "Jun 2026", body: `# Pureit (via BizLearner) · Aug 2024 – Jun 2026
+Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints.
+
+- Benchmarked the market and competitors in Bangladesh and Sri Lanka
+- Created 300+ launch assets across Wave, Marina and Ultima Pro
+- Supported Ultima Pro's end-to-end communications
+- Worked with brand, media and agency teams as digital sales grew 6.5x` },
   { id: "skills", title: "Skills & tools", date: "Nov 2026", body: `# Skills\n${Object.entries(skills).map(([k, v]) => `## ${k}\n${v.map((s) => `- ${s}`).join("\n")}`).join("\n\n")}` },
-  { id: "awards", title: "Competitions & awards", date: "2026", body: `# ${awards.length} results · ${awards.filter((a) => a.rank === "Champion").length} championships\n${awards.map((a) => `- ${a.rank} — ${a.title} (${a.organizer}): ${a.focus}${a.scale ? `, ${a.scale}` : ""}`).join("\n")}` },
+  { id: "awards", title: "Competitions & awards", date: "2026", body: `# 7 podiums + 1 Marico finalist\n${awards.map((a) => `- ${a.rank} — ${a.title} (${a.organizer}): ${a.focus}${a.scale ? `, ${a.scale}` : ""}`).join("\n")}` },
   { id: "community", title: "Community & leadership", date: "2026", body: `# Leadership\n${leadership.map((l) => `- ${l.role}, ${l.org} (${l.period}) — ${l.detail}`).join("\n")}` },
-  { id: "insights", title: "Marketing Insights: Airtel → Cirkle", date: "2026", body: "# Marketing Insights\nA LinkedIn thought piece by Mahin analysing the Airtel to Cirkle rebrand and its long-term brand identity strategy.\n\nThis is personal commentary — not a campaign Mahin worked on.\n\n- Read: linkedin.com/posts/raihanmahin (From Airtel to Cirkle)" },
+  { id: "insights", title: "Marketing Insights: Airtel → Cirkle", date: "2026", body: "# Marketing Insights\nMy LinkedIn take on the Airtel → Cirkle rebrand and what it means for long-term brand identity. Personal commentary, not a campaign I worked on.\n\n- Read: linkedin.com/posts/raihanmahin (From Airtel to Cirkle)" },
   { id: "education", title: "Education", date: "2026", body: `# Education\n${education.map((e) => `- ${e.degree} — ${e.school}, ${e.period}`).join("\n")}` },
   { id: "experience", title: "Experience timeline", date: "2026", body: `# Experience\n${experience.map((e) => `## ${e.role} — ${e.org}\n${e.period} · ${e.type}\n${e.bullets.map((b) => `- ${b}`).join("\n")}`).join("\n\n")}` },
 ];
 
 export const qa = [
-  { q: "What do you do?", a: `I'm a brand marketing & strategy professional. ${profile.tagline}. ${profile.bio}` },
-  { q: "What are you working on now?", a: "I currently run an agency. One of our current workstreams is producing AI-generated content for Lux, Lifebuoy and Dove." },
-  { q: "Tell me about Pureit", a: "At BizLearner (Aug 2024 – Jun 2026) I worked on Pureit: contributing to the brand transition and logo rollout across 7+ touchpoints, market and competitor benchmarking for Bangladesh and Sri Lanka, over 300 marketing assets across the Wave, Marina and Ultima Pro launches, and Ultima Pro end-to-end communications. Working with brand, media and agency teams, we contributed to a 6.5x increase in digital sales." },
-  { q: "Agency & client work?", a: "At X Integrated Marketing Agency (Oct 2023 – Oct 2024) I handled customer response strategy for 5 accounts — Upay, City Bank, IDLC, Break Station and Petal — with a 90% on-time response rate. I also did a short marketing contract at Legend International School." },
-  { q: "Competition wins?", a: `${awards.length} results, including ${awards.filter((a) => a.rank === "Champion").length} championships: BizMetrics 2026, Nexus 2025 and Hult Prize at NSU 2026. Plus 1st Runner-Up at Admaker, Marxcellence and Innovade 2026.` },
+  { q: "What do you do?", a: `I'm a brand marketing & strategy professional. ${profile.bio}` },
+  { q: "What are you working on now?", a: "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove." },
+  { q: "Tell me about Pureit", a: "Through BizLearner (Aug 2024 – Jun 2026) I helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ touchpoints. I also created 300+ launch assets for Wave, Marina and Ultima Pro, and worked with brand, media and agency teams as digital sales grew 6.5x." },
+  { q: "Agency & client work?", a: "At X Integrated Marketing Agency (Oct 2023 – Oct 2024) I handled engagement for Upay, City Bank, IDLC, Break Station and Petal, with a 90% on-time response rate. I also did a short marketing contract at Legend International School." },
+  { q: "Competition wins?", a: "Seven podiums: champion at BizMetrics 2026, Nexus 2025 and Hult Prize at NSU 2026; 1st runner-up at Admaker Bangladesh, Marxcellence and Innovade 2026; 2nd runner-up at BrandAid 2026. I was also a finalist at Marico's Over the Wall 2025." },
   { q: "Your skills?", a: "GTM and launches, strategy, research, competitor benchmarking, consumer insights, campaign execution, agency client servicing, asset design (Photoshop, Illustrator, Canva, Figma) and stakeholder management." },
   { q: "Community work?", a: "I founded Music That Heals in 2020 and grew it into a 200K-member music community with live events." },
   { q: "Education?", a: "Final-year BBA in Marketing at North South University, expected December 2026. HSC Science from DRMC." },
