@@ -1,7 +1,7 @@
 - [x] Integrate chosen portrait and compact reference desktop arrangement.
 - [x] Separate professional work collections from all eight awards across Photos and Files.
 - [x] Align shared career copy and verify desktop/iPhone interactions and media.
-- [ ] Correct collaborative career attribution and recruiter metrics throughout shared content.
-- [ ] Add six Marico photos, award stories and accessible photo viewing.
-- [ ] Refine résumé Preview/folders, app choices and safe Notes seed updates.
-- [ ] Verify desktop/phone flows, tests and commit; do not publish.
+- [x] Correct collaborative career attribution and recruiter metrics throughout shared content.
+- [x] Add six Marico photos, award stories and accessible photo viewing.
+- [x] Refine résumé Preview/folders, app choices and safe Notes seed updates.
+- [x] Verify desktop/phone flows and tests; save in a commit without publishing.

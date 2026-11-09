@@ -1,6 +1,6 @@
 import { profile, experience, awards, leadership, education, skills } from "@/data/portfolio";
 export const resumeSections = () => [
-  { title: "Experience", lines: experience.flatMap(e => [`${e.role} — ${e.org} | ${e.period} | ${e.type}`, ...e.bullets]) },
+  { title: "Experience", lines: experience.flatMap(e => [`${e.role} — ${e.org} | ${e.period}${e.type === e.period ? "" : ` | ${e.type}`}`, ...(e.context ? [e.context] : []), ...e.bullets]) },
   { title: "Competitions", lines: awards.map(a => `${a.rank} — ${a.title} (${a.organizer})${a.scale ? ` | ${a.scale}` : ""}`) },
   { title: "Leadership", lines: leadership.map(l => `${l.role}, ${l.org}: ${l.detail}`) },
   { title: "Education", lines: education.map(e => `${e.degree}, ${e.school} | ${e.period}`) },
