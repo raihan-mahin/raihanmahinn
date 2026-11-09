@@ -238,7 +238,9 @@
 .document-icon > svg { width: 30px; height: 30px; }
 .document-band { position: absolute; bottom: 12px; left: -4px; padding: 3px 6px; font-size: 9px; font-weight: 700; color: var(--chrome-foreground); border-radius: 2px; }
 .document-pdf { background: var(--tl-red); }.document-note { background: oklch(.67 .14 80); }.document-project { background: var(--primary); }
-.notes-native { --primary: var(--gold); }
+.notes-native { --primary: var(--gold); --background: oklch(.15 0 0); }
+.messages-native { --bubble-them: oklch(.25 0 0); --bubble-me: oklch(.59 .21 255); }
+.settings-native { --background: oklch(0 0 0); --card: oklch(.19 0 0); }
 .music-cover { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; color: var(--chrome-foreground); overflow: hidden; }
 .music-cover span { font-size: 78px; transform: rotate(-12deg); }
 .music-focus { background: oklch(.48 .12 180); }.music-night { background: oklch(.38 .09 315); }.music-energy { background: oklch(.64 .2 25); }

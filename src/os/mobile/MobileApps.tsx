@@ -15,6 +15,7 @@ import { useOS, type Wallpaper } from "../store";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 import { Render } from "../apps/Notes";
 import type { AppId } from "../apps-registry";
+import { SystemSettings } from "../apps/SystemSettings";
 
 /* ---------- iOS page scaffold: blurred nav bar, large title, edge-swipe back ---------- */
 export function IOSPage({ title, backLabel, onBack, right, children, large = true, inset = true, photos = false }:
@@ -129,39 +130,7 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHom
 
 /* ---------- Settings ---------- */
 export function IOSSettings({ onHome }: { onHome: () => void }) {
-  const { prefs, setPrefs, resetPrefs } = useOS();
-  const wps: { id: Wallpaper; name: string }[] = [{ id: "image", name: "Indigo Silk" }, { id: "aurora", name: "Aurora" }, { id: "dusk", name: "Dusk" }, { id: "ocean", name: "Ocean" }];
-  return (
-    <IOSPage title="Settings" backLabel="Home" onBack={onHome}>
-      <Group>
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="grid size-14 place-items-center rounded-full bg-primary text-lg font-bold text-primary-foreground">RM</div>
-          <div><p className="text-[20px] font-semibold">{profile.shortName}</p><p className="text-[13px] text-muted-foreground">{profile.headline}</p></div>
-        </div>
-      </Group>
-      <Group header="Appearance">
-        {(["light", "dark"] as const).map((t) => <Row key={t} title={t === "light" ? "Light" : "Dark"} chevron={false} onClick={() => setPrefs({ theme: t })} right={prefs.theme === t ? <Check size={18} className="text-primary" /> : undefined} />)}
-      </Group>
-      <Group header="Wallpaper">
-        <div className="grid grid-cols-4 gap-2 p-3">
-          {wps.map((w) => (
-            <button key={w.id} onClick={() => setPrefs({ wallpaper: w.id })} className={cn("overflow-hidden rounded-lg ring-2", prefs.wallpaper === w.id ? "ring-primary" : "ring-transparent")} aria-label={w.name}>
-              {w.id === "image" ? <img src={wallpaper} alt="" className="aspect-[9/16] w-full object-cover" /> : <div className={cn("aspect-[9/16]", `wp-${w.id}`)} />}
-            </button>))}
-        </div>
-      </Group>
-      <Group header="Contact">
-        <Row title="Email" value="" sub={profile.email} href={`mailto:${profile.email}`} />
-        <Row title="LinkedIn" sub="raihan-mahin-150b7123a" href={profile.linkedin} />
-        <Row title="Behance" sub="behance.net/raihanmahin" href={profile.behance} />
-      </Group>
-      <Group header="About" footer="Mahin OS is a portfolio inspired by desktop and phone interfaces. Not affiliated with Apple.">
-        <Row title="Name" value={profile.shortName} chevron={false} />
-        <Row title="Location" value="Dhaka, BD" chevron={false} />
-        <Row title="Reset settings" chevron={false} onClick={resetPrefs} />
-      </Group>
-    </IOSPage>
-  );
+  return <SystemSettings mobile onHome={onHome}/>;
 }
 
 export function IOSRecruiter({ onHome }: { onHome: () => void }) { return <div className="native-dark absolute inset-0"><IOSPage title="For Recruiters" backLabel="Home" onBack={onHome} large={false} inset={false}><RecruiterContent /></IOSPage></div>; }

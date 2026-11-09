@@ -1,3 +1,3 @@
-- [x] Update awards, gallery removals, shared copy, email and safe Notes migration.
-- [x] Separate verbatim CV content for Preview and PDF; align mobile LinkedIn tile.
-- [x] Run targeted tests and desktop/phone checks, then commit without publishing.
+- [x] Nudge only the phone LinkedIn graphic by four pixels.
+- [x] Refine shared Messages, grouped Notes and functional Settings views.
+- [x] Verify phone/desktop flows and persistence; commit once without publishing.

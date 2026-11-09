@@ -44,3 +44,5 @@ use the editor.
 - Notes replace only exact known historical defaults and merge missing IDs; preserve all edited notes, with explicit Reset the only destructive restore.
 - ProjectStory owns shared work metrics and award photo viewing across desktop/mobile so captions, accessible navigation and case attribution stay identical.
 - MOBILE_APPS defines phone-visible apps for home, Spotlight and Files; résumé and awards remain reachable as content without desktop-only tools.
+- Messages and SystemSettings share desktop/phone behavior with dedicated full-height phone bodies; no nested viewport box, so compact screens remain usable.
+- NoteList shares date grouping and decorative icons across shells; coarse seed dates remain in Portfolio notes and real edits use optional timestamps without changing storage migration.

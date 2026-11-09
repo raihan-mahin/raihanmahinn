@@ -7,46 +7,10 @@ import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
 import { useOS, type Wallpaper } from "../store";
 import { profile, highlights, experience, awards, agencyBrands, education, leadership } from "@/data/portfolio";
+import { SystemSettings } from "./SystemSettings";
 
 export function Settings() {
-  const { prefs, setPrefs, resetPrefs } = useOS();
-  const wps: { id: Wallpaper; name: string; cls: string }[] = [
-    { id: "image", name: "Indigo Silk", cls: "" }, { id: "aurora", name: "Aurora", cls: "wp-aurora" }, { id: "dusk", name: "Dusk", cls: "wp-dusk" }, { id: "ocean", name: "Ocean", cls: "wp-ocean" },
-  ];
-  const Toggle = ({ on, set, label }: { on: boolean; set: (v: boolean) => void; label: string }) => (
-    <button role="switch" aria-checked={on} aria-label={label} onClick={() => set(!on)} className={cn("relative h-6 w-10 rounded-full transition", on ? "bg-success" : "bg-muted")}>
-      <span className={cn("absolute top-0.5 size-5 rounded-full bg-card shadow-soft transition-all", on ? "left-[18px]" : "left-0.5")} />
-    </button>
-  );
-  return (
-    <div className="h-full space-y-5 overflow-auto p-5">
-      <section>
-        <h3 className="mb-2 text-sm font-bold">Appearance</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {(["light", "dark"] as const).map((t) => (
-            <button key={t} onClick={() => setPrefs({ theme: t })} className={cn("rounded-xl p-3 text-sm font-semibold capitalize ring-2", prefs.theme === t ? "ring-primary" : "ring-border")}>
-              <div className={cn("mb-2 h-14 rounded-lg", t === "light" ? "bg-secondary" : "bg-terminal")} />{t}
-            </button>))}
-        </div>
-      </section>
-      <section>
-        <h3 className="mb-2 text-sm font-bold">Wallpaper</h3>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {wps.map((w) => (
-            <button key={w.id} onClick={() => setPrefs({ wallpaper: w.id })} className={cn("overflow-hidden rounded-xl text-xs font-semibold ring-2", prefs.wallpaper === w.id ? "ring-primary" : "ring-border")}>
-              {w.id === "image" ? <img src={wallpaper} alt="" className="h-16 w-full object-cover" /> : <div className={cn("h-16", w.cls)} />}
-              <p className="py-1.5">{w.name}</p>
-            </button>))}
-        </div>
-      </section>
-      <section className="space-y-2 rounded-xl bg-secondary p-3 text-sm">
-        <div className="flex items-center justify-between"><span>Dock magnification</span><Toggle label="Dock magnification" on={prefs.magnify} set={(v) => setPrefs({ magnify: v })} /></div>
-        <div className="flex items-center justify-between"><span>Show “Hi, I'm Mahin” widget</span><Toggle label="Show widget" on={prefs.showWidget} set={(v) => setPrefs({ showWidget: v })} /></div>
-      </section>
-      <button onClick={resetPrefs} className="flex items-center gap-1.5 text-xs font-semibold text-primary"><RotateCcw size={13} />Reset to defaults</button>
-      <p className="text-xs text-muted-foreground">Settings are saved on this device.</p>
-    </div>
-  );
+  return <SystemSettings/>;
 }
 
 const EVENTS: { date: string; title: string; tone: "primary" | "gold" | "success" }[] = [

@@ -13,6 +13,7 @@ import { Spotlight } from "../Overlays";
 import { AppBody } from "../Desktop";
 import { resolvePhotoCategory, type ProjectCategory } from "@/data/portfolio";
 import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings, IOSRecruiter } from "./MobileApps";
+import { Messages } from "../apps/Messages";
 
 const PAGE1 = MOBILE_APPS;
 const DOCK: AppId[] = ["notes", "messages", "photos", "music"];
@@ -84,7 +85,7 @@ function Grid({ ids }: { ids: AppId[] }) {
   const tileLabel = "text-shadow-soft max-w-full truncate text-[12px] font-medium text-chrome-foreground";
   return <div className="grid w-full shrink-0 snap-center grid-cols-4 content-start gap-x-4 gap-y-4 px-6">
     {ids.map(id => <Button variant="ghost" key={id} onClick={() => os.open(id)} className={tileClass}><AppIcon id={id} className="size-[56px] shrink-0" /><span className={tileLabel}>{label(id)}</span></Button>)}
-    <Button variant="ghost" asChild className={tileClass}><a aria-label="LinkedIn" href={profile.linkedin} target="_blank" rel="noreferrer"><span aria-hidden="true" className="flex size-[56px] shrink-0 items-center justify-center"><span className="linkedin-icon">in</span></span><span className={tileLabel}>LinkedIn</span></a></Button>
+    <Button variant="ghost" asChild className={tileClass}><a aria-label="LinkedIn" href={profile.linkedin} target="_blank" rel="noreferrer"><span aria-hidden="true" className="flex size-[56px] shrink-0 items-center justify-center"><span className="linkedin-icon translate-x-[4px]">in</span></span><span className={tileLabel}>LinkedIn</span></a></Button>
   </div>;
 }
 
@@ -125,6 +126,7 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
   switch (id) {
     case "recruiter": body = <IOSRecruiter onHome={home} />; break;
     case "notes": body = <IOSNotes onHome={home} payload={payload} />; break;
+    case "messages": body = <Messages mobile onHome={home} payload={payload}/>; break;
     case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialAlbum={alb} initialPid={pid} />; break;
     case "awards": body = <IOSPhotos onHome={home} initial="Awards & Achievements" title="Awards" initialPid={pid} />; break;
     case "brands": body = <IOSPhotos onHome={home} initialAlbum="agency" title="Agency Work" />; break;
@@ -133,10 +135,10 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
     default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;
   }
   return (
-    <div className={cn("fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground", ["recruiter", "finder", "notes", "music", "photos", "awards"].includes(id) && "native-dark")}>
-      <div className="absolute inset-x-0 top-0 z-20"><StatusBar light={id === "recruiter" || id === "finder" || id === "notes" || id === "music" || id === "photos" || id === "awards"} /></div>
+    <div className={cn("fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground", ["recruiter", "finder", "notes", "messages", "settings", "music", "photos", "awards"].includes(id) && "native-dark")}>
+      <div className="absolute inset-x-0 top-0 z-20"><StatusBar light={["recruiter", "finder", "notes", "messages", "settings", "music", "photos", "awards"].includes(id)} /></div>
       <div className="relative min-h-0 flex-1">{body}</div>
-      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator light={["recruiter", "finder", "notes", "music", "photos", "awards"].includes(id)} onTap={home} /></div>
+      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator light={["recruiter", "finder", "notes", "messages", "settings", "music", "photos", "awards"].includes(id)} onTap={home} /></div>
     </div>
   );
 }
@@ -147,7 +149,7 @@ export function IOSShell() {
   return (
     <div className={cn("fixed inset-0 overflow-hidden", os.prefs.theme === "dark" && "dark")}>
       <h1 className="sr-only">Mahin OS — Raihan Mahin portfolio</h1>
-      <IOSHome />
+      <div inert={Boolean(top)} aria-hidden={Boolean(top)}><IOSHome /></div>
       {top && <IOSApp key={top.id} id={top.id} payload={top.payload} />}
       {os.overlay === "spotlight" && <Spotlight />}
       {os.locked && <IOSLock />}

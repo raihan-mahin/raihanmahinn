@@ -25,7 +25,7 @@ export function AppBody({ id, payload }: { id: AppId; payload?: string | undefin
   switch (id) {
     case "finder": return <Finder />;
     case "notes": return <Notes payload={payload} />;
-    case "messages": return <Messages />;
+    case "messages": return <Messages payload={payload}/>;
     case "photos": return <Photos payload={payload} />;
     case "preview": return <Preview />;
     case "terminal": return <Terminal />;

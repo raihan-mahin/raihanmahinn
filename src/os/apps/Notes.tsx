@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, Pencil, Eye, Plus, RotateCcw } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { notes as seed, type Note } from "@/data/portfolio";
+import { notes as seed } from "@/data/portfolio";
 
 import { loadNotes, NOTES_KEY as KEY } from "@/lib/note-storage";
 import { Button } from "@/components/ui/button";
+import { NoteList } from "../NoteList";
+import { newNote, editNote, type DatedNote } from "@/lib/note-presentation";
 
 export function Render({ body }: { body: string }) {
   return (
@@ -21,13 +22,13 @@ export function Render({ body }: { body: string }) {
 }
 
 export function Notes({ payload }: { payload?: string | undefined }) {
-  const [list, setList] = useState<Note[]>(seed);
+  const [list, setList] = useState<DatedNote[]>(seed);
   const [sel, setSel] = useState(payload ?? "about");
   const [q, setQ] = useState("");
   const [edit, setEdit] = useState(false);
   useEffect(() => { setList(loadNotes()); }, []);
   useEffect(() => { if (payload) { setSel(payload); setEdit(false); } }, [payload]);
-  const save = (l: Note[]) => { setList(l); try { localStorage.setItem(KEY, JSON.stringify(l)); } catch { /* ignore */ } };
+  const save = (l: DatedNote[]) => { setList(l); try { localStorage.setItem(KEY, JSON.stringify(l)); } catch { /* ignore */ } };
   const filtered = useMemo(() => list.filter((n) => `${n.title} ${n.body}`.toLowerCase().includes(q.toLowerCase())), [list, q]);
   const cur = list.find((n) => n.id === sel) ?? list[0];
 
@@ -37,17 +38,9 @@ export function Notes({ payload }: { payload?: string | undefined }) {
         <div className="flex items-center gap-1.5 p-2">
           <label className="flex flex-1 items-center gap-1.5 rounded-md bg-muted px-2 py-1"><Search size={13} className="text-muted-foreground" />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search notes" aria-label="Search notes" className="w-full bg-transparent text-sm outline-none" /></label>
-          <Button variant="ghost" aria-label="New note" onClick={() => { const n = { id: `n${Date.now()}`, title: "New note", date: "Today", body: "# New note\n" }; save([n, ...list]); setSel(n.id); setEdit(true); }} className="rounded-md p-1.5 hover:bg-accent"><Plus size={15} /></Button>
+          <Button variant="ghost" aria-label="New note" onClick={() => { const n = newNote(); save([n, ...list]); setSel(n.id); setEdit(true); }} className="rounded-md p-1.5 hover:bg-accent"><Plus size={15} /></Button>
         </div>
-        <ul className="flex-1 overflow-auto px-2 pb-2">
-          {["Pinned", "Recent"].map(section => <li key={section}><p className="px-3 pb-1 pt-3 text-[11px] font-semibold text-muted-foreground">{section}</p><ul>{filtered.filter(n => section === "Pinned" ? ["about", "experience", "pureit"].includes(n.id) : !["about", "experience", "pureit"].includes(n.id)).map((n) => (
-            <li key={n.id}><Button variant="ghost" onClick={() => { setSel(n.id); setEdit(false); }} className={cn("block h-auto w-full whitespace-normal rounded-lg px-3 py-3 text-left", cur?.id === n.id ? "bg-gold/30" : "hover:bg-accent")}>
-              <p className="truncate text-[13px] font-bold">{n.title}</p>
-              <p className="truncate text-xs text-muted-foreground"><span className="font-semibold">{n.date}</span> {n.body.replace(/^#+\s*|\n#*\s*-?\s*/gm, " ").slice(0, 60)}</p>
-            </Button></li>
-          ))}</ul></li>)}
-          {!filtered.length && <li className="p-3 text-xs text-muted-foreground">No notes match.</li>}
-        </ul>
+        <div className="flex-1 overflow-auto px-2 pb-2"><NoteList notes={filtered} selected={cur?.id} onSelect={id => {setSel(id);setEdit(false);}}/><p className="py-3 text-center text-xs text-muted-foreground">{filtered.length} notes</p></div>
       </aside>
       {cur && (
         <div className="flex min-h-0 flex-1 flex-col bg-card">
@@ -59,8 +52,8 @@ export function Notes({ payload }: { payload?: string | undefined }) {
             <p className="mb-3 text-center text-xs text-muted-foreground">{cur.date}</p>
             {edit ? (
               <textarea aria-label="Note content" value={cur.body} onChange={(e) => {
-                const body = e.target.value; const title = (body.split("\n")[0] ?? "").replace(/^#+\s*/, "").slice(0, 50) || "Untitled";
-                save(list.map((n) => (n.id === cur.id ? { ...n, body, title } : n)));
+                const body = e.target.value;
+                save(list.map((n) => (n.id === cur.id ? editNote(n, body) : n)));
               }} className="h-full min-h-80 w-full resize-none bg-transparent font-mono text-sm outline-none" />
             ) : <Render body={cur.body} />}
           </div>
