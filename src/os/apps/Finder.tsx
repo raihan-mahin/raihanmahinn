@@ -49,7 +49,7 @@ export function Finder() {
                 <tbody>{s.items.map((it, i) => (
                   <tr key={it.id} onClick={() => setSel(it.id)} onDoubleClick={() => os.open(...it.open)} className={cn("cursor-default", sel === it.id ? "bg-primary text-primary-foreground" : i % 2 ? "bg-secondary/40" : "")}>
                     <td className="flex items-center gap-2 rounded-l-md px-2 py-1.5"><FileText size={14} className="shrink-0 opacity-70" /><span className="truncate">{it.name}</span></td>
-                    <td className="hidden px-2 sm:table-cell">{it.kind}</td><td className="hidden rounded-r-md px-2 lg:table-cell">{it.meta}</td>
+                    <td className="hidden whitespace-nowrap px-2 sm:table-cell">{it.kind}</td><td className="hidden whitespace-nowrap rounded-r-md px-2 lg:table-cell">{it.meta}</td>
                   </tr>))}</tbody>
               </table>
             ) : (

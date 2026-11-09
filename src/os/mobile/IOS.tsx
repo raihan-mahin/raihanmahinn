@@ -1,5 +1,5 @@
 import { useRef, useState, type TouchEvent } from "react";
-import { ChevronLeft, Search, Wifi, BatteryFull, Signal, ChevronUp, Lock } from "lucide-react";
+import { Search, Wifi, BatteryFull, Signal, ChevronUp, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
 import { profile, stats } from "@/data/portfolio";
@@ -9,6 +9,8 @@ import { useClock } from "../useClock";
 import { AppIcon } from "../ui";
 import { Spotlight } from "../Overlays";
 import { AppBody } from "../Desktop";
+import type { ProjectCategory } from "@/data/portfolio";
+import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings } from "./MobileApps";
 
 const PAGE1: AppId[] = ["photos", "notes", "finder", "messages", "brands", "awards", "preview", "recruiter", "settings", "calendar", "music", "terminal"];
 const PAGE2: AppId[] = ["trash"];
@@ -81,8 +83,8 @@ function Grid({ ids }: { ids: AppId[] }) {
     <div className="grid w-full shrink-0 snap-center grid-cols-4 content-start gap-x-4 gap-y-5 px-6">
       {ids.map((id, i) => (
         <button key={id} onClick={() => os.open(id)} className="flex flex-col items-center gap-1.5 animate-ios-zoom active:scale-90" style={{ animationDelay: `${i * 20}ms` }}>
-          <AppIcon id={id} className="size-[62px]" size={28} />
-          <span className="text-shadow-soft max-w-full truncate text-[11.5px] font-medium text-chrome-foreground">{label(id)}</span>
+          <AppIcon id={id} className="size-[64px]" />
+          <span className="text-shadow-soft max-w-full truncate text-[12px] font-medium text-chrome-foreground">{label(id)}</span>
         </button>
       ))}
     </div>
@@ -94,7 +96,7 @@ function IOSHome() {
   const [page, setPage] = useState(0);
   return (
     <div className="fixed inset-0 flex flex-col">
-      <img src={wallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      {os.prefs.wallpaper === "image" ? <img src={wallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" /> : <div className={cn("absolute inset-0", `wp-${os.prefs.wallpaper}`)} />}
       <div className="relative flex min-h-0 flex-1 flex-col">
         <StatusBar light />
         <div className="flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden pt-3 [scrollbar-width:none]"
@@ -126,7 +128,7 @@ function IOSHome() {
         <div className="flex justify-center gap-2 py-2" aria-hidden>
           {[0, 1].map((i) => <span key={i} className={cn("size-[7px] rounded-full", page === i ? "bg-chrome-foreground" : "bg-chrome-foreground/40")} />)}
         </div>
-        <button onClick={() => os.setOverlay("spotlight")} className="glass mx-auto mb-3 flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-foreground"><Search size={13} />Search</button>
+        <button onClick={() => os.setOverlay("spotlight")} className="glass mx-auto mb-3 flex min-h-9 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-foreground"><Search size={13} />Search</button>
         <div className="glass mx-3 flex justify-around rounded-[2rem] px-3 py-3">
           {DOCK.map((id) => <button key={id} aria-label={`Open ${label(id)}`} onClick={() => os.open(id)} className="active:scale-90"><AppIcon id={id} className="size-[60px]" size={28} /></button>)}
         </div>
@@ -138,24 +140,24 @@ function IOSHome() {
 
 function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
   const os = useOS();
-  const x0 = useRef<number | null>(null);
-  const [dx, setDx] = useState(0);
-  const back = () => os.closeAll();
+  const home = () => os.closeAll();
+  const cat = payload?.startsWith("cat:") ? (payload.slice(4) as ProjectCategory) : undefined;
+  const pid = payload && !payload.startsWith("cat:") ? payload : undefined;
+  let body: React.ReactNode;
+  switch (id) {
+    case "notes": body = <IOSNotes onHome={home} payload={payload} />; break;
+    case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialPid={pid} />; break;
+    case "awards": body = <IOSPhotos onHome={home} initial="Case Competitions" title="Awards" initialPid={pid} />; break;
+    case "brands": body = <IOSPhotos onHome={home} initial="AI Brand Reels" title="Brand Reels" />; break;
+    case "finder": body = <IOSFiles onHome={home} />; break;
+    case "settings": body = <IOSSettings onHome={home} />; break;
+    default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;
+  }
   return (
-    <div className={cn("fixed inset-0 z-30 flex flex-col bg-background text-foreground", dx === 0 && "animate-ios-in")}
-      style={{ transform: dx ? `translateX(${dx}px)` : undefined }}
-      onTouchStart={(e) => { const t = e.touches[0]; x0.current = t && t.clientX < 30 ? t.clientX : null; }}
-      onTouchMove={(e) => { if (x0.current !== null) setDx(Math.max(0, (e.touches[0]?.clientX ?? 0) - x0.current)); }}
-      onTouchEnd={() => { if (dx > 90) back(); setDx(0); x0.current = null; }}>
-      <div className="glass-strong sticky top-0 z-10 border-x-0 border-t-0">
-        <StatusBar />
-        <div className="relative flex h-11 items-center px-2">
-          <button onClick={back} className="flex items-center text-[17px] font-medium text-primary"><ChevronLeft size={26} />Home</button>
-          <h1 className="pointer-events-none absolute inset-x-0 text-center text-[17px] font-semibold">{label(id)}</h1>
-        </div>
-      </div>
-      <div className="min-h-0 flex-1 overflow-hidden"><AppBody id={id} payload={payload} /></div>
-      <HomeIndicator onTap={back} />
+    <div className="fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground">
+      <div className="absolute inset-x-0 top-0 z-20"><StatusBar /></div>
+      <div className="relative min-h-0 flex-1">{body}</div>
+      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator onTap={home} /></div>
     </div>
   );
 }

@@ -10,6 +10,7 @@ export function Window({ win, children }: { win: Win; children: ReactNode }) {
   const drag = useRef<{ dx: number; dy: number } | null>(null);
   const meta = APPS[win.id];
   const full = mobile || win.maximized;
+  const isActive = active === win.id;
 
   const onDown = (e: RPE) => {
     if (full || (e.target as HTMLElement).closest("button")) return;
@@ -34,9 +35,8 @@ export function Window({ win, children }: { win: Win; children: ReactNode }) {
     window.addEventListener("pointerup", up);
   };
 
-  if (win.minimized) return null;
-  const isActive = active === win.id;
 
+  if (win.minimized) return null;
   return (
     <section
       role="dialog"
@@ -52,11 +52,11 @@ export function Window({ win, children }: { win: Win; children: ReactNode }) {
       <header onPointerDown={onDown} onDoubleClick={() => !mobile && toggleMax(win.id)}
         className={cn("relative flex h-10 shrink-0 select-none items-center border-b border-border px-3", !full && "cursor-grab active:cursor-grabbing")}>
         <div className="group flex items-center gap-2">
-          <button aria-label={`Close ${meta.name}`} onClick={() => close(win.id)} className="grid size-3.5 place-items-center rounded-full bg-tl-red text-[9px] font-bold leading-none text-foreground/0 group-hover:text-foreground/60">×</button>
-          <button aria-label={`Minimize ${meta.name}`} onClick={() => minimize(win.id)} className="grid size-3.5 place-items-center rounded-full bg-tl-yellow text-[9px] font-bold leading-none text-foreground/0 group-hover:text-foreground/60">–</button>
-          <button aria-label={`Maximize ${meta.name}`} onClick={() => toggleMax(win.id)} disabled={mobile} className="grid size-3.5 place-items-center rounded-full bg-tl-green text-[8px] font-bold leading-none text-foreground/0 group-hover:text-foreground/60 disabled:opacity-40">+</button>
+          <button aria-label={`Close ${meta.name}`} onClick={() => close(win.id)} className={cn("grid size-3 place-items-center rounded-full text-[9px] font-bold leading-none text-foreground/0 ring-[0.5px] ring-foreground/20 group-hover:text-foreground/60", isActive ? "bg-tl-red" : "bg-muted group-hover:bg-tl-red")}>×</button>
+          <button aria-label={`Minimize ${meta.name}`} onClick={() => minimize(win.id)} className={cn("grid size-3 place-items-center rounded-full text-[9px] font-bold leading-none text-foreground/0 ring-[0.5px] ring-foreground/20 group-hover:text-foreground/60", isActive ? "bg-tl-yellow" : "bg-muted group-hover:bg-tl-yellow")}>–</button>
+          <button aria-label={`Maximize ${meta.name}`} onClick={() => toggleMax(win.id)} disabled={mobile} className={cn("grid size-3 place-items-center rounded-full text-[8px] font-bold leading-none text-foreground/0 ring-[0.5px] ring-foreground/20 group-hover:text-foreground/60 disabled:opacity-40", isActive ? "bg-tl-green" : "bg-muted group-hover:bg-tl-green")}>+</button>
         </div>
-        <h2 className="pointer-events-none absolute inset-x-0 text-center text-[13px] font-semibold text-muted-foreground">{meta.name}</h2>
+        <h2 className="pointer-events-none absolute inset-x-0 text-center text-[13px] font-semibold text-foreground/80">{meta.name}</h2>
       </header>
       <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
       {!full && <div onPointerDown={onResize} aria-hidden className="absolute bottom-0 right-0 size-4 cursor-nwse-resize" />}

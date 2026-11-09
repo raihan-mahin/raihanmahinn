@@ -1,15 +1,10 @@
 import { ImagePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { APPS, type AppId } from "./apps-registry";
+import type { AppId } from "./apps-registry";
+import { AppleStyleAppIcon } from "./icons";
 
-export function AppIcon({ id, className, size = 22 }: { id: AppId; className?: string; size?: number }) {
-  const m = APPS[id];
-  const I = m.icon;
-  return (
-    <div className={cn("icon-tile grid place-items-center", m.tile, className)}>
-      <I size={size} strokeWidth={2} />
-    </div>
-  );
+export function AppIcon({ id, className }: { id: AppId; className?: string; size?: number }) {
+  return <AppleStyleAppIcon app={id} className={cn("block drop-shadow-sm", className)} />;
 }
 
 export function MediaPlaceholder({ seed = 0, label = "Media coming soon", className, src, alt }: { seed?: number; label?: string; className?: string; src?: string | undefined; alt?: string }) {

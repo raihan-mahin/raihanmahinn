@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Search, Briefcase, Wifi, BatteryFull } from "lucide-react";
+import { Search, Briefcase, Wifi, BatteryFull, ToggleRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { APPS } from "./apps-registry";
 import { useOS } from "./store";
@@ -53,8 +53,8 @@ export function MenuBar() {
   ];
 
   return (
-    <div ref={ref} className="glass-chrome fixed inset-x-0 top-0 z-[9000] flex h-7 items-center gap-1 px-2 text-[13px] font-medium">
-      <button onClick={() => os.setLocked(true)} className="rounded px-2 font-bold tracking-tight hover:bg-chrome-foreground/15" aria-label="Lock screen">◆ Mahin OS</button>
+    <div ref={ref} className="glass-chrome fixed inset-x-0 top-0 z-[9000] flex h-[27px] items-center gap-0.5 px-2 text-[13px] font-medium">
+      <button onClick={() => os.setLocked(true)} className="grid h-6 place-items-center rounded px-2 hover:bg-chrome-foreground/15" aria-label="Mahin OS — lock screen" title="Lock screen"><svg viewBox="0 0 20 20" className="size-[15px]" aria-hidden><circle cx="10" cy="10" r="9" fill="currentColor" /><path d="M5.5 14V6.5l4.5 5 4.5-5V14" fill="none" stroke="var(--chrome)" strokeWidth="2" strokeLinejoin="round" style={{ stroke: "oklch(0.25 0.08 268)" }} /></svg></button>
       <nav className="hidden items-center md:flex" aria-label="Menu bar">
         {menus.map((m, i) => (
           <div key={m.name} className="relative">
@@ -83,6 +83,7 @@ export function MenuBar() {
         </button>
         <span className="hidden px-1 sm:inline"><Wifi size={14} /></span>
         <span className="hidden px-1 sm:inline"><BatteryFull size={16} /></span>
+        <button onClick={() => os.open("settings")} aria-label="Control Center" className="rounded px-2 py-0.5 hover:bg-chrome-foreground/15"><ToggleRight size={16} /></button>
         <button onClick={() => os.setOverlay("spotlight")} aria-label="Spotlight search" className="rounded px-2 py-0.5 hover:bg-chrome-foreground/15"><Search size={14} /></button>
         <span className="px-2 tabular-nums" suppressHydrationWarning>
           {now ? `${now.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}  ${now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}` : ""}

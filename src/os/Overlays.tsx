@@ -28,7 +28,7 @@ export function Spotlight() {
 
   useEffect(() => setSel(0), [q]);
   return (
-    <div className="fixed inset-0 z-[9200] flex items-start justify-center bg-chrome/40 px-4 pt-[18vh]" onMouseDown={() => os.setOverlay("none")}>
+    <div className="fixed inset-0 z-[9200] flex items-start justify-center bg-chrome/30 px-4 pt-[18vh] backdrop-blur-[2px] animate-fade-up" onMouseDown={() => os.setOverlay("none")}>
       <div className="glass-strong shadow-window w-full max-w-xl overflow-hidden rounded-2xl" onMouseDown={(e) => e.stopPropagation()} role="dialog" aria-label="Spotlight">
         <div className="flex items-center gap-3 px-4">
           <Search size={20} className="text-muted-foreground" />
@@ -64,13 +64,13 @@ export function Launchpad() {
   const [q, setQ] = useState("");
   const ids = ([...DOCK.filter((d) => d !== "launchpad"), "recruiter"] as AppId[]).filter((id) => APPS[id].name.toLowerCase().includes(q.toLowerCase()));
   return (
-    <div className="fixed inset-0 z-[9100] flex flex-col items-center bg-chrome px-6 pt-16 backdrop-blur-3xl" onClick={() => os.setOverlay("none")}>
+    <div className="fixed inset-0 z-[9100] flex flex-col items-center bg-chrome px-6 pt-16 backdrop-blur-3xl animate-ios-zoom" onClick={() => os.setOverlay("none")}>
       <input autoFocus value={q} onClick={(e) => e.stopPropagation()} onChange={(e) => setQ(e.target.value)} placeholder="Search"
         className="glass w-64 rounded-lg px-3 py-1.5 text-center text-sm text-foreground outline-none placeholder:text-muted-foreground" />
       <div className="mt-12 grid w-full max-w-4xl grid-cols-3 gap-x-6 gap-y-10 sm:grid-cols-4 md:grid-cols-6">
         {ids.map((id, i) => (
           <button key={id} onClick={(e) => { e.stopPropagation(); os.open(id); }} className="flex flex-col items-center gap-2 animate-fade-up" style={{ animationDelay: `${i * 25}ms` }}>
-            <AppIcon id={id} className="size-16 transition hover:scale-110 md:size-20" size={32} />
+            <AppIcon id={id} className="size-16 transition hover:scale-110 md:size-20" />
             <span className="text-shadow-soft text-sm font-medium text-chrome-foreground">{APPS[id].name}</span>
           </button>
         ))}
