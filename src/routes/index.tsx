@@ -1,23 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { MahinOS } from "@/os/Desktop";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Mahin OS | Raihan Mahin — Brand Marketing & Creative Portfolio" },
+      { name: "description", content: "Raihan Mahin — brand marketer, creative strategist and AI content creator in Dhaka. GTM launches, Pureit brand transition, AI reels and 8 case competition results." },
+      { property: "og:title", content: "Mahin OS | Raihan Mahin — Brand Marketing & Creative Portfolio" },
+      { property: "og:description", content: "A macOS-style portfolio of Raihan Mahin: brand marketing, GTM launches, AI reels and case competitions." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: MahinOS,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
