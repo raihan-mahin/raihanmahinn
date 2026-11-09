@@ -39,7 +39,7 @@ export function OSProvider({ children }: { children: ReactNode }) {
   const [zTop, setZTop] = useState(10);
   const [prefs, setPrefsState] = useState<Prefs>(DEFAULT_PREFS);
   const [overlay, setOverlay] = useState<Ctx["overlay"]>("none");
-  const [locked, setLocked] = useState(true);
+  const [locked, setLocked] = useState(false);
 
   useEffect(() => {
     try {
@@ -79,6 +79,10 @@ export function OSProvider({ children }: { children: ReactNode }) {
       return nz;
     });
   }, []);
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) open("notes", "about");
+  }, [open]);
 
   const focus = useCallback((id: AppId) => {
     setZTop((z) => { const nz = z + 1; setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, z: nz } : w))); return nz; });

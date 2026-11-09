@@ -4,7 +4,7 @@
 export const agencyName = "Independent Agency";
 
 export const profile = {
-  avatar: "/media/awards/marxcellence-2026-runner-up-solo-stage.jpg",
+  avatar: "/media/profile/mahin-profile.png",
   fullName: "Abu Raihan Mahin",
   shortName: "Raihan Mahin",
   nickname: "Mahin",
@@ -12,7 +12,7 @@ export const profile = {
   subtitle: "Brand Marketing · GTM · Campaign Execution",
   // Owner-supplied wording (from his LinkedIn bio); not independently fetched.
   tagline: "Experience across 10+ brands spanning FMCG, consumer durables and fintech",
-  bio: "I've worked across product launches, brand transitions and agency campaigns. Seven competition podium finishes have shaped how I approach brand challenges.",
+  bio: "I led Pureit’s logo rollout across seven-plus touchpoints as it moved from Unilever to A. O. Smith. At X Integrated, I managed customer engagement for five client accounts. Today, I co-run an agency producing short-form content for Lux, Lifebuoy and Dove.",
   location: "Dhaka, Bangladesh",
   email: "raihanmahin.ubl@gmail.com",
   linkedin: "https://bd.linkedin.com/in/raihan-mahin-150b7123a",
@@ -39,7 +39,7 @@ export const experience: Experience[] = [
     type: "Current",
     clients: ["Lux", "Lifebuoy", "Dove"],
     bullets: [
-      "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.",
+      "I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove.",
     ],
   },
   {
@@ -49,12 +49,12 @@ export const experience: Experience[] = [
     context: "Pureit (formerly Unilever, acquired by A. O. Smith)",
     period: "Aug 2024 – Jun 2026",
     type: "Part-time",
-    clients: ["Pureit", "A. O. Smith"],
+    clients: ["Unilever", "Pureit", "A. O. Smith"],
     bullets: [
-      "Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints.",
+      "At BizLearner, I led Pureit’s logo rollout across seven-plus touchpoints as it moved from Unilever to A. O. Smith.",
       "Conducted competitor benchmarking and feasibility research in Bangladesh and Sri Lanka.",
-      "Created 300+ launch assets across Pureit Wave, Marina and Ultima Pro, including Ultima Pro's end-to-end communications.",
-      "Worked with brand, media and agency teams on digital growth that reached a 6.5x increase in digital sales.",
+      "I developed 300+ launch materials collectively for Wave, Marina and Ultima Pro. For Ultima Pro, I helped coordinate messaging before and after launch across digital, PR and trade.",
+      "Collaborative campaign and e-commerce work with brand, media and agency teams contributed to 6.5x digital sales growth.",
     ],
   },
   {
@@ -73,8 +73,8 @@ export const experience: Experience[] = [
     type: "Part-time",
     clients: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"],
     bullets: [
-      "Handled engagement across five client accounts — Upay, City Bank, IDLC, Break Station and Petal — with a 90% on-time response rate.",
-      "Conducted consumer research and contributed to campaign ideation.",
+      "At X Integrated, I managed response strategy for Upay, City Bank, IDLC, Break Station and Petal, with 90% of responses on time.",
+      "I brought proposed improvements to client meetings and contributed to consumer research and campaign ideas.",
     ],
   },
 ];
@@ -100,10 +100,10 @@ export const awards: Award[] = [
 
 export type PureitCase = { id: string; title: string; kind: string; challenge: string; contribution: string; outcome: string; images: string[] };
 export const pureitCases: PureitCase[] = [
-  { id: "pureit-transition", title: "Pureit Brand Transition", kind: "Brand transition", challenge: "Pureit's move to a new identity after its acquisition by A. O. Smith (formerly Unilever).", contribution: "Contributed to the logo rollout across 7+ touchpoints, plus market and competitor benchmarking for Bangladesh and Sri Lanka.", outcome: "Brand transition rolled out across 7+ touchpoints (team effort).", images: [] },
+  { id: "pureit-transition", title: "Pureit Brand Transition", kind: "Brand transition", challenge: "Pureit's move to a new identity after its acquisition by A. O. Smith (formerly Unilever).", contribution: "At BizLearner, I led Pureit’s logo rollout across seven-plus touchpoints and benchmarked competitors in Bangladesh and Sri Lanka.", outcome: "Brand transition rolled out across 7+ touchpoints (team effort).", images: [] },
   { id: "pureit-wave", title: "Pureit Wave Launch", kind: "Product launch", challenge: "One of three Pureit product launches.", contribution: "Marketing assets for the launch, as part of 300+ assets across the three launches.", outcome: "Part of the 300+ assets delivered across three launches.", images: [] },
   { id: "pureit-marina", title: "Pureit Marina Launch", kind: "Product launch", challenge: "One of three Pureit product launches.", contribution: "Marketing assets for the launch, as part of 300+ assets across the three launches.", outcome: "Part of the 300+ assets delivered across three launches.", images: [] },
-  { id: "pureit-ultima", title: "Pureit Ultima Pro Launch", kind: "Product launch", challenge: "One of three Pureit product launches.", contribution: "Supported Ultima Pro end-to-end communications, as part of 300+ assets across the three launches.", outcome: "Part of the 300+ assets delivered across three launches.", images: [] },
+  { id: "pureit-ultima", title: "Pureit Ultima Pro Launch", kind: "Product launch", challenge: "One of three Pureit product launches.", contribution: "I helped coordinate Ultima Pro messaging before and after launch across digital, PR and trade, as part of 300+ assets collectively across three launches.", outcome: "Part of the 300+ assets delivered across three launches.", images: [] },
 ];
 
 const BH = profile.behance;
@@ -127,7 +127,7 @@ export const behanceWorks: BehanceWork[] = [
 ];
 
 export const leadership = [
-  { id: "mth", role: "Founder & Admin", org: "Music That Heals", period: "2020 – Present", detail: "Built and led a 200K-member music community and organised live events." },
+  { id: "mth", role: "Founder & Admin", org: "Music That Heals", period: "2020 – Present", detail: "I founded Music That Heals and built it into a 200K-member music community that also organizes live events." },
   { id: "yes", role: "General Member", org: "NSU Young Entrepreneurs Society", period: "2022 – 2023", detail: "Supported 2023 recruitment, the brand guideline, and Admaker." },
   { id: "drmc", role: "Volunteer", org: "DRMC Science Club", period: "2019 – 2020", detail: "Volunteered at the science festival and gaming segment with ~1,000 participants." },
 ];
@@ -153,7 +153,7 @@ export const highlights = [
 ];
 export const recruiter = {
   subtitle: "Brand Marketing & Strategy Professional | GTM, Brand Transitions & Integrated Marketing",
-  summary: "My work spans go-to-market planning, brand transitions, product launches and agency client servicing. Through BizLearner, I helped bring Pureit's new identity to market and worked across three launches. Seven national competition podiums have sharpened my approach to research and brand challenges.",
+  summary: profile.bio,
   roles: ["Brand Marketing", "GTM & Launches", "Campaign Strategy", "Agency Client Servicing"],
   stats: [{ value: "10+", label: "Brands" }, { value: "7", label: "National Podiums" }, { value: "3", label: "Championships" }, { value: "200K", label: "Community" }],
   highlights: ["Pureit, through BizLearner: brand transition from Unilever to A. O. Smith, 7+ touchpoints and three product launches.", "X Integrated: five client accounts, consumer research, campaign ideation and 90% on-time responses.", "Seven national podiums, including three championships; separately, a finalist among 1850+ teams at Marico's Over the Wall 2025.", "Founder & Admin of Music That Heals, a 200K-member community."],
@@ -172,8 +172,8 @@ export const stats = [
   { value: "6.5x", label: "Digital sales (team)" },
 ];
 
-export type ProjectCategory = "Featured" | "Brand Design" | "Competitions" | "More Work";
-export const projectCategories: ProjectCategory[] = ["Featured", "Brand Design", "Competitions", "More Work"];
+export type ProjectCategory = "★ Flagship" | "Brand Strategy & Transition" | "Product Launches" | "Client Engagement" | "Campaigns & Creative" | "Community & Leadership" | "Awards & Achievements";
+export const projectCategories: ProjectCategory[] = ["★ Flagship", "Brand Strategy & Transition", "Product Launches", "Client Engagement", "Campaigns & Creative", "Community & Leadership"];
 
 export type Project = {
   id: string; title: string; subtitle: string; role?: string;
@@ -189,20 +189,20 @@ const behanceProjects = behanceWorks.map<Project>((w) => ({
 
 export const projects: Project[] = [
   ...behanceProjects,
-  { id: "pureit-transition", title: "Pureit Brand Transition", subtitle: "BizLearner · Aug 2024 – Jun 2026", role: "Marketing (BizLearner)", summary: "Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints. Benchmarked the market and competitors in Bangladesh and Sri Lanka.", images: ["/media/behance/234564039.jpg"], brandRow: { label: "Brands", names: ["Pureit", "A. O. Smith"] } },
-  { id: "pureit-launches", title: "Pureit Wave, Marina & Ultima Pro", subtitle: "3 product launches", role: "Marketing (BizLearner)", summary: "Created launch materials across Wave, Marina and Ultima Pro — 300+ assets in total — and supported Ultima Pro's end-to-end communications. Working with brand, media and agency teams, digital sales grew 6.5x.", images: ["/media/behance/234562973.jpg"], brandRow: { label: "Brands", names: ["Pureit", "A. O. Smith"] } },
+  { id: "pureit-transition", title: "Pureit Brand Transition", subtitle: "BizLearner · Aug 2024 – Jun 2026", role: "Marketing (BizLearner)", summary: "At BizLearner, I led Pureit’s logo rollout across seven-plus touchpoints as it moved from Unilever to A. O. Smith. I benchmarked competitors in Bangladesh and Sri Lanka.", images: ["/media/behance/234564039.jpg"], brandRow: { label: "Brands", names: ["Unilever", "Pureit", "A. O. Smith"] } },
+  { id: "pureit-launches", title: "Pureit Wave, Marina & Ultima Pro", subtitle: "3 product launches", role: "Marketing (BizLearner)", summary: "I developed launch materials for Wave, Marina and Ultima Pro — 300+ collectively. For Ultima Pro, I helped coordinate messaging before and after launch across digital, PR and trade. Collaborative campaign and e-commerce work contributed to 6.5x digital sales growth.", images: ["/media/behance/234562973.jpg"], brandRow: { label: "Brands", names: ["Unilever", "Pureit", "A. O. Smith"] } },
   ...awards.map<Project>((a) => ({
     id: `award-${a.id}`, title: `${a.title} — ${a.rank}`, subtitle: `${a.organizer} · ${a.year}`, ...(a.team ? { role: `Team ${a.team}` } : {}),
     summary: `${a.detail}${a.scale ? ` ${a.scale}.` : ""}`, images: a.images, badge: a.rank,
     ...(a.caseBrands ? { brandRow: { label: "Case subjects (competition, not clients)", names: a.caseBrands } } : {}),
     ...(a.link ? { link: a.link, linkLabel: "View LinkedIn post" } : {}),
   })),
-  { id: "agency", title: "Co-Founder", subtitle: `${agencyName} · Current`, role: "Co-Founder", summary: "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.", images: [], brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
+  { id: "agency", title: "Co-Founder", subtitle: `${agencyName} · Current`, role: "Co-Founder", summary: "I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove.", images: [], brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
   ...agencyBrands.map<Project>((b) => ({ id: `agency-${b.id}`, title: b.brand, subtitle: "Agency work · Current", role: "Co-Founder", summary: b.description, images: b.thumbnail ? [b.thumbnail] : [] })),
-  { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023 – Oct 2024", role: "Junior Engagement Officer", summary: "Handled engagement across five client accounts with a 90% on-time response rate, and supported agency research.", images: [], brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
+  { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023 – Oct 2024", role: "Junior Engagement Officer", summary: experience.find(e => e.id === "x-agency")?.bullets.join(" ") ?? "", images: [], brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
   { id: "legend", title: "Legend International School", subtitle: "Marketing Officer · Oct – Nov 2024", role: "Marketing Officer (contract)", summary: "Promotional material and marketing execution on a short contract.", images: [] },
-  { id: "mth", title: "Music That Heals", subtitle: "Founder & Admin · 2020 – Present", role: "Founder & Admin", summary: "Built and led a 200K-member music community and organised live events.", images: [] },
-  { id: "yes", title: "NSU Young Entrepreneurs Society", subtitle: "General Member · 2022 – 2023", role: "General Member", summary: "Helped with 2023 recruitment, the brand guideline and Admaker.", images: ["/media/awards/admaker-2026-runner-up-group-stage.jpg"] },
+  { id: "mth", title: "Music That Heals", subtitle: "Founder & Admin · 2020 – Present", role: "Founder & Admin", summary: "I founded Music That Heals and built it into a 200K-member music community that also organizes live events.", images: [] },
+  { id: "yes", title: "NSU Young Entrepreneurs Society", subtitle: "General Member · 2022 – 2023", role: "General Member", summary: "Helped with 2023 recruitment, the brand guideline and Admaker.", images: [] },
   { id: "insight-cirkle", title: "From Airtel to Cirkle", subtitle: "LinkedIn thought piece", role: "Author", summary: "A personal LinkedIn post on the Airtel → Cirkle rebrand and long-term brand identity. Commentary, not a campaign he worked on.", images: [], link: "https://www.linkedin.com/posts/raihanmahin_from-airtel-to-cirkle-a-meaningless-rebrand-activity-7496206091739967488-a0Tp", linkLabel: "Read on LinkedIn" },
 ];
 
@@ -210,20 +210,27 @@ export type PhotoAlbum = { id: string; title: string; ids: string[] };
 export type PhotoRoot = { id: ProjectCategory; ids?: string[]; albums?: PhotoAlbum[]; cover?: string };
 /** Single source of truth for the Photos hierarchy (desktop + phone). */
 export const photoRoots: PhotoRoot[] = [
-  { id: "Featured", cover: "/media/behance/234564039.jpg", ids: ["pureit-transition", "pureit-launches", "x-agency", "award-bizmetrics", "award-nexus", "award-admaker", "mth", "agency"] },
-  { id: "Brand Design", albums: [
-    { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man", "pureit-transition", "pureit-launches"] },
+  { id: "★ Flagship", ids: ["pureit-transition", "pureit-launches", "x-agency", "mth"], cover: "/media/behance/234564039.jpg" },
+  { id: "Brand Strategy & Transition", ids: ["pureit-transition", "insight-cirkle"], cover: "/media/behance/234564039.jpg" },
+  { id: "Product Launches", ids: ["pureit-launches"], cover: "/media/behance/234562973.jpg" },
+  { id: "Client Engagement", albums: [{ id: "agency", title: "Agency & Client Work", ids: ["x-agency", "agency", "legend"] }] },
+  { id: "Campaigns & Creative", albums: [
+    { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man"] },
     { id: "berger", title: "Berger & Outdoor", ids: ["bh-berger", "bh-billboard"] },
     { id: "packaging", title: "Packaging", ids: ["bh-parachute"] },
     { id: "campaigns", title: "Campaigns & Digital", ids: ["bh-skin", "bh-bankcard", "bh-promo-video", "bh-promo-social", "bh-social", "bh-social-brand"] },
     { id: "other", title: "Other Design", ids: ["bh-letterhead", "bh-brochure", "bh-oggy", "bh-hattori"] },
   ] },
-  { id: "Competitions", ids: awards.map((a) => `award-${a.id}`) },
-  { id: "More Work", albums: [
-    { id: "agency", title: "Agency & Clients", ids: ["agency", "agency-lux", "agency-lifebuoy", "agency-dove", "x-agency", "legend"] },
-    { id: "community", title: "Community & Writing", ids: ["mth", "yes", "insight-cirkle"] },
-  ] },
+  { id: "Community & Leadership", ids: ["mth", "yes"] },
+  { id: "Awards & Achievements", ids: awards.map(a => `award-${a.id}`) },
 ];
+/** Old OS links continue to resolve without mixing achievements into work. */
+export function resolvePhotoCategory(value: string): ProjectCategory {
+  const aliases: Record<string, ProjectCategory> = { Featured: "★ Flagship", "Brand Design": "Campaigns & Creative", Competitions: "Awards & Achievements", "More Work": "Client Engagement" };
+  return aliases[value] ?? projectCategories.find(c => c === value) ?? (value === "Awards & Achievements" ? value : "★ Flagship");
+}
+export const workRoots = photoRoots.filter(r => r.id !== "Awards & Achievements");
+export const workProjects = projects.filter(p => !p.id.startsWith("award-"));
 export const projectById = (id: string) => projects.find((p) => p.id === id);
 export const albumItems = (ids: string[]) => ids.map(projectById).filter((p): p is Project => !!p);
 export const rootIds = (r: PhotoRoot) => r.ids ?? (r.albums ?? []).flatMap((a) => a.ids);
@@ -251,9 +258,9 @@ ${profile.bio}
 
 ${profile.email} · behance.net/raihanmahin` },
   { id: "now", title: "Currently: Co-Founder", date: "Nov 2026", body: `# Co-Founder
-I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove.` },
+I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove.` },
   { id: "pureit", title: "Pureit Brand Transition", date: "Jun 2026", body: `# Pureit (via BizLearner) · Aug 2024 – Jun 2026
-Helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ brand touchpoints.
+At BizLearner, I led Pureit’s logo rollout across seven-plus touchpoints as it moved from Unilever to A. O. Smith.
 
 - Benchmarked the market and competitors in Bangladesh and Sri Lanka
 - Created 300+ launch assets across Wave, Marina and Ultima Pro
@@ -266,15 +273,15 @@ Helped bring Pureit's new identity to market after the A. O. Smith acquisition, 
   { id: "education", title: "Education", date: "2026", body: `# Education\n${education.map((e) => `- ${e.degree} — ${e.school}, ${e.period}`).join("\n")}` },
   { id: "experience", title: "Where I’ve Worked", date: "2026", body: `# Experience\n${experience.map((e) => `## ${e.role} — ${e.org}\n${e.period} · ${e.type}\n${e.bullets.map((b) => `- ${b}`).join("\n")}`).join("\n\n")}` },
   { id: "launches", title: "Pureit Product Launches", date: "Jun 2026", body: "# Pureit Product Launches\nWave, Marina and Ultima Pro: 300+ communication assets across the three launches. Ultima Pro included pre-to-post launch communications. Collaborative digital campaigns and e-commerce work contributed to 6.5x digital sales growth." },
-  { id: "x-accounts", title: "X Agency Accounts", date: "Oct 2024", body: "# X Agency Accounts\nUpay, City Bank, IDLC, Break Station and Petal. Handled engagement with 90% on-time responses, alongside consumer research and campaign ideation." },
+  { id: "x-accounts", title: "X Agency Accounts", date: "Oct 2024", body: "# X Agency Accounts\nUpay, City Bank, IDLC, Break Station and Petal. Managed response strategy with 90% on-time responses, bringing proposed improvements to client meetings alongside consumer research and campaign ideas." },
   { id: "website", title: "About This Site", date: "Nov 2026", body: "# About This Site\nMahin OS is my career portfolio, inspired by desktop and phone interfaces. Not affiliated with Apple. Design work sits in a separate Behance gallery." },
 ];
 
 export const qa = [
   { q: "What do you do?", a: `I'm a brand marketing & strategy professional. ${profile.bio}` },
-  { q: "What are you working on now?", a: "I run an independent agency. We currently produce AI-generated content for Lux, Lifebuoy and Dove." },
-  { q: "Tell me about Pureit", a: "Through BizLearner (Aug 2024 – Jun 2026) I helped bring Pureit's new identity to market after the A. O. Smith acquisition, across 7+ touchpoints. I also created 300+ launch assets for Wave, Marina and Ultima Pro, and worked with brand, media and agency teams as digital sales grew 6.5x." },
-  { q: "Agency & client work?", a: "At X Integrated Marketing Agency (Oct 2023 – Oct 2024) I handled engagement for Upay, City Bank, IDLC, Break Station and Petal, with a 90% on-time response rate. I also did a short marketing contract at Legend International School." },
+  { q: "What are you working on now?", a: "I co-run an independent agency. We produce AI-generated short-form content for Lux, Lifebuoy and Dove." },
+  { q: "Tell me about Pureit", a: "Through BizLearner (Aug 2024 – Jun 2026) I led Pureit’s logo rollout across seven-plus touchpoints after the A. O. Smith acquisition. I developed 300+ launch assets collectively for Wave, Marina and Ultima Pro. Collaborative campaign and e-commerce work contributed to 6.5x digital sales growth." },
+  { q: "Agency & client work?", a: "At X Integrated Marketing Agency (Oct 2023 – Oct 2024) I managed response strategy for Upay, City Bank, IDLC, Break Station and Petal, with 90% of responses on time. I also did a short marketing contract at Legend International School." },
   { q: "Competition wins?", a: "Seven podiums: champion at BizMetrics 2026, Nexus 2025 and Hult Prize at NSU 2026; 1st runner-up at Admaker Bangladesh, Marxcellence and Innovade 2026; 2nd runner-up at BrandAid 2026. I was also a finalist at Marico's Over the Wall 2025." },
   { q: "Your skills?", a: "GTM and launches, strategy, research, competitor benchmarking, consumer insights, campaign execution, agency client servicing, asset design (Photoshop, Illustrator, Canva, Figma) and stakeholder management." },
   { q: "Community work?", a: "I founded Music That Heals in 2020 and grew it into a 200K-member music community with live events." },

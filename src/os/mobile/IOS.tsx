@@ -11,7 +11,7 @@ import { useClock } from "../useClock";
 import { AppIcon } from "../ui";
 import { Spotlight } from "../Overlays";
 import { AppBody } from "../Desktop";
-import type { ProjectCategory } from "@/data/portfolio";
+import { resolvePhotoCategory, type ProjectCategory } from "@/data/portfolio";
 import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings, IOSRecruiter } from "./MobileApps";
 
 const PAGE1: AppId[] = ["finder", "notes", "messages", "photos", "settings", "calendar", "recruiter", "music"];
@@ -139,7 +139,7 @@ function IOSHome() {
 function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
   const os = useOS();
   const home = () => os.closeAll();
-  const cat = payload?.startsWith("cat:") ? (payload.slice(4) as ProjectCategory) : undefined;
+  const cat = payload?.startsWith("cat:") ? resolvePhotoCategory(payload.slice(4)) : undefined;
   const alb = payload?.startsWith("album:") ? payload.slice(6) : undefined;
   const pid = payload && !payload.startsWith("cat:") && !alb ? payload : undefined;
   let body: React.ReactNode;
@@ -147,17 +147,17 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
     case "recruiter": body = <IOSRecruiter onHome={home} />; break;
     case "notes": body = <IOSNotes onHome={home} payload={payload} />; break;
     case "photos": body = <IOSPhotos key={payload} onHome={home} initial={cat} initialAlbum={alb} initialPid={pid} />; break;
-    case "awards": body = <IOSPhotos onHome={home} initial="Competitions" title="Awards" initialPid={pid} />; break;
+    case "awards": body = <IOSPhotos onHome={home} initial="Awards & Achievements" title="Awards" initialPid={pid} />; break;
     case "brands": body = <IOSPhotos onHome={home} initialAlbum="agency" title="Agency Work" />; break;
     case "finder": body = <IOSFiles onHome={home} />; break;
     case "settings": body = <IOSSettings onHome={home} />; break;
     default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;
   }
   return (
-    <div className={cn("fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground", ["recruiter", "finder", "notes", "music"].includes(id) && "native-dark")}>
-      <div className="absolute inset-x-0 top-0 z-20"><StatusBar light={id === "recruiter" || id === "finder" || id === "notes" || id === "music"} /></div>
+    <div className={cn("fixed inset-0 z-30 flex flex-col overflow-hidden bg-background text-foreground", ["recruiter", "finder", "notes", "music", "photos", "awards"].includes(id) && "native-dark")}>
+      <div className="absolute inset-x-0 top-0 z-20"><StatusBar light={id === "recruiter" || id === "finder" || id === "notes" || id === "music" || id === "photos" || id === "awards"} /></div>
       <div className="relative min-h-0 flex-1">{body}</div>
-      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator light={["recruiter", "finder", "notes", "music"].includes(id)} onTap={home} /></div>
+      <div className="absolute inset-x-0 bottom-0 z-20"><HomeIndicator light={["recruiter", "finder", "notes", "music", "photos", "awards"].includes(id)} onTap={home} /></div>
     </div>
   );
 }

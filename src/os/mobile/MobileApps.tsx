@@ -1,12 +1,14 @@
 export { IOSNotes } from "./IOSNotes";
 export { IOSFiles } from "./IOSFiles";
+import { Button } from "@/components/ui/button";
+import { ProjectCover } from "../ProjectCover";
 import { RecruiterContent } from "../RecruiterContent";
 import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star, Layers, PanelsTopLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
-import { photoRoots, rootIds, albumItems, albumCover, findAlbum, projectById, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project } from "@/data/portfolio";
+import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, albumCover, findAlbum, projectById, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project } from "@/data/portfolio";
 import { useOS, type Wallpaper } from "../store";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 import { Render } from "../apps/Notes";
@@ -78,7 +80,7 @@ function SearchField({ value, onChange, placeholder }: { value: string; onChange
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
   return (
     <IOSPage title="" backLabel={back} onBack={onBack} large={false}>
-      <div className="aspect-[4/3] w-full bg-secondary"><MediaPlaceholder seed={hash(p.id)} src={p.images[0]} alt={p.title} className="object-contain" /></div>
+      <div className="aspect-[4/3] w-full bg-secondary"><ProjectCover project={p} contain /></div>
       <div className="px-4 pt-4">
         <div className="flex flex-wrap items-center gap-1.5">{p.badge && <Badge tone={p.badge === "Champion" ? "gold" : "default"}>{p.badge}</Badge>}<span className="text-[13px] text-muted-foreground">{p.subtitle}</span></div>
         <h2 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight">{p.title}</h2>
@@ -98,65 +100,38 @@ function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: 
   );
 }
 
-function AlbumGrid({ items, onOpen }: { items: { id: string; title: string; count: number; cover: string | undefined }[]; onOpen: (id: string) => void }) {
-  return (
-    <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-4">
-      {items.map((c) => (
-        <button key={c.id} onClick={() => onOpen(c.id)} className="text-left active:opacity-70">
-          <div className="aspect-square overflow-hidden rounded-xl"><MediaPlaceholder seed={hash(c.id)} src={c.cover} alt={`${c.title} album`} label={c.title} /></div>
-          <p className="mt-1.5 text-[15px] font-medium leading-tight">{c.title}</p><p className="text-[13px] text-muted-foreground">{c.count}</p>
-        </button>))}
-    </div>
-  );
-}
-
-export function IOSPhotos({ onHome, initial, initialAlbum, initialPid, title = "Photos" }: { onHome: () => void; initial?: ProjectCategory | undefined; initialAlbum?: string | undefined; initialPid?: string | undefined; title?: string }) {
+export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHome: () => void; initial?: ProjectCategory | undefined; initialAlbum?: string | undefined; initialPid?: string | undefined; title?: string }) {
   const found = initialAlbum ? findAlbum(initialAlbum) : undefined;
   const [root, setRoot] = useState<ProjectCategory | null>(found?.root ?? initial ?? null);
   const [album, setAlbum] = useState<string | null>(found?.album.id ?? null);
   const [pid, setPid] = useState<string | null>(initialPid ?? null);
-  const entry = initialAlbum ? "album" : initial ? "root" : "home";
-  const r = photoRoots.find((x) => x.id === root);
-  const a = r?.albums?.find((x) => x.id === album);
+  const [tab, setTab] = useState<"Library" | "Collections">("Collections");
+  const [searching, setSearching] = useState(false);
+  const [q, setQ] = useState("");
+  const r = photoRoots.find(x => x.id === root);
+  const a = r?.albums?.find(x => x.id === album);
   const p = pid ? projectById(pid) : undefined;
-  if (p) return <ProjectDetail p={p} back={a?.title ?? r?.id ?? title} onBack={() => (a || r ? setPid(null) : onHome())} />;
-  if (r && (a || !r.albums)) {
-    const items = albumItems(a ? a.ids : rootIds(r));
-    const leaveToHome = entry === "album" || (entry === "root" && !a);
-    const awardsList = r.id === "Competitions";
-    return (
-      <IOSPage title={a ? a.title : entry === "root" ? title : r.id} backLabel={leaveToHome ? "Home" : a ? r.id : "Albums"} onBack={() => (leaveToHome ? onHome() : a ? setAlbum(null) : setRoot(null))}>
-        {awardsList ? (
-          <Group footer="7 national podiums + 1 Marico finalist.">
-            {items.map((x) => (
-              <button key={x.id} onClick={() => setPid(x.id)} className="flex w-full items-center gap-3 px-4 py-2.5 text-left active:bg-accent">
-                <div className="size-14 shrink-0 overflow-hidden rounded-lg"><MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="" /></div>
-                <div className="min-w-0 flex-1"><p className="truncate text-[16px] font-semibold">{x.title.replace(/ — .*$/, "")}</p><p className="truncate text-[13px] text-muted-foreground">{x.badge} · {x.subtitle}</p></div>
-              </button>))}
-          </Group>
-        ) : (
-          <div className="grid grid-cols-3 gap-0.5">
-            {items.map((x) => (
-              <button key={x.id} onClick={() => setPid(x.id)} className="relative aspect-square overflow-hidden" aria-label={x.title}>
-                <MediaPlaceholder seed={hash(x.id)} src={x.images[0]} label="" />
-                {!x.images[0] && <span className="absolute inset-x-0 bottom-0 truncate bg-chrome px-1.5 py-1 text-[10px] font-semibold text-chrome-foreground">{x.title}</span>}
-              </button>))}
-          </div>
-        )}
-        <p className="pt-4 text-center text-[13px] text-muted-foreground">{items.length} items</p>
-      </IOSPage>
-    );
-  }
-  if (r?.albums) return (
-    <IOSPage title={r.id} backLabel={entry === "root" ? "Home" : "Albums"} onBack={() => (entry === "root" ? onHome() : setRoot(null))}>
-      <AlbumGrid items={r.albums.map((x) => ({ id: x.id, title: x.title, count: x.ids.length, cover: albumCover(x.ids) }))} onOpen={setAlbum} />
-    </IOSPage>
-  );
-  return (
-    <IOSPage title="Albums" backLabel="Home" onBack={onHome}>
-      <AlbumGrid items={photoRoots.map((x) => ({ id: x.id, title: x.id, count: rootIds(x).length, cover: x.cover ?? albumCover(rootIds(x)) }))} onOpen={(id) => setRoot(id as ProjectCategory)} />
-    </IOSPage>
-  );
+  const back = () => { if (searching) { setSearching(false); setQ(""); } else if (pid) setPid(null); else if (album) setAlbum(null); else if (root) setRoot(null); else onHome(); };
+  const itemGrid = (items: Project[], countPhotos = false) => <div className="grid grid-cols-2 gap-x-3 gap-y-6">{items.map(x => <Button key={x.id} variant="ghost" className="h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => setPid(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]"><ProjectCover project={x}/></div><p className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p><p className="mt-1 text-[13px] text-muted-foreground">{countPhotos ? `${x.images.length} photos · ${x.badge}` : x.subtitle}</p></Button>)}</div>;
+  const collections = (entries: { id: string; title: string; ids: string[]; cover?: string | undefined }[], open: (id: string) => void) => <div className="grid grid-cols-2 gap-x-3 gap-y-7">{entries.map(x => {
+    const cover = albumItems(x.ids)[0];
+    return <Button key={x.id} variant="ghost" className="h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => open(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]">{x.cover ? <MediaPlaceholder src={x.cover} alt={x.title}/> : cover && <ProjectCover project={cover}/>}</div><p className="mt-2 text-[15px] font-semibold leading-snug">{x.title}</p><p className="mt-1 text-[13px] text-muted-foreground">{x.ids.length} items</p></Button>;
+  })}</div>;
+  const source = root === "Awards & Achievements" ? albumItems(r ? rootIds(r) : []) : workProjects;
+  const results = source.filter(x => `${x.title} ${x.subtitle} ${x.summary ?? ""}`.toLowerCase().includes(q.toLowerCase()));
+  return <div className="native-dark photos-native absolute inset-0">
+    {p ? <ProjectDetail p={p} back={a?.title ?? r?.id ?? tab} onBack={back}/> : <IOSPage title={searching ? "Search" : a?.title ?? r?.id ?? tab} backLabel={root ? "Collections" : "Home"} onBack={back}>
+      <div className="px-4 pb-36">
+        {searching ? <><label className="mb-5 flex h-11 items-center gap-2 rounded-lg bg-secondary px-3"><Search size={18}/><input autoFocus aria-label="Search Photos" placeholder={root === "Awards & Achievements" ? "Search awards" : "Search work"} value={q} onChange={e => setQ(e.target.value)} className="min-w-0 flex-1 bg-transparent outline-none" /></label>{itemGrid(results, root === "Awards & Achievements")}{!results.length && <p className="py-10 text-center text-muted-foreground">No results</p>}</> : r ? r.albums && !a ? collections(r.albums, setAlbum) : itemGrid(albumItems(a?.ids ?? rootIds(r)), root === "Awards & Achievements") : tab === "Library" ? itemGrid(workProjects) : <>
+          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover })), id => setRoot(resolvePhotoCategory(id)))}
+          <h3 className="mb-5 mt-12 text-[25px] font-bold leading-tight">Awards & Achievements</h3>
+          {itemGrid(albumItems(awards.map(x => `award-${x.id}`)), true)}
+          <p className="mt-6 text-[13px] text-muted-foreground">7 national podiums · 1 Marico finalist</p>
+        </>}
+      </div>
+    </IOSPage>}
+    {!p && <div className="absolute inset-x-0 bottom-8 z-20 flex items-center justify-between gap-4 px-4"><div role="tablist" aria-label="Photos views" className="photos-toolbar flex rounded-full p-1">{(["Library", "Collections"] as const).map(t => <Button key={t} role="tab" aria-selected={tab === t} variant="ghost" className="photos-tab h-[52px] flex-col gap-0.5 rounded-full px-5 text-[12px]" onClick={() => { setTab(t); setRoot(null); setAlbum(null); setSearching(false); setQ(""); }}>{t === "Library" ? <Layers/> : <PanelsTopLeft/>}{t}</Button>)}</div><Button variant="secondary" className="photos-toolbar size-[52px] shrink-0 rounded-full" aria-label="Search Photos" onClick={() => setSearching(v => !v)}><Search/></Button></div>}
+  </div>;
 }
 
 /* ---------- Settings ---------- */

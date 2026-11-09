@@ -1,4 +1,3 @@
-- [x] Rebuild compact desktop and iOS home with portrait and three actions.
-- [x] Native recruiter overview, actual sanitized PDF, Files, Notes and Spotify discovery.
-- [x] Correct Co-Founder positioning, career-first content and logo-only marks.
-- [x] Preserve media; test desktop/mobile interactions and commit without publishing.
+- [x] Integrate chosen portrait and compact reference desktop arrangement.
+- [x] Separate professional work collections from all eight awards across Photos and Files.
+- [x] Align shared career copy and verify desktop/iPhone interactions and media.

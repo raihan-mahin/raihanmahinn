@@ -36,7 +36,8 @@ use the editor.
 - Media files live in `public/media/` (behance covers named by Behance project id, award photos per `public/media/awards/README.md`); award `images` point at their expected file paths (same as `pendingImages`); `MediaPlaceholder` falls back to a placeholder when a file is missing.
 - App icons are original SVG drawings in `src/os/icons.tsx` (illustration colours allowed there only).
 - Brand logos: files in `public/media/logos/`, mapped by brand name in `src/data/brandLogos.ts`, rendered only via `BrandLogo`/`BrandStrip` (text fallback); competition case brands never get logo entries.
-- Photos hierarchy (4 roots, nested albums, covers) is defined once in `photoRoots` in `src/data/portfolio.ts`; desktop and iOS Photos and all "cat:<root>" / "album:<id>" payloads read from it.
+- Photos work taxonomy and separate achievements collection are defined in `photoRoots`; `workRoots` and `workProjects` exclude awards, and legacy category payloads resolve centrally so existing shortcuts keep working.
+- ProjectCover renders actual project imagery or verified branded/neutral covers so work without photographs remains distinct from award media.
 - RecruiterContent is shared across desktop and the native phone page to keep career facts and actions identical; sanitized PDFs are generated on demand in the browser from portfolio data, never from private CV fields.
 - Music links to external Spotify discovery searches only; no simulated playback or invented personal recordings.
 - Notes merge missing seed IDs into stored user notes without overwriting saved edits; explicit Reset remains the only destructive seed restore.

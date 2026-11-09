@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { FileText, Folder, Trophy } from "lucide-react";
+import { FileText, Folder, Trophy, UserRound, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
 import { OSProvider, useOS } from "./store";
@@ -55,9 +56,12 @@ function Shell() {
   }, [os]);
 
   const icons: { label: string; icon: React.ReactNode; app: AppId; payload?: string | undefined }[] = [
+    { label: "Quick View", icon: <UserRound size={40} className="text-chrome-foreground" />, app: "recruiter" },
     { label: "Resume.pdf", icon: <FileText size={40} className="text-chrome-foreground" />, app: "preview" },
-    { label: "Projects", icon: <Folder size={44} className="fill-primary/60 text-primary" />, app: "finder" },
-    { label: "Awards", icon: <Trophy size={40} className="text-gold" />, app: "photos", payload: "cat:Competitions" },
+    { label: "Work", icon: <Folder size={44} className="fill-primary/60 text-primary" />, app: "photos", payload: "cat:★ Flagship" },
+    { label: "Experience", icon: <Briefcase size={40} className="text-chrome-foreground" />, app: "finder" },
+    { label: "Contact.txt", icon: <FileText size={40} className="text-chrome-foreground" />, app: "messages" },
+    { label: "Awards", icon: <Trophy size={40} className="text-gold" />, app: "photos", payload: "cat:Awards & Achievements" },
   ];
 
   if (mobile) return <IOSShell />;
@@ -71,10 +75,10 @@ function Shell() {
       {os.prefs.showWidget && <DesktopWidget />}
       <div className="absolute right-4 top-12 flex flex-col gap-4">
         {icons.map((i) => (
-          <button key={i.label} onDoubleClick={() => os.open(i.app, i.payload)} onClick={(e) => e.detail === 0 && os.open(i.app, i.payload)}
-            className="flex w-20 flex-col items-center gap-1 rounded-lg p-1.5 focus:bg-chrome" title="Double-click to open">
+          <Button variant="ghost" key={i.label} onDoubleClick={() => os.open(i.app, i.payload)} onClick={(e) => e.detail === 0 && os.open(i.app, i.payload)}
+            className="flex h-auto w-20 flex-col items-center gap-1 rounded-lg p-1.5 focus:bg-chrome" title="Double-click to open">
             {i.icon}<span className="text-shadow-soft text-xs font-semibold text-chrome-foreground">{i.label}</span>
-          </button>))}
+          </Button>))}
       </div>
       {os.windows.map((w) => <Window key={w.id} win={w}><AppBody id={w.id} payload={w.payload} /></Window>)}
       <Dock />
