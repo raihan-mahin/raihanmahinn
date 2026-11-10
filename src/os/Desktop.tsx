@@ -11,6 +11,7 @@ import { Window } from "./Window";
 import { LockScreen } from "./LockScreen";
 import { Spotlight, Launchpad, Shortcuts } from "./Overlays";
 import { DesktopWidget } from "./DesktopWidget";
+import { DesktopPortrait } from "./DesktopPortrait";
 import { Finder } from "./apps/Finder";
 import { Notes } from "./apps/Notes";
 import { Messages } from "./apps/Messages";
@@ -73,6 +74,7 @@ function Shell() {
         ? <img src={wallpaper} alt="" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
         : <div className={cn("absolute inset-0", `wp-${os.prefs.wallpaper}`)} />}
       <h1 className="sr-only">Mahin OS — Raihan Mahin, brand marketing and creative portfolio</h1>
+      {mobile === false && !os.active && !os.locked && os.overlay === "none" && <DesktopPortrait />}
       <MenuBar />
       {os.prefs.showWidget && <DesktopWidget />}
       <div className="absolute right-4 top-12 flex flex-col gap-4">

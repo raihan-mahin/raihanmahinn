@@ -201,6 +201,7 @@
 @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes bounce-dock { 0%,40%,80%,100% { transform: translateY(0); } 20% { transform: translateY(-24px); } 60% { transform: translateY(-12px); } }
 .os-mobile-pending { display: none; }
+.desktop-home-portrait { position: absolute; left: 50%; top: 48%; width: min(clamp(260px, 32vw, 430px), 50vh); aspect-ratio: 1291 / 1218; transform: translate(-50%, -50%); pointer-events: none; user-select: none; }
 @media (width < 768px) {
   .os-desktop-shell { display: none !important; }
   .os-mobile-pending { display: block; }

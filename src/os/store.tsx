@@ -80,10 +80,6 @@ export function OSProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  useEffect(() => {
-    if (window.innerWidth >= 768) open("notes", "about");
-  }, [open]);
-
   const focus = useCallback((id: AppId) => {
     setZTop((z) => { const nz = z + 1; setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, z: nz } : w))); return nz; });
   }, []);
