@@ -8,8 +8,8 @@ import { ProjectCover } from "./ProjectCover";
 
 export function StoryText({ project }: { project: Project }) {
   return <div className="space-y-4">
-    {project.metrics && <section aria-label="Scope of contribution"><h3 className="text-sm font-semibold">Scope of contribution</h3><dl className="mt-3 grid grid-cols-2 gap-3">{project.metrics.map(m => <div key={m.label} className="border-b border-border pb-3"><dt className="text-2xl font-bold">{m.value}</dt><dd className="text-xs text-muted-foreground">{m.label}</dd></div>)}</dl></section>}
-    {project.summary && <section>{project.badge && <h3 className="mb-2 font-semibold">The case</h3>}<p className="text-[15px] leading-relaxed">{project.summary}</p></section>}
+    {project.metrics && <section aria-label="Fast Facts"><h3 className="text-sm font-semibold">Fast Facts</h3><dl className="mt-3 grid grid-cols-2 gap-3">{project.metrics.map(m => <div key={m.label} className="border-b border-border pb-3"><dt className="text-2xl font-bold">{m.value}</dt><dd className="text-xs text-muted-foreground">{m.label}</dd></div>)}</dl></section>}
+    {project.summary && <section>{project.badge && <h3 className="mb-2 font-semibold">The case</h3>}{project.summary.split("\n\n").map((paragraph, index) => <p key={index} className="text-[15px] leading-relaxed [&+p]:mt-4">{paragraph}</p>)}</section>}
     {project.brandRow && <BrandStrip label={project.brandRow.label} names={project.brandRow.names}/>}
     {project.link && <Button asChild><a href={project.link} target="_blank" rel="noreferrer">{project.linkLabel ?? "View on Behance"}</a></Button>}
   </div>;

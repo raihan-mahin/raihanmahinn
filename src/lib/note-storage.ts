@@ -8,7 +8,7 @@ export function mergeNotes(stored: Note[], defaults = notes): Note[] {
     ...stored.map(n => {
       const current = defaults.find(s => s.id === n.id);
       const untouched = legacy.some(s => s.id === n.id && s.title === n.title && s.body === n.body);
-      return current && untouched ? current : n;
+      return current && untouched ? { ...n, ...current, date: n.date } : n;
     }),
     ...defaults.filter(n => !stored.some(s => s.id === n.id)),
   ];

@@ -1,3 +1,3 @@
-- [x] Finish the supplied shared gallery and Notes patch, preserving the partial revision.
-- [x] Run tests and inspect phone/desktop contact actions, gradients, collections and unchanged award media.
-- [x] Save one finished commit without publishing or changing visibility.
+- [x] Refresh approved work, creative, leadership and supporting copy while preserving bios and CV.
+- [x] Verify tests, displayed phone/desktop stories and unchanged media.
+- [x] Save the revision without publishing or visibility changes.

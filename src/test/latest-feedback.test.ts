@@ -17,7 +17,7 @@ describe("owner's latest factual rules", () => {
     expect(projectById("pureit-transition")?.metrics?.map(m => m.value)).toEqual(["7+", "2", "3", "300+"]);
     expect(experience.find(e => e.id === "bizlearner")?.bullets.join(" ")).not.toContain("India");
   });
-  it("labels the two-minute response as target alongside verified counts", () => expect(projectById("x-agency")?.metrics).toEqual([{ value: "Under 2 minutes", label: "Response target" }, { value: "90%", label: "On-time response" }, { value: "5", label: "Client accounts" }]));
+  it("labels the two-minute response as target alongside verified counts", () => expect(projectById("x-agency")?.metrics).toEqual([{ value: "Under 2 minutes", label: "Response target" }, { value: "90%", label: "On-time response rate" }, { value: "5", label: "Client accounts" }]));
   it("uses three confirmed markets in recruiter statistics", () => expect(recruiter.stats[2]).toEqual({ value: "3", label: "Markets", note: "Bangladesh · India · Sri Lanka" }));
   it("retains seven podiums and all sixteen original photographs without slides", () => {
     expect(awards.filter(a => a.rank !== "Finalist")).toHaveLength(7);

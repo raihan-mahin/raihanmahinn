@@ -31,7 +31,7 @@ describe("positioning", () => {
   it("current role is Co-Founder, one of four equal entries", () => {
     expect(experience).toHaveLength(4);
     expect(experience.find((e) => e.type === "Current")?.role).toBe("Co-Founder");
-    expect(experience.find((e) => e.type === "Current")?.org).toBe("Independent Agency");
+    expect(experience.find((e) => e.type === "Current")?.org).toBe("XYZ Agency");
   });
   it("Featured holds no more than one agency item", () => {
     const featured = photoRoots.find(r => r.id === "★ Flagship")?.ids ?? [];
@@ -57,7 +57,7 @@ describe("media", () => {
 
 describe("work collections and achievements", () => {
   it("keeps the remaining career categories in order", () => {
-    expect(workRoots.map(r => r.id)).toEqual(["★ Flagship", "Brand Strategy & Transition", "X Integrated Marketing Agency", "Co-Founder · Independent Agency", "Legend International School", "Campaigns & Creative", "Community & Leadership"]);
+    expect(workRoots.map(r => r.id)).toEqual(["★ Flagship", "Brand Strategy & Transition", "X Integrated Marketing Agency", "XYZ Agency", "Legend International School", "Campaigns & Creative", "Community & Leadership"]);
   });
   it("excludes all competition records and photos from work collections", () => {
     for (const r of workRoots) for (const p of albumItems(rootIds(r))) {
@@ -76,7 +76,7 @@ describe("work collections and achievements", () => {
   it("Flagship prioritizes transition and servicing without Music That Heals", () => {
     expect(photoRoots.find(r => r.id === "★ Flagship")?.ids).toEqual(["pureit-transition", "x-agency"]);
     expect(photoRoots.find(r => r.id === "X Integrated Marketing Agency")?.ids).toEqual(["x-agency"]);
-    expect(photoRoots.find(r => r.id === "Co-Founder · Independent Agency")?.ids).toEqual(["agency"]);
+    expect(photoRoots.find(r => r.id === "XYZ Agency")?.ids).toEqual(["agency"]);
     expect(photoRoots.find(r => r.id === "Legend International School")?.ids).toEqual(["legend"]);
     expect(workRoots.every(root => Boolean(root.gradient))).toBe(true);
     expect(workProjects.some(p => p.id === "mth")).toBe(false);
