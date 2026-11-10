@@ -14,5 +14,5 @@
 - [x] Spread XYZ shelf positions responsively while preserving navigation and media.
 - [x] Enable intentional preview sound with policy fallback; verified desktop/mobile browser-equivalent audible playback, touch navigation, full viewer/focus, stable simulated policy fallback, 76 tests and preview build. Saved without publishing; actual editor permissions and physical-device audio remain unverified.
 - [x] Compact XYZ shelf using wider adjacent faces; verified Lux middle/ends at desktop and 390/375px phones, single-click entry, keyboard navigation, advancing audible playback, viewer pause/focus return; 76 tests passed and preview build OK. Saved preview only.
-- [ ] Prevent phone desktop first-paint flash with hydration-safe selection and CSS guards; verify delayed/disabled scripts and desktop SSR.
-- [ ] Stabilize desktop dock hover geometry and compose launch bounce; verify desktop/mobile interaction, resize and reduced motion; save preview only.
+- [x] Prevent phone desktop first-paint flash; scripts-disabled checks passed at 375/390/767px with wallpaper only, desktop SSR visible at 768/1280px; delayed scripts hydrated into iOS without errors.
+- [x] Stabilize dock hover and separate bounce; verified fixed 48px targets, ~82px magnified icons, fast movement/exit, launch, keyboard, preference off/on, reduced motion, 60px phone dock tap/home and resize retaining Photos; 82 tests and preview build passed. Saved preview only; physical-device testing not performed.
