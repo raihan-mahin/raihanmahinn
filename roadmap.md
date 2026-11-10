@@ -11,3 +11,5 @@
 - [x] Verify playback at 390×844 and 1280×1800 (Born for This advanced after click; 38-item queue retained at index 3), two-column gallery/native dialog using temporary media only, keyboard focus return, 65 tests and preview build; save without publishing.
 - [x] Restore ordered two-column watch actions with official cropped Instagram players, native-source preference and original-link fallbacks.
 - [x] Check all four public embeds at 390×844 and 1280×1800: first/fourth played, second did not advance and showed an in-media Instagram prompt (use explicit fallback), third publicly unavailable (fallback). Crops hide surrounding feed, retain original controls; phone pause verified, desktop pause inconsistent. Born for This played with 38-entry queue/index 3, no overflow, focus returned; 66 tests and preview build passed. Save without publishing.
+- [ ] Spread XYZ shelf positions responsively while preserving navigation and media.
+- [ ] Enable intentional preview sound with policy fallback; verify desktop/mobile playback, controls and tests; save without publishing.

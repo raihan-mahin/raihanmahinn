@@ -46,3 +46,4 @@ use the editor.
 - MOBILE_APPS defines phone-visible apps for home, Spotlight and Files; résumé and awards remain reachable as content without desktop-only tools.
 - Messages and SystemSettings share desktop/phone behavior with dedicated full-height phone bodies; no nested viewport box, so compact screens remain usable.
 - NoteList shares date grouping and decorative icons across shells; coarse seed dates remain in Portfolio notes and real edits use optional timestamps without changing storage migration.
+- CampaignMedia reuses one center preview element and attempts playback synchronously during navigation; a single policy refusal falls back muted with an explicit gesture retry to avoid competing audio and rejection loops.
