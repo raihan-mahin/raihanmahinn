@@ -49,4 +49,4 @@ use the editor.
 - CampaignMedia reuses one center preview element and attempts playback synchronously during navigation; a single policy refusal falls back muted with an explicit gesture retry to avoid competing audio and rejection loops.
 - CampaignMedia packs native-ratio poster faces by adjoining projected widths and a small gap, hiding out-of-frame neighbors rather than clipping them; this keeps the shelf compact across screen sizes.
 - Shell selection uses a hydration-safe viewport subscription and matching CSS width guards; pending phones show only wallpaper while desktop SSR remains visible, without mounting two live shells.
-- Desktop dock hit areas stay fixed while nested icon scale and launch bounce compose independently; stable geometry avoids pointer/layout feedback.
+- Desktop dock magnification animates occupied target widths/heights and centered glass together; invert a deterministic baseline layout including LinkedIn/divider gaps, never animated DOM measurements, to avoid feedback jitter. Launch bounce is a separate nested transform.
