@@ -40,7 +40,7 @@ use the editor.
 - ProjectCover and CollectionCover share GradientCover for explicitly configured career covers using CSS palette tokens; original images remain accessible in ProjectStory and awards retain image-first covers.
 - CollectionCover reads collection-level cover styles from the shared taxonomy to distinguish designed career covers from project and award imagery.
 - RecruiterContent is shared across desktop and the native phone page to keep career facts and actions identical; sanitized PDFs and Preview read the same separate verbatim CV content source, never private CV fields.
-- Music links to external Spotify discovery searches only; no simulated playback or invented personal recordings.
+- Music uses one shared curated reel list and UI across shells; mount only the selected public Instagram iframe, without autoplay or rehosting, and always retain its canonical external fallback.
 - Notes replace only exact known historical defaults and merge missing IDs; preserve custom text and existing date/timestamp fields during default refreshes, with explicit Reset the only destructive restore.
 - ProjectStory owns shared work metrics and award photo viewing across desktop/mobile so captions, accessible navigation and case attribution stay identical.
 - MOBILE_APPS defines phone-visible apps for home, Spotlight and Files; résumé and awards remain reachable as content without desktop-only tools.

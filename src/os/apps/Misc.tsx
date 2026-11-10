@@ -1,5 +1,5 @@
 import { RecruiterContent } from "../RecruiterContent";
-import { listeningPlaylists } from "@/data/portfolio";
+export { Music } from "./Music";
 import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, SkipBack, SkipForward, RotateCcw, Trash2, Mail, Linkedin, FileText, ExternalLink } from "lucide-react";
@@ -68,10 +68,6 @@ export function Calendar() {
       </aside>
     </div>
   );
-}
-
-export function Music() {
-  return <div className="native-dark h-full overflow-auto p-5"><h2 className="mb-1 text-[32px] font-bold">Playlists</h2><p className="mb-5 text-xs text-muted-foreground">Listening & discovery · Spotify</p><div className="grid grid-cols-2 gap-x-4 gap-y-6">{listeningPlaylists.map(p => <a key={p.title} href={p.url} target="_blank" rel="noreferrer" className="min-w-0"><div className={`music-cover music-${p.tone}`}><span>{p.symbol}</span></div><p className="mt-2 text-sm font-semibold">{p.title}</p><p className="mt-0.5 text-xs text-muted-foreground">Spotify</p></a>)}</div></div>;
 }
 
 const JUNK = ["generic-portfolio-template.zip", "boring_resume_v1_FINAL_final.docx", "stock-photo-handshake.jpg", "lorem-ipsum-case-study.pdf", "imposter-syndrome.tmp"];

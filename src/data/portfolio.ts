@@ -152,11 +152,12 @@ export const recruiter = {
   stats: [{ value: "10+", label: "Brands" }, { value: "7", label: "National Competition Podiums" }, { value: "3", label: "Markets", note: "Bangladesh · India · Sri Lanka" }, { value: "2+ years", label: "Marketing experience" }],
   highlights: ["Supported Pureit’s transition across 7+ touchpoints and three product launches.", "Managed five client accounts at X Integrated Marketing Agency, with a 90% on-time response rate.", "Earned seven national competition podiums."],
 };
-export const listeningPlaylists = [
-  { title: "Focus & Flow", query: "instrumental focus", symbol: "♫", tone: "focus" },
-  { title: "After Hours", query: "late night jazz", symbol: "♪", tone: "night" },
-  { title: "Energy Boost", query: "workout energy", symbol: "♬", tone: "energy" },
-].map((p) => ({ ...p, url: `https://open.spotify.com/search/${encodeURIComponent(p.query)}` }));
+export const motivationReels = [
+  "https://www.instagram.com/reel/DeMQdiPDrIT/",
+  "https://www.instagram.com/reel/DfjHOPGuXIo/",
+  "https://www.instagram.com/reel/DfJMntJKKb5/",
+  "https://www.instagram.com/reel/DfUDCG9Nc5a/",
+].map((url, index) => ({ url, embedUrl: `${url}embed/`, label: `Reel ${index + 1}` }));
 
 /** Kept for detailed views (e.g. resume); not shown on the homepage. */
 export const stats = [

@@ -14,6 +14,7 @@ import { AppBody } from "../Desktop";
 import { resolvePhotoCategory, type ProjectCategory } from "@/data/portfolio";
 import { IOSPage, IOSNotes, IOSPhotos, IOSFiles, IOSSettings, IOSRecruiter } from "./MobileApps";
 import { Messages } from "../apps/Messages";
+import { Music } from "../apps/Music";
 
 const PAGE1 = MOBILE_APPS;
 const DOCK: AppId[] = ["notes", "messages", "photos", "music"];
@@ -132,6 +133,7 @@ function IOSApp({ id, payload }: { id: AppId; payload?: string | undefined }) {
     case "brands": body = <IOSPhotos onHome={home} initial="XYZ Agency" title="XYZ Agency" />; break;
     case "finder": body = <IOSFiles onHome={home} />; break;
     case "settings": body = <IOSSettings onHome={home} />; break;
+    case "music": body = <IOSPage title="Music" backLabel="Home" onBack={home} large={false} inset={false}><Music mobile /></IOSPage>; break;
     default: body = <IOSPage title={label(id)} backLabel="Home" onBack={home} large={false} inset={false}><div className="h-[calc(100dvh-140px)]"><AppBody id={id} payload={payload} /></div></IOSPage>;
   }
   return (

@@ -1,3 +1,6 @@
 - [x] Refresh approved work, creative, leadership and supporting copy while preserving bios and CV.
 - [x] Verify tests, displayed phone/desktop stories and unchanged media.
 - [x] Save the revision without publishing or visibility changes.
+- [x] Replace Music playlists with four ordered public Instagram reels and a single selected player.
+- [x] Check all four actual embeds, phone/desktop scrolling, tests and preview status (1/4 playback verified; 2 preview loaded but playback unverified; 3 unavailable).
+- [x] Commit the Music revision without publication or visibility changes.
