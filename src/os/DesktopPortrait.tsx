@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { PORTRAIT_EYES, PUPIL_RADIUS, portraitGaze, portraitTransform } from "@/lib/portrait-gaze";
+import { IRIS_RADIUS, PORTRAIT_EYES, PUPIL_RADIUS, portraitGaze, portraitTransform } from "@/lib/portrait-gaze";
 
 const portrait = "/media/profile/mahin-desktop-avatar.png";
 
@@ -19,7 +19,7 @@ export function DesktopPortrait() {
     const draw = () => {
       const t = portraitTransform(current);
       element.style.transform = `rotateX(${t.rotateX}deg) rotateY(${t.rotateY}deg)`;
-      eyes.current?.setAttribute("transform", `translate(${t.pupilX} ${t.pupilY})`);
+      eyes.current?.querySelectorAll(".portrait-iris").forEach(g => g.setAttribute("transform", `translate(${t.pupilX} ${t.pupilY})`));
     };
     const animate = (now: number) => {
       frame = 0;
@@ -64,7 +64,16 @@ export function DesktopPortrait() {
     <img src={portrait} alt="" draggable={false} />
     <div className="portrait-stage"><div ref={head} className="portrait-head">
       <img src={portrait} alt="" draggable={false} />
-      <svg viewBox="0 0 1291 1218"><g ref={eyes}>{PORTRAIT_EYES.map(e => <circle key={e.x} cx={e.x} cy={e.y} r={PUPIL_RADIUS} className="portrait-pupil" />)}</g></svg>
+      <svg viewBox="0 0 1291 1218"><defs>
+        <radialGradient id="portrait-iris-fill"><stop offset="0%" stopColor="#3c1e0c" /><stop offset="70%" stopColor="#2a1408" /><stop offset="100%" stopColor="#120804" /></radialGradient>
+        <filter id="portrait-eye-soft"><feGaussianBlur stdDeviation="1.2" /></filter>
+        {PORTRAIT_EYES.map((e, i) => <clipPath key={i} id={`portrait-eye-${i}`}><ellipse cx={e.x} cy={e.y + 1} rx={27} ry={11} /></clipPath>)}
+      </defs><g ref={eyes}>{PORTRAIT_EYES.map((e, i) => <g key={i} clipPath={`url(#portrait-eye-${i})`}>
+        <ellipse cx={e.x} cy={e.y + 1} rx={26} ry={13} fill="#bea99d" filter="url(#portrait-eye-soft)" />
+        <g className="portrait-iris"><circle cx={e.x} cy={e.y} r={IRIS_RADIUS} fill="url(#portrait-iris-fill)" />
+          <circle cx={e.x} cy={e.y} r={PUPIL_RADIUS} fill="#050201" />
+          <circle cx={e.x + 6} cy={e.y - 6} r={3} fill="#e8e4e6" opacity={0.85} /></g>
+      </g>)}</g></svg>
     </div></div>
   </div>;
 }
