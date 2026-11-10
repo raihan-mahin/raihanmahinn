@@ -16,8 +16,8 @@ describe("desktop home portrait behavior", () => {
     expect(portraitPoint(640, 389, { x: 1, y: 0 }).x).toBeGreaterThan(690);
     expect(portraitPoint(640, 389, { x: -1, y: 0 }).x).toBeLessThan(590);
     expect(portraitPoint(546, 389, { x: 0, y: 0 })).toEqual({ x: 546, y: 389 });
-    const a = portraitPoint(640, 869, { x: 1, y: 1 });
-    expect(Math.abs(a.x - 640) + Math.abs(a.y - 869)).toBeLessThan(.01);
+    const a = portraitPoint(640, 815, { x: 1, y: 1 });
+    expect(Math.abs(a.x - 640) + Math.abs(a.y - 815)).toBeLessThan(.01);
   });
   it("starts home with no windows but preserves explicit Notes payloads", () => {
     function Probe() {

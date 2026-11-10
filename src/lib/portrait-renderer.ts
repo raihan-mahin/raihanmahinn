@@ -5,9 +5,9 @@ export function createPortraitRenderer(canvas: HTMLCanvasElement, image: HTMLIma
   const vertex = `precision mediump float; attribute vec2 point; varying vec2 uv; uniform vec2 pose;
     void main() {
       uv=point/vec2(1291.,1218.);
-      float weight=1.-smoothstep(650.,870.,point.y);
+      float weight=1.-smoothstep(710.,800.,point.y);
       float a=pose.x*.075; vec2 p=point-vec2(640.,700.);
-      vec2 r=vec2(p.x*cos(a)-p.y*sin(a)+pose.x*32.-p.x*abs(pose.x)*.035,
+      vec2 r=vec2(p.x*cos(a)-p.y*sin(a)+pose.x*32.-p.x*abs(pose.x)*.035-pose.x*.06*p.x*p.x/320.,
         p.x*sin(a)+p.y*cos(a)+pose.y*18.+p.y*pose.y*.025);
       vec2 dest=point+weight*(r-p);
       gl_Position=vec4(dest.x/1291.*2.-1.,1.-dest.y/1218.*2.,0.,1.);
@@ -19,7 +19,7 @@ export function createPortraitRenderer(canvas: HTMLCanvasElement, image: HTMLIma
       vec2 left=(p-vec2(546.,389.))/vec2(29.,10.);
       vec2 right=(p-vec2(734.,390.))/vec2(28.,10.);
       float mask=1.-smoothstep(.72,1.,min(dot(left,left),dot(right,right)));
-      sampleUV-=mask*pose*vec2(4./1291.,2./1218.);
+      sampleUV-=mask*pose*vec2(14./1291.,6./1218.);
       vec4 color=texture2D(art,sampleUV); gl_FragColor=vec4(color.rgb*color.a,color.a);
     }`;
   const shaders: WebGLShader[] = [];
