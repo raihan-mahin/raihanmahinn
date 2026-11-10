@@ -200,6 +200,13 @@
 @keyframes win-in { from { opacity: 0; transform: scale(0.94) translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes bounce-dock { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-14px); } }
+.os-mobile-pending { display: none; }
+@media (width < 768px) {
+  .os-desktop-shell { display: none !important; }
+  .os-mobile-pending { display: block; }
+}
+@media (width >= 768px) { .os-mobile-shell { display: none; } }
+.dock-magnify { transform: scale(var(--dock-scale, 1)); transform-origin: bottom center; transition: transform 150ms cubic-bezier(.2, .75, .3, 1); }
 @keyframes ios-in { from { transform: translateX(100%); } to { transform: none; } }
 @keyframes ios-zoom { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: none; } }
 @utility animate-ios-in { animation: ios-in 0.42s cubic-bezier(0.32, 0.72, 0, 1); }
@@ -216,6 +223,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .dock-magnify { transform: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 

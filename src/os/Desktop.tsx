@@ -17,7 +17,7 @@ import { Messages } from "./apps/Messages";
 import { Photos } from "./apps/Photos";
 import { Preview } from "./apps/Preview";
 import { Terminal } from "./apps/Terminal";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useMobileViewport } from "@/hooks/use-mobile";
 import { IOSShell } from "./mobile/IOS";
 import { Settings, Calendar, Music, TrashApp, Recruiter } from "./apps/Misc";
 
@@ -42,7 +42,7 @@ export function AppBody({ id, payload }: { id: AppId; payload?: string | undefin
 
 function Shell() {
   const os = useOS();
-  const mobile = useIsMobile();
+  const mobile = useMobileViewport();
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       const mod = e.metaKey || e.ctrlKey;
@@ -64,9 +64,11 @@ function Shell() {
     { label: "Awards", icon: <Trophy size={40} className="text-gold" />, app: "photos", payload: "cat:Awards & Achievements" },
   ];
 
-  if (mobile) return <IOSShell />;
+  if (mobile) return <div className="os-mobile-shell"><IOSShell /></div>;
   return (
-    <div className={cn("fixed inset-0 overflow-hidden", os.prefs.theme === "dark" && "dark")}>
+    <>
+    {mobile === undefined && <div className="os-mobile-pending fixed inset-0" aria-hidden="true"><img src={wallpaper} alt="" width={1920} height={1088} className="h-full w-full object-cover" /></div>}
+    <div className={cn("os-desktop-shell fixed inset-0 overflow-hidden", os.prefs.theme === "dark" && "dark")}>
       {os.prefs.wallpaper === "image"
         ? <img src={wallpaper} alt="" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
         : <div className={cn("absolute inset-0", `wp-${os.prefs.wallpaper}`)} />}
@@ -87,6 +89,7 @@ function Shell() {
       {os.overlay === "shortcuts" && <Shortcuts />}
       {os.locked && <LockScreen />}
     </div>
+    </>
   );
 }
 

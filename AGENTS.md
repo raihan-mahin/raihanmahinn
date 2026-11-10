@@ -48,3 +48,5 @@ use the editor.
 - NoteList shares date grouping and decorative icons across shells; coarse seed dates remain in Portfolio notes and real edits use optional timestamps without changing storage migration.
 - CampaignMedia reuses one center preview element and attempts playback synchronously during navigation; a single policy refusal falls back muted with an explicit gesture retry to avoid competing audio and rejection loops.
 - CampaignMedia packs native-ratio poster faces by adjoining projected widths and a small gap, hiding out-of-frame neighbors rather than clipping them; this keeps the shelf compact across screen sizes.
+- Shell selection uses a hydration-safe viewport subscription and matching CSS width guards; pending phones show only wallpaper while desktop SSR remains visible, without mounting two live shells.
+- Desktop dock hit areas stay fixed while nested icon scale and launch bounce compose independently; stable geometry avoids pointer/layout feedback.
