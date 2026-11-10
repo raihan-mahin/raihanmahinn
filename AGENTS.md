@@ -50,3 +50,4 @@ use the editor.
 - CampaignMedia packs native-ratio poster faces by adjoining projected widths and a small gap, hiding out-of-frame neighbors rather than clipping them; this keeps the shelf compact across screen sizes.
 - Shell selection uses a hydration-safe viewport subscription and matching CSS width guards; pending phones show only wallpaper while desktop SSR remains visible, without mounting two live shells.
 - Desktop dock magnification animates occupied target widths/heights and centered glass together; invert a deterministic baseline layout including LinkedIn/divider gaps, never animated DOM measurements, to avoid feedback jitter. Launch bounce is a separate nested transform.
+- Messages uses centralized thread copy and a scoped answer adapter over portfolioAnswer; typed app/payload actions open existing portfolio destinations without changing other apps’ answers or approved bios.

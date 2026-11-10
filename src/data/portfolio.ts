@@ -314,3 +314,21 @@ export const qa = [
 
 /** Single-case collections that open their story directly instead of a redundant one-item grid. */
 export const directCollectionProject: Partial<Record<ProjectCategory, string>> = { "XYZ Agency": "agency" };
+
+/** Messages copy is independent of the approved long-form profile/Notes bios. */
+export const messageThreads = [
+  { id: "personal", name: profile.shortName, preview: "A quick introduction and the best way to reach me.", pinned: true, initials: "RM", welcome: ["Hi, I’m Raihan 👋", "I work in brand marketing and strategy. Ask me about my work, or get in touch."], prompts: ["Quick intro", "What are you working on now?", "View résumé", "Get in touch"] },
+  { id: "recruiters", name: "Recruiters & Hiring", preview: "My experience, the roles I’m a fit for, and my résumé.", pinned: true, initials: "RH", welcome: ["Hi! Thanks for stopping by 👋", "If you’re hiring for brand marketing or campaign strategy, here’s a quick way to get to know my work."], prompts: ["Quick intro", "What did you do at Pureit?", "View résumé", "Get in touch"] },
+  { id: "pureit", name: "Pureit Brand Transition", preview: "What I worked on as Pureit moved from Unilever to A. O. Smith.", pinned: false, initials: "P", welcome: ["At BizLearner, I supported Pureit through its transition to A. O. Smith. What would you like to explore?"], prompts: ["What did you do at Pureit?", "Which launches?", "What did you do in Sri Lanka?"] },
+  { id: "xyz", name: agencyName, preview: "A look at the reels we’re creating for Lux and Lifebuoy.", pinned: false, initials: "XYZ", welcome: ["I co-run XYZ Agency. We’re creating AI-generated reels shaped around each brand’s voice."], prompts: ["What are you creating?", "Show Lux reels", "Show Lifebuoy reels"] },
+  { id: "x-integrated", name: "X Integrated Marketing Agency", preview: "What I learned handling customer queries across five client accounts.", pinned: false, initials: "X", welcome: ["At X Integrated, I handled customer queries across five client accounts. It taught me to listen closely and check the details before replying."], prompts: ["Which client accounts?", "How did you handle queries?", "What did you learn?"] },
+  { id: "competitions", name: "Case Competitions", preview: "The briefs we tackled and the ideas we pitched.", pinned: false, initials: "CC", welcome: ["My teams earned seven national podiums, plus a Marico finalist finish. These were competition proposals, not client campaigns."], prompts: ["Competition wins?", "What did you pitch at Admaker?", "Tell me about Marico", "Explore competition stories"] },
+] as const;
+export const messageCopy = {
+  intro: "I’m a Brand Marketing & Strategy Professional based in Dhaka. I’ve worked across brand transitions, product launches and customer engagement. Today, I co-run XYZ Agency.",
+  pureit: "I worked on Pureit’s transition to A. O. Smith across 7+ touchpoints in Bangladesh and Sri Lanka. I also supported three product launches and helped build the Ultima Pro prelaunch materials from scratch.",
+  launches: "I supported Marina, Wave and Ultima Pro. Our team developed 300+ assets across the three launches; I helped build Ultima Pro’s prelaunch materials from scratch.",
+  sriLanka: "I worked on Sinhala and Tamil rollout materials for Sri Lanka. My competitor research was in Bangladesh; the Sri Lanka work was localisation.",
+  xQueries: "I checked details, followed up on queries and maintained a 90% on-time response rate. Under two minutes was our response target, not an achieved result.",
+  xLearning: "I learned to spot recurring customer questions and use feedback to improve replies. Sometimes the brand’s message needed to be clearer, not just the response.",
+};
