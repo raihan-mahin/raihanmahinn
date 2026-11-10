@@ -10,7 +10,7 @@ import { CampaignMedia } from "./CampaignMedia";
 
 /** Photos destination for a project with campaign media: tabs + shelf, no hero or heading. */
 export function CampaignDestination({ project }: { project: Project }) {
-  return <CampaignMedia brands={project.campaigns ?? []} extraBrands={project.brandRow?.names} intro="We launched XYZ Agency to create AI-generated reels for Lux, Lifebuoy and Dove."/>;
+  return <CampaignMedia brands={project.campaigns ?? []} extraBrands={project.brandRow?.names ?? []} intro="We launched XYZ Agency to create AI-generated reels for Lux, Lifebuoy and Dove."/>;
 }
 
 export function StoryText({ project }: { project: Project }) {
