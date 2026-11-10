@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { portraitGaze, portraitPoint } from "@/lib/portrait-gaze";
+import { portraitGaze, portraitTransform } from "@/lib/portrait-gaze";
 import { DesktopPortrait } from "@/os/DesktopPortrait";
 import { OSProvider, useOS } from "@/os/store";
 
@@ -11,13 +11,9 @@ describe("desktop home portrait behavior", () => {
     expect(portraitGaze(-10000, -10000)).toEqual({ x: -1, y: -1 });
     expect(portraitGaze(0, 0)).toEqual({ x: 0, y: 0 });
   });
-  it("moves the head noticeably while anchoring lower chest and preserving neutral art", () => {
-    expect(portraitPoint(640, 1000, { x: 1, y: 1 })).toEqual({ x: 640, y: 1000 });
-    expect(portraitPoint(640, 389, { x: 1, y: 0 }).x).toBeGreaterThan(690);
-    expect(portraitPoint(640, 389, { x: -1, y: 0 }).x).toBeLessThan(590);
-    expect(portraitPoint(546, 389, { x: 0, y: 0 })).toEqual({ x: 546, y: 389 });
-    const a = portraitPoint(640, 815, { x: 1, y: 1 });
-    expect(Math.abs(a.x - 640) + Math.abs(a.y - 815)).toBeLessThan(.01);
+  it("clamps tilt to 7 degrees and centers at neutral", () => {
+    expect(portraitTransform({ x: 1, y: -1 })).toMatchObject({ rotateY: 7, rotateX: 7 });
+    expect(portraitTransform({ x: 0, y: 0 })).toMatchObject({ rotateY: 0, pupilX: 0, pupilY: 0 });
   });
   it("starts home with no windows but preserves explicit Notes payloads", () => {
     function Probe() {
