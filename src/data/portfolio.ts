@@ -154,13 +154,15 @@ export const recruiter = {
 };
 export const musicPlaylist = {
   title: "YouTube Music Playlist",
-  embedUrl: "https://www.youtube.com/embed/videoseries?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db",
+  embedUrl: "https://www.youtube.com/embed/hRxyvtvxC9c?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db&index=4",
   url: "https://music.youtube.com/playlist?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db",
 };
 export type MotivationReel = {
   url: string;
   /** Add only an original file provided for reuse or a verified stable public download. */
   source?: string;
+  /** Set only after verifying native playback and permission to reuse the source. */
+  sourceVerified?: boolean;
   poster?: string;
 };
 export const motivationReels: MotivationReel[] = [

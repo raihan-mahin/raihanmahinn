@@ -1,38 +1,33 @@
-import { useRef } from "react";
-import { ExternalLink, Mountain, Orbit, Sparkles, Waves } from "lucide-react";
+import { useRef, useState } from "react";
+import { ExternalLink, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { motivationReels, musicPlaylist, type MotivationReel } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
-const artwork = [
-  { Icon: Mountain, label: "Mountain artwork", tone: "bg-secondary text-gold" },
-  { Icon: Orbit, label: "Orbit artwork", tone: "bg-accent text-foreground" },
-  { Icon: Waves, label: "Wave artwork", tone: "bg-muted text-success" },
-  { Icon: Sparkles, label: "Spark artwork", tone: "bg-card text-gold" },
-];
-
 export function ReelGallery({ reels = motivationReels }: { reels?: MotivationReel[] }) {
-  const videos = useRef(new Map<string, HTMLVideoElement>());
-  return <ul aria-label="Reels" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-    {reels.map((reel, index) => {
-      const art = artwork[index % artwork.length];
-      if (!art) return null;
-      const { Icon } = art;
-      const visual = <div role="img" aria-label={art.label} className={cn("flex aspect-[4/5] w-full items-center justify-center rounded-lg border border-border", art.tone)}><Icon size={56} strokeWidth={1} aria-hidden="true" /></div>;
-      return <li key={reel.url} className="min-w-0">
-        {reel.source ? <video
-          ref={node => { if (node) videos.current.set(reel.url, node); else videos.current.delete(reel.url); }}
-          src={reel.source} poster={reel.poster} controls playsInline preload="metadata"
-          aria-label={`Video with ${art.label.toLowerCase()}`}
-          onPlay={event => { for (const video of videos.current.values()) if (video !== event.currentTarget) video.pause(); }}
-          className="aspect-[4/5] w-full rounded-lg bg-island object-contain"
-        /> : <a href={reel.url} target="_blank" rel="noopener noreferrer" aria-label={`Open original reel — ${art.label.toLowerCase()}`} className="block rounded-lg focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-4">{visual}</a>}
-        <Button variant="link" asChild className="mt-1 h-auto w-full whitespace-normal px-0 py-2 text-xs">
-          <a href={reel.url} target="_blank" rel="noopener noreferrer" aria-label={`Open original reel — ${art.label.toLowerCase()}`}>Open original reel <ExternalLink size={12} aria-hidden="true" /></a>
-        </Button>
-      </li>;
-    })}
-  </ul>;
+  const [selected, setSelected] = useState<MotivationReel | null>(null);
+  const opener = useRef<HTMLButtonElement | null>(null);
+  const [failed, setFailed] = useState<string[]>([]);
+  const available = reels.filter(reel => reel.source && reel.sourceVerified === true && !failed.includes(reel.url));
+  return <>
+    {available.length === 0 ? <p className="text-sm text-muted-foreground">Videos are currently unavailable.</p> :
+      <ul aria-label="Reels" className="grid grid-cols-2 gap-3">
+        {available.map((reel, index) => <li key={reel.url} className="min-w-0">
+          <Button variant="ghost" aria-label={`Open video ${index + 1}`} onClick={event => { opener.current = event.currentTarget; setSelected(reel); }} className="relative block aspect-[4/5] h-auto w-full overflow-hidden rounded-lg border border-border p-0">
+            <video src={reel.source} poster={reel.poster} muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1}
+              onError={() => setFailed(previous => [...previous, reel.url])} className="pointer-events-none h-full w-full object-cover" />
+            <span className="absolute inset-0 flex items-center justify-center"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-island/80 text-foreground"><Play size={24} aria-hidden="true" /></span></span>
+          </Button>
+        </li>)}
+      </ul>}
+    <Dialog open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}>
+      <DialogContent aria-describedby={undefined} onCloseAutoFocus={event => { event.preventDefault(); opener.current?.focus(); }} className="native-dark w-[calc(100%-2rem)] max-w-3xl rounded-lg p-4 pt-12">
+        <DialogTitle className="sr-only">Video player</DialogTitle>
+        {selected && <video key={selected.url} src={selected.source} poster={selected.poster} controls playsInline preload="metadata" aria-label="Selected video" className="max-h-[75dvh] w-full bg-island object-contain" />}
+      </DialogContent>
+    </Dialog>
+  </>;
 }
 
 export function Music({ mobile = false }: { mobile?: boolean }) {

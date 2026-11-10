@@ -7,3 +7,5 @@
 - [x] Add the official YouTube playlist and replace Instagram embeds with an optional-native-video reels gallery.
 - [x] Verify actual playlist playback, reel source availability, mobile/desktop scrolling and tests (first track advanced on both sizes; no stable public originals found for any reel; 64 tests passed; preview build OK).
 - [x] Save this Music-only revision without publishing or visibility changes.
+- [x] Set the requested opening track while preserving the playlist queue; remove unavailable reel UI and support verified native sources only.
+- [x] Verify playback at 390×844 and 1280×1800 (Born for This advanced after click; 38-item queue retained at index 3), two-column gallery/native dialog using temporary media only, keyboard focus return, 65 tests and preview build; save without publishing.
