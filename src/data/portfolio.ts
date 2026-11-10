@@ -164,7 +164,7 @@ export const recruiter = {
 };
 export const musicPlaylist = {
   title: "YouTube Music Playlist",
-  embedUrl: "https://www.youtube.com/embed/hRxyvtvxC9c?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db&index=4",
+  embedUrl: "https://www.youtube.com/embed/hRxyvtvxC9c?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db&index=4&playsinline=1&rel=0",
   url: "https://music.youtube.com/playlist?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db",
 };
 export type MotivationReel = {

@@ -1,7 +1,7 @@
 export { IOSNotes } from "./IOSNotes";
 export { IOSFiles } from "./IOSFiles";
 import { Button } from "@/components/ui/button";
-import { ProjectGallery, StoryText } from "../ProjectStory";
+import { CampaignDestination, ProjectGallery, StoryText } from "../ProjectStory";
 import { ProjectCover, coverFrame } from "../ProjectCover";
 import { CollectionCover, collectionFrame } from "../CollectionCover";
 import { RecruiterContent } from "../RecruiterContent";
@@ -81,6 +81,7 @@ function SearchField({ value, onChange, placeholder }: { value: string; onChange
 
 /* ---------- Photos / Awards / Brands ---------- */
 function ProjectDetail({ p, back, onBack }: { p: Project; back: string; onBack: () => void }) {
+  if (p.campaigns) return <IOSPage title={p.title} backLabel={back} onBack={onBack} large={false} photos><div className="px-4 pb-12 pt-2"><CampaignDestination project={p}/></div></IOSPage>;
   return (
     <IOSPage title="" backLabel={back} onBack={onBack} large={false} photos>
       <div className="px-4 pb-12">

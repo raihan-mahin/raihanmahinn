@@ -68,7 +68,7 @@ export function Music({ mobile = false }: { mobile?: boolean }) {
     <h2 className="text-2xl font-bold leading-tight">Music that push me harder</h2>
     <section aria-label={musicPlaylist.title} className="mt-6">
       <h3 className="mb-3 text-base font-semibold">{musicPlaylist.title}</h3>
-      <iframe title={musicPlaylist.title} src={musicPlaylist.embedUrl} loading="lazy" allow="encrypted-media; fullscreen; picture-in-picture" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" className="block aspect-video w-full max-w-full rounded-lg border border-border bg-island" />
+      <iframe title={musicPlaylist.title} src={musicPlaylist.embedUrl} loading="lazy" allow="encrypted-media; fullscreen; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" className="block aspect-video w-full max-w-full rounded-lg border border-border bg-island" />
       <Button variant="link" asChild className="mt-2 h-auto whitespace-normal px-0 py-2 text-sm"><a href={musicPlaylist.url} target="_blank" rel="noopener noreferrer">Open in YouTube Music <ExternalLink size={14} aria-hidden="true" /></a></Button>
     </section>
     <section aria-label="Reels gallery" className="mt-6">

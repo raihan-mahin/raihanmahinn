@@ -18,7 +18,7 @@ describe("Music curated reels", () => {
     const { container } = render(<Music mobile={mobile} />);
     expect(container.querySelectorAll("iframe")).toHaveLength(1);
     const frame = container.querySelector("iframe");
-    expect(frame?.getAttribute("src")).toBe("https://www.youtube.com/embed/hRxyvtvxC9c?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db&index=4");
+    expect(frame?.getAttribute("src")).toBe("https://www.youtube.com/embed/hRxyvtvxC9c?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db&index=4&playsinline=1&rel=0");
     expect(frame?.getAttribute("allow")).not.toContain("autoplay");
     expect(new URL(musicPlaylist.embedUrl).searchParams.has("shuffle")).toBe(false);
     expect(screen.getByRole("link", { name: "Open in YouTube Music" }).getAttribute("href")).toBe("https://music.youtube.com/playlist?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db");

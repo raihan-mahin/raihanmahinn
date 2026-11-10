@@ -4,12 +4,13 @@ import { cn } from "@/lib/utils";
 import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, findAlbum, projectById, directCollectionProject, type ProjectCategory, type Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { ProjectCover, coverFrame } from "../ProjectCover";
-import { ProjectGallery, StoryText } from "../ProjectStory";
+import { CampaignDestination, ProjectGallery, StoryText } from "../ProjectStory";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 
 const tone = (b?: string) => (b === "Champion" ? "gold" : "default") as "gold" | "default";
 
 export function ProjectArticle({ p }: { p: Project }) {
+  if (p.campaigns) return <div className="mx-auto max-w-3xl"><CampaignDestination project={p}/></div>;
   return (
     <article className="mx-auto max-w-3xl animate-fade-up">
       <ProjectGallery project={p}/>
