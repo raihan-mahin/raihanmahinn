@@ -153,7 +153,7 @@ export const highlights = [
 ];
 export const recruiter = {
   subtitle: "Brand Marketing & Strategy Professional",
-  summary: profile.bio,
+  summary: "Very few people get a front-row seat to a brand acquisition. I had one. I joined Unilever as a BizLearner, assigned to Pureit, and six months in, A. O. Smith acquired the brand.\n\nI helped carry Pureit through the transition while supporting three product launches. For Ultima Pro, I helped build the launch campaign materials from scratch.\n\nBefore Pureit, I managed customer engagement for five clients at X Integrated Marketing Agency. Today, I co-run an independent agency. Across those roles, I’ve worked with 10+ brands while pursuing my Marketing degree at NSU.",
   roles: ["Brand Marketing", "Sales & E-commerce", "Campaign Strategy", "Agency Client Servicing"],
   stats: [{ value: "10+", label: "Brands" }, { value: "7", label: "National Competition Podiums" }, { value: "3", label: "Markets", note: "Bangladesh · India · Sri Lanka" }, { value: "2+ years", label: "Marketing experience" }],
   highlights: ["Supported Pureit’s transition across 7+ brand touchpoints, from packaging to retail.", "Managed social media queries for five accounts at X Integrated, with a 90% on-time response rate.", "Helped develop 300+ marketing assets for three Pureit launches.", "Earned seven national competition podiums across product, brand and campaign briefs."],
