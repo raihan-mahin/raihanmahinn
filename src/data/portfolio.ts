@@ -247,7 +247,11 @@ export const notes: Note[] = [
   { id: "about", title: "Hi, I'm Mahin 👋", date: "Nov 2026", body: `# Hi, I'm Mahin 👋
 ${profile.headline} · ${profile.location}
 
-${profile.bio}
+Very few people get a front-row seat to a brand acquisition. I had one. I joined Unilever as a BizLearner, assigned to Pureit, and six months in, A. O. Smith acquired the brand.
+
+I helped carry Pureit through the transition and supported three product launches. For Ultima Pro, I helped build the launch materials from scratch.
+
+Before Pureit, I managed customer engagement for five clients at X Integrated Marketing Agency. Today, I co-run an independent agency. In total, I’ve worked with 10+ brands while studying Marketing at NSU.
 
 ## At a glance
 - 10+ brands worked with across FMCG, consumer durables and fintech
