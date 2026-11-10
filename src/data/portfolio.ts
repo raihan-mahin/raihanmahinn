@@ -100,6 +100,16 @@ export const pureitCases: PureitCase[] = [
 ];
 
 const BH = profile.behance;
+export type CampaignVideo = { title: string; src: string; poster: string; width: number; height: number };
+export type CampaignBrand = { brand: string; videos: CampaignVideo[]; stills?: { title: string; src: string; width: number; height: number }[] };
+const xyz = (name: string) => `/media/xyz-agency/${name}`;
+const reel = (title: string, base: string, height = 1920): CampaignVideo => ({ title, src: xyz(`${base}.mp4`), poster: xyz(`${base}.jpg`), width: 1080, height });
+/** XYZ Agency campaign work by brand (owner-supplied files; separate from Music reels). */
+export const agencyCampaigns: CampaignBrand[] = [
+  { brand: "Lux", videos: [reel("AirDrop", "lux-airdrop"), reel("Airport", "lux-airport"), reel("Truck", "lux-truck"), reel("Crazy", "lux-crazy", 1918)], stills: [{ title: "Puja Special Giveaway", src: xyz("lux-puja-giveaway.jpg"), width: 2048, height: 2048 }] },
+  { brand: "Lifebuoy", videos: [reel("Puja", "lifebuoy-puja")] },
+];
+
 export type BehanceWork = { id: string; title: string; type: string; caption: string; url: string; verified: boolean; thumbnail?: string; /** 808px cover of the same Behance artwork (Behance CDN size 808), stored locally. */ full?: string };
 export const behanceWorks: BehanceWork[] = [
   { id: "skin", title: "Confidence Breakthrough · Skincare Campaign", caption: "A skincare campaign around confidence.", type: "Campaign", url: "https://www.behance.net/gallery/242883541/Skin-Care-Branding-Confidence-Breakthrough-Campaign", verified: true, thumbnail: "/media/behance/242883541.jpg", full: "/media/behance/hd/242883541.jpg" },
@@ -186,7 +196,7 @@ export const projectCategories: ProjectCategory[] = ["★ Flagship", "Brand Stra
 export type Project = {
   id: string; title: string; subtitle: string; role?: string;
   challenge?: string; contribution?: string; outcome?: string; summary?: string;
-  images: string[]; /** Creative artwork: shown uncropped; `artworkFallback` is the known-good smaller file. */ artwork?: boolean; artworkFallback?: string | undefined; captions?: string[]; metrics?: { value: string; label: string }[]; link?: string; linkLabel?: string; badge?: string;
+  images: string[]; /** Creative artwork: shown uncropped; `artworkFallback` is the known-good smaller file. */ artwork?: boolean; campaigns?: CampaignBrand[]; artworkFallback?: string | undefined; captions?: string[]; metrics?: { value: string; label: string }[]; link?: string; linkLabel?: string; badge?: string;
   /** "Case brands" = competition case subjects (not clients); "Clients"/"Brands" = professional work. */
   brandRow?: { label: string; names: string[] };
   /** Work thumbnail gradient; original images stay in `images`. */
@@ -208,7 +218,7 @@ export const projects: Project[] = [
     ...(a.caseBrands ? { brandRow: { label: "Case subjects (competition, not clients)", names: a.caseBrands } } : {}),
     ...(a.link ? { link: a.link, linkLabel: "Read the LinkedIn post" } : {}),
   })),
-  { id: "agency", title: agencyName, subtitle: "Co-Founder", role: "Co-Founder", summary: agencyStory, images: [], gradient: { from: "#ff6b00", to: "#4a1200", tag: "#IndependentAgency" }, brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
+  { id: "agency", title: agencyName, subtitle: "Co-Founder", role: "Co-Founder", summary: agencyStory, images: [], gradient: { from: "#ff6b00", to: "#4a1200", tag: "#IndependentAgency" }, campaigns: agencyCampaigns, brandRow: { label: "Current brands", names: agencyBrands.map((b) => b.brand) } },
   ...agencyBrands.map<Project>((b) => ({ id: `agency-${b.id}`, title: b.brand, subtitle: b.tagline, role: "Co-Founder", summary: b.description, images: b.thumbnail ? [b.thumbnail] : [] })),
   { id: "x-agency", title: "X Integrated Marketing Agency", subtitle: "Junior Engagement Officer · Oct 2023–Oct 2024", role: "Junior Engagement Officer", metrics: [{ value: "Under 2 minutes", label: "Response target" }, { value: "90%", label: "On-time response rate" }, { value: "5", label: "Client accounts" }], summary: xAgencyStory, images: [], gradient: { from: "#2478e8", to: "#11264d", tag: "#ClientServicing" }, brandRow: { label: "Client accounts", names: ["Upay", "City Bank", "IDLC", "Break Station", "Petal"] } },
   { id: "legend", title: "Legend International School", subtitle: "Marketing Officer · Oct–Nov 2024 · Contract", role: "Marketing Officer (contract)", summary: legendStory, images: [], gradient: { from: "#c9a227", to: "#1b1b1b", tag: "#SchoolMarketing" } },
