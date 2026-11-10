@@ -13,16 +13,16 @@ const smooth = (t: number) => t * t * (3 - 2 * t);
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 /** Fan-shaped 3D cover shelf: dominant centre cover, side covers taper and recede as narrow slices. */
-export function CoverShelf({ items, label }: { items: ShelfItem[]; label: string }) {
+export function CoverShelf({ items, label, soundPreference }: { items: ShelfItem[]; label: string; soundPreference?: { current: boolean } }) {
   const n = items.length;
   const [open, setOpen] = useState<ShelfItem | null>(null);
   const [pos, setPos] = useState(0);
   const [target, setTarget] = useState(0);
   const [width, setWidth] = useState(360);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(soundPreference?.current ?? false);
   const [blocked, setBlocked] = useState(false);
   const preview = useRef<HTMLVideoElement>(null);
-  const mutedRef = useRef(false);
+  const mutedRef = useRef(soundPreference?.current ?? false);
   const blockedRef = useRef(false);
   const visibleRef = useRef(false);
   const openRef = useRef(false);
@@ -90,6 +90,7 @@ export function CoverShelf({ items, label }: { items: ShelfItem[]; label: string
   }, [open, playSelected]);
   const toggleSound = () => {
     const next = blockedRef.current ? false : !mutedRef.current;
+    if (soundPreference) soundPreference.current = next;
     mutedRef.current = next; setMuted(next);
     if (next) { reportBlocked(false); if (preview.current) preview.current.muted = true; }
     else playSelected(selectedRef.current, true);
@@ -197,6 +198,7 @@ const itemsFor = (b: CampaignBrand): ShelfItem[] => [
 
 /** Brand tabs over one shelf; brands without uploaded media show an honest empty state. */
 export function CampaignMedia({ brands, extraBrands = [], intro }: { brands: CampaignBrand[]; extraBrands?: string[]; intro?: string }) {
+  const soundPreference = useRef(false);
   const names = [...brands.map(b => b.brand), ...extraBrands.filter(x => !brands.some(b => b.brand === x))];
   const [tab, setTab] = useState(names[0] ?? "");
   const brand = brands.find(b => b.brand === tab);
@@ -208,7 +210,7 @@ export function CampaignMedia({ brands, extraBrands = [], intro }: { brands: Cam
     </div>
     {intro && <p className="text-sm text-muted-foreground">{intro}</p>}
     <div role="tabpanel" aria-label={tab}>
-      {items.length ? <CoverShelf key={tab} items={items} label={tab}/> : <p className="rounded-lg border border-border py-10 text-center text-sm text-muted-foreground">No {tab} work uploaded yet.</p>}
+      {items.length ? <CoverShelf key={tab} items={items} label={tab} soundPreference={soundPreference}/> : <p className="rounded-lg border border-border py-10 text-center text-sm text-muted-foreground">No {tab} work uploaded yet.</p>}
     </div>
   </section>;
 }
