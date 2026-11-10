@@ -3,7 +3,7 @@ import { ChevronLeft, ExternalLink, Trophy, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, findAlbum, projectById, type ProjectCategory, type Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
-import { ProjectCover } from "../ProjectCover";
+import { ProjectCover, coverFrame } from "../ProjectCover";
 import { ProjectGallery, StoryText } from "../ProjectStory";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 
@@ -62,10 +62,10 @@ export function Photos({ payload }: { payload?: string | undefined }) {
       <div className="min-h-0 flex-1 overflow-auto p-5">
         {current ? <ProjectArticle p={current} /> : <>
           {!isAwards && view === "Collections" && <div className="mb-5 flex flex-wrap gap-1">{workRoots.map(x => <Button key={x.id} size="sm" variant={root === x.id ? "secondary" : "ghost"} className="text-[11px]" onClick={() => select(x.id)}>{x.id}</Button>)}</div>}
-          {r.albums && !a && !q && view === "Collections" ? <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">{r.albums.map(x => {
+          {r.albums && !a && !q && view === "Collections" ? <div className="grid grid-cols-2 items-start gap-5 lg:grid-cols-3">{r.albums.map(x => {
             const cover = albumItems(x.ids)[0];
-            return <Button key={x.id} variant="ghost" onClick={() => setAlbum(x.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className="aspect-square overflow-hidden rounded-lg">{cover && <ProjectCover project={cover}/>}</div><p className="mt-2 text-sm font-semibold">{x.title}</p><p className="text-xs text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
-          })}</div> : <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">{items.map(p => <Button key={p.id} variant="ghost" onClick={() => setOpenId(p.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className="relative aspect-square overflow-hidden rounded-lg"><ProjectCover project={p}/>{p.badge && <span className="absolute bottom-2 left-2"><Badge tone={tone(p.badge)}>{p.badge}</Badge></span>}</div><p className="mt-2 line-clamp-2 text-sm font-semibold">{p.title}</p><p className="text-xs text-muted-foreground">{p.subtitle}</p></Button>)}</div>}
+            return <Button key={x.id} variant="ghost" onClick={() => setAlbum(x.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className={`${coverFrame(cover)} overflow-hidden rounded-lg`}>{cover && <ProjectCover project={cover}/>}</div><p className="mt-2 text-sm font-semibold">{x.title}</p><p className="text-xs text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
+          })}</div> : <div className="grid grid-cols-2 items-start gap-5 lg:grid-cols-3">{items.map(p => <Button key={p.id} variant="ghost" onClick={() => setOpenId(p.id)} className="h-auto min-w-0 flex-col items-stretch justify-start whitespace-normal p-0 text-left"><div className={`relative ${coverFrame(p)} overflow-hidden rounded-lg`}><ProjectCover project={p}/>{p.badge && <span className="absolute bottom-2 left-2"><Badge tone={tone(p.badge)}>{p.badge}</Badge></span>}</div><p className="mt-2 line-clamp-2 text-sm font-semibold">{p.title}</p><p className="text-xs text-muted-foreground">{p.subtitle}</p></Button>)}</div>}
           {!items.length && <p className="py-12 text-center text-sm text-muted-foreground">No matching work.</p>}
         </>}
       </div>

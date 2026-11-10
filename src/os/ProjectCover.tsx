@@ -12,9 +12,13 @@ export function GradientCover({ gradient }: { gradient: Gradient }) {
   );
 }
 
+/** Creative artwork keeps its intrinsic 808×632 frame; everything else stays square. */
+export const isArtworkCover = (p?: Project) => !!p && !p.gradient && !!p.artwork && !!p.images[0];
+export const coverFrame = (p?: Project) => isArtworkCover(p) ? "aspect-[808/632]" : "aspect-square";
+
 export function ProjectCover({ project, contain = false }: { project: Project; contain?: boolean }) {
   if (project.gradient) return <GradientCover gradient={project.gradient} />;
-  if (project.artwork && project.images[0]) return <div className="artwork-backing h-full w-full bg-muted"><MediaPlaceholder src={project.images[0]} fallbackSrc={project.artworkFallback} seed={hash(project.id)} alt={project.title} className="object-contain" /></div>;
+  if (project.artwork && project.images[0]) return <div className="h-full w-full"><MediaPlaceholder src={project.images[0]} fallbackSrc={project.artworkFallback} seed={hash(project.id)} alt={project.title} className="object-cover" /></div>;
   if (project.images[0]) return <MediaPlaceholder src={project.images[0]} seed={hash(project.id)} alt={project.title} className={contain ? "object-contain" : "object-cover"} />;
   return <div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden bg-secondary p-3 text-center text-foreground">
     {project.brandRow && <div className="flex flex-wrap justify-center gap-2">{project.brandRow.names.slice(0, 3).map(name => <BrandLogo key={name} name={name} />)}</div>}

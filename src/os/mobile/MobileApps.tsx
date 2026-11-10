@@ -2,8 +2,8 @@ export { IOSNotes } from "./IOSNotes";
 export { IOSFiles } from "./IOSFiles";
 import { Button } from "@/components/ui/button";
 import { ProjectGallery, StoryText } from "../ProjectStory";
-import { ProjectCover } from "../ProjectCover";
-import { CollectionCover } from "../CollectionCover";
+import { ProjectCover, coverFrame } from "../ProjectCover";
+import { CollectionCover, collectionFrame } from "../CollectionCover";
 import { RecruiterContent } from "../RecruiterContent";
 import { BrandStrip } from "../BrandLogo";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
@@ -106,9 +106,9 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHom
   const a = r?.albums?.find(x => x.id === album);
   const p = pid ? projectById(pid) : undefined;
   const back = () => { if (searching) { setSearching(false); setQ(""); } else if (pid) setPid(null); else if (album) setAlbum(null); else if (root) setRoot(null); else onHome(); };
-  const itemGrid = (items: Project[], countPhotos = false) => <div className="grid grid-cols-2 gap-x-3 gap-y-6">{items.map(x => <Button key={x.id} variant="ghost" className="photos-item h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => setPid(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]"><ProjectCover project={x}/></div><p className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p><p className="mt-1 text-[13px] text-muted-foreground">{countPhotos ? x.images.length ? `${x.images.length} ${x.images.length === 1 ? "photo" : "photos"} · ${x.badge}` : x.badge : x.subtitle}</p></Button>)}</div>;
+  const itemGrid = (items: Project[], countPhotos = false) => <div className="grid grid-cols-2 items-start gap-x-3 gap-y-6">{items.map(x => <Button key={x.id} variant="ghost" className="photos-item h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => setPid(x.id)}><div className={`${coverFrame(x)} overflow-hidden rounded-[12px]`}><ProjectCover project={x}/></div><p className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p><p className="mt-1 text-[13px] text-muted-foreground">{countPhotos ? x.images.length ? `${x.images.length} ${x.images.length === 1 ? "photo" : "photos"} · ${x.badge}` : x.badge : x.subtitle}</p></Button>)}</div>;
   const collections = (entries: { id: string; title: string; ids: string[]; cover?: string | undefined; coverStyle?: PhotoRoot["coverStyle"]; gradient?: PhotoRoot["gradient"] }[], open: (id: string) => void) => <div className="grid grid-cols-2 gap-x-3 gap-y-7">{entries.map(x => {
-    return <Button key={x.id} variant="ghost" className="photos-item h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => open(x.id)}><div className="aspect-square overflow-hidden rounded-[12px]"><CollectionCover collection={x}/></div><p className="mt-2 text-[15px] font-semibold leading-snug">{x.title}</p><p className="mt-1 text-[13px] text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
+    return <Button key={x.id} variant="ghost" className="photos-item h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => open(x.id)}><div className={`${collectionFrame(x)} overflow-hidden rounded-[12px]`}><CollectionCover collection={x}/></div><p className="mt-2 text-[15px] font-semibold leading-snug">{x.title}</p><p className="mt-1 text-[13px] text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
   })}</div>;
   const source = root === "Awards & Achievements" ? albumItems(r ? rootIds(r) : []) : workProjects;
   const results = source.filter(x => `${x.title} ${x.subtitle} ${x.summary ?? ""}`.toLowerCase().includes(q.toLowerCase()));

@@ -1,7 +1,7 @@
 import { ArrowRight, Star } from "lucide-react";
 import { albumItems, type PhotoRoot } from "@/data/portfolio";
 import { BrandLogo } from "./BrandLogo";
-import { GradientCover, ProjectCover } from "./ProjectCover";
+import { GradientCover, ProjectCover, coverFrame } from "./ProjectCover";
 import { MediaPlaceholder } from "./ui";
 
 export function CollectionCover({ collection }: { collection: { title: string; ids: string[]; cover?: string | undefined; coverStyle?: PhotoRoot["coverStyle"]; gradient?: PhotoRoot["gradient"] } }) {
@@ -12,3 +12,6 @@ export function CollectionCover({ collection }: { collection: { title: string; i
   const project = albumItems(collection.ids)[0];
   return project ? <ProjectCover project={project}/> : null;
 }
+type CoverSource = { ids: string[]; cover?: string | undefined; coverStyle?: PhotoRoot["coverStyle"]; gradient?: PhotoRoot["gradient"] };
+/** Frame matching what CollectionCover renders: artwork keeps its own ratio. */
+export const collectionFrame = (c: CoverSource) => c.gradient || c.coverStyle || c.cover ? "aspect-square" : coverFrame(albumItems(c.ids)[0]);
