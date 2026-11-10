@@ -4,3 +4,6 @@
 - [x] Replace Music playlists with four ordered public Instagram reels and a single selected player.
 - [x] Check all four actual embeds, phone/desktop scrolling, tests and preview status (1/4 playback verified; 2 preview loaded but playback unverified; 3 unavailable).
 - [x] Commit the Music revision without publication or visibility changes.
+- [x] Add the official YouTube playlist and replace Instagram embeds with an optional-native-video reels gallery.
+- [x] Verify actual playlist playback, reel source availability, mobile/desktop scrolling and tests (first track advanced on both sizes; no stable public originals found for any reel; 64 tests passed; preview build OK).
+- [x] Save this Music-only revision without publishing or visibility changes.

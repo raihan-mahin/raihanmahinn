@@ -152,12 +152,23 @@ export const recruiter = {
   stats: [{ value: "10+", label: "Brands" }, { value: "7", label: "National Competition Podiums" }, { value: "3", label: "Markets", note: "Bangladesh · India · Sri Lanka" }, { value: "2+ years", label: "Marketing experience" }],
   highlights: ["Supported Pureit’s transition across 7+ touchpoints and three product launches.", "Managed five client accounts at X Integrated Marketing Agency, with a 90% on-time response rate.", "Earned seven national competition podiums."],
 };
-export const motivationReels = [
+export const musicPlaylist = {
+  title: "YouTube Music Playlist",
+  embedUrl: "https://www.youtube.com/embed/videoseries?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db",
+  url: "https://music.youtube.com/playlist?list=PLMz3Ghq38K5gnDSoKaOMzWZthOOl0M1Db",
+};
+export type MotivationReel = {
+  url: string;
+  /** Add only an original file provided for reuse or a verified stable public download. */
+  source?: string;
+  poster?: string;
+};
+export const motivationReels: MotivationReel[] = [
   "https://www.instagram.com/reel/DeMQdiPDrIT/",
   "https://www.instagram.com/reel/DfjHOPGuXIo/",
   "https://www.instagram.com/reel/DfJMntJKKb5/",
   "https://www.instagram.com/reel/DfUDCG9Nc5a/",
-].map((url, index) => ({ url, embedUrl: `${url}embed/`, label: `Reel ${index + 1}` }));
+].map(url => ({ url }));
 
 /** Kept for detailed views (e.g. resume); not shown on the homepage. */
 export const stats = [
