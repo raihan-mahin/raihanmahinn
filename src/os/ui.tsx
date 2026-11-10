@@ -8,9 +8,10 @@ export function AppIcon({ id, className }: { id: AppId; className?: string; size
   return <AppleStyleAppIcon app={id} className={cn("block drop-shadow-sm", className)} />;
 }
 
-export function MediaPlaceholder({ seed = 0, label = "Media coming soon", className, src, alt }: { seed?: number; label?: string; className?: string; src?: string | undefined; alt?: string }) {
-  const [failed, setFailed] = useState<string | null>(null);
-  if (src && failed !== src) return <img key={src} src={src} alt={alt ?? ""} loading="lazy" onError={() => setFailed(src)} className={cn("h-full w-full object-cover", className)} />;
+export function MediaPlaceholder({ seed = 0, label = "Media coming soon", className, src, alt, fallbackSrc }: { seed?: number; label?: string; className?: string; src?: string | undefined; alt?: string; fallbackSrc?: string | undefined }) {
+  const [failed, setFailed] = useState<string[]>([]);
+  const active = [src, fallbackSrc].find((s): s is string => !!s && !failed.includes(s));
+  if (active) return <img key={active} src={active} alt={alt ?? ""} loading="lazy" decoding="async" onError={() => setFailed(f => [...f, active])} className={cn("h-full w-full object-cover", className)} />;
   return (
     <div className={cn(`ph-${Math.abs(seed) % 6}`, "relative grid h-full w-full place-items-center overflow-hidden text-primary-foreground", className)}>
       <div className="ph-stripes absolute inset-0" />

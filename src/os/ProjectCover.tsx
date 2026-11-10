@@ -14,6 +14,7 @@ export function GradientCover({ gradient }: { gradient: Gradient }) {
 
 export function ProjectCover({ project, contain = false }: { project: Project; contain?: boolean }) {
   if (project.gradient) return <GradientCover gradient={project.gradient} />;
+  if (project.artwork && project.images[0]) return <div className="artwork-backing h-full w-full bg-muted"><MediaPlaceholder src={project.images[0]} fallbackSrc={project.artworkFallback} seed={hash(project.id)} alt={project.title} className="object-contain" /></div>;
   if (project.images[0]) return <MediaPlaceholder src={project.images[0]} seed={hash(project.id)} alt={project.title} className={contain ? "object-contain" : "object-cover"} />;
   return <div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden bg-secondary p-3 text-center text-foreground">
     {project.brandRow && <div className="flex flex-wrap justify-center gap-2">{project.brandRow.names.slice(0, 3).map(name => <BrandLogo key={name} name={name} />)}</div>}

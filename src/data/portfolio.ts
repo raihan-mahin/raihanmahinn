@@ -100,20 +100,20 @@ export const pureitCases: PureitCase[] = [
 ];
 
 const BH = profile.behance;
-export type BehanceWork = { id: string; title: string; type: string; caption: string; url: string; verified: boolean; thumbnail?: string };
+export type BehanceWork = { id: string; title: string; type: string; caption: string; url: string; verified: boolean; thumbnail?: string; /** 808px cover of the same Behance artwork (Behance CDN size 808), stored locally. */ full?: string };
 export const behanceWorks: BehanceWork[] = [
-  { id: "skin", title: "Confidence Breakthrough · Skincare Campaign", caption: "A skincare campaign around confidence.", type: "Campaign", url: "https://www.behance.net/gallery/242883541/Skin-Care-Branding-Confidence-Breakthrough-Campaign", verified: true, thumbnail: "/media/behance/242883541.jpg" },
-  { id: "berger", title: "Berger Sealer · Billboard", caption: "Outdoor campaign creative for Berger Sealer.", type: "Billboard", url: "https://www.behance.net/gallery/239452045/Billboard-Design-Berger-Sealer-Campaign", verified: true, thumbnail: "/media/behance/239452045.png" },
-  { id: "pureit-cat", title: "Pureit · Product Catalogue", caption: "A print catalogue for browsing the Pureit range.", type: "Print", url: "https://www.behance.net/gallery/234564039/Product-Catalogue-Pureit", verified: true, thumbnail: "/media/behance/234564039.jpg" },
-  { id: "pureit-man", title: "Pureit · Product Manual", caption: "A manual layout for finding product instructions.", type: "Print", url: "https://www.behance.net/gallery/234562973/Product-Manual-Design-Brand-Pureit", verified: true, thumbnail: "/media/behance/234562973.jpg" },
-  { id: "billboard", title: "Outdoor Advertising · Billboard Design", caption: "Billboard design with information that is clear at a glance.", type: "Billboard", url: "https://www.behance.net/gallery/234553883/Eye-Catching-Billboard-Design-Outdoor-Advertising", verified: true, thumbnail: "/media/behance/234553883.png" },
-  { id: "bankcard", title: "Bank Card Branding · Fintech Campaign", caption: "Card branding and a companion online video commercial.", type: "Campaign", url: "https://www.behance.net/gallery/234546863/Bank-Card-Branding-OVC-Creative-Fintech-Campaign", verified: true, thumbnail: "/media/behance/234546863.png" },
-  { id: "parachute", title: "Parachute Just for Baby · Packaging", caption: "Packaging design for the Parachute Just for Baby range.", type: "Packaging", url: "https://www.behance.net/gallery/215718967/Parachute-Just-for-Baby-Baby-Care-Brand-Packaging", verified: true, thumbnail: "/media/behance/215718967.png" },
-  { id: "letterhead", title: "Letterhead Design", caption: "Letterhead design for branded correspondence.", type: "Stationery", url: "https://www.behance.net/gallery/210532369/Letterhead-Design-Pad", verified: true, thumbnail: "/media/behance/210532369.jpg" },
-  { id: "promo-video", title: "Brand Promotion · Video", caption: "A promotional video for brand communication.", type: "Video", url: "https://www.behance.net/gallery/186704511/Brand-Promotion-Video", verified: true, thumbnail: "/media/behance/186704511.png" },
-  { id: "promo-social", title: "Brand Promotion · Social Post", caption: "Promotion-led creative for social media.", type: "Social", url: "https://www.behance.net/gallery/186372427/Brand-Promotion-Social-Media-Post", verified: true, thumbnail: "/media/behance/186372427.jpg" },
-  { id: "social", title: "Social Media Post", caption: "A standalone social media design.", type: "Social", url: "https://www.behance.net/gallery/183253499/Social-Media-Post", verified: true, thumbnail: "/media/behance/183253499.jpeg" },
-  { id: "social-brand", title: "Brand Identity · Social Post", caption: "A visual identity adapted for social media.", type: "Social", url: "https://www.behance.net/gallery/183014205/Social-Media-Post-Branding", verified: true, thumbnail: "/media/behance/183014205.jpg" },
+  { id: "skin", title: "Confidence Breakthrough · Skincare Campaign", caption: "A skincare campaign around confidence.", type: "Campaign", url: "https://www.behance.net/gallery/242883541/Skin-Care-Branding-Confidence-Breakthrough-Campaign", verified: true, thumbnail: "/media/behance/242883541.jpg", full: "/media/behance/hd/242883541.jpg" },
+  { id: "berger", title: "Berger Sealer · Billboard", caption: "Outdoor campaign creative for Berger Sealer.", type: "Billboard", url: "https://www.behance.net/gallery/239452045/Billboard-Design-Berger-Sealer-Campaign", verified: true, thumbnail: "/media/behance/239452045.png", full: "/media/behance/hd/239452045.png" },
+  { id: "pureit-cat", title: "Pureit · Product Catalogue", caption: "A print catalogue for browsing the Pureit range.", type: "Print", url: "https://www.behance.net/gallery/234564039/Product-Catalogue-Pureit", verified: true, thumbnail: "/media/behance/234564039.jpg", full: "/media/behance/hd/234564039.jpg" },
+  { id: "pureit-man", title: "Pureit · Product Manual", caption: "A manual layout for finding product instructions.", type: "Print", url: "https://www.behance.net/gallery/234562973/Product-Manual-Design-Brand-Pureit", verified: true, thumbnail: "/media/behance/234562973.jpg", full: "/media/behance/hd/234562973.jpg" },
+  { id: "billboard", title: "Outdoor Advertising · Billboard Design", caption: "Billboard design with information that is clear at a glance.", type: "Billboard", url: "https://www.behance.net/gallery/234553883/Eye-Catching-Billboard-Design-Outdoor-Advertising", verified: true, thumbnail: "/media/behance/234553883.png", full: "/media/behance/hd/234553883.png" },
+  { id: "bankcard", title: "Bank Card Branding · Fintech Campaign", caption: "Card branding and a companion online video commercial.", type: "Campaign", url: "https://www.behance.net/gallery/234546863/Bank-Card-Branding-OVC-Creative-Fintech-Campaign", verified: true, thumbnail: "/media/behance/234546863.png", full: "/media/behance/hd/234546863.png" },
+  { id: "parachute", title: "Parachute Just for Baby · Packaging", caption: "Packaging design for the Parachute Just for Baby range.", type: "Packaging", url: "https://www.behance.net/gallery/215718967/Parachute-Just-for-Baby-Baby-Care-Brand-Packaging", verified: true, thumbnail: "/media/behance/215718967.png", full: "/media/behance/hd/215718967.png" },
+  { id: "letterhead", title: "Letterhead Design", caption: "Letterhead design for branded correspondence.", type: "Stationery", url: "https://www.behance.net/gallery/210532369/Letterhead-Design-Pad", verified: true, thumbnail: "/media/behance/210532369.jpg", full: "/media/behance/hd/210532369.jpg" },
+  { id: "promo-video", title: "Brand Promotion · Video", caption: "A promotional video for brand communication.", type: "Video", url: "https://www.behance.net/gallery/186704511/Brand-Promotion-Video", verified: true, thumbnail: "/media/behance/186704511.png", full: "/media/behance/hd/186704511.png" },
+  { id: "promo-social", title: "Brand Promotion · Social Post", caption: "Promotion-led creative for social media.", type: "Social", url: "https://www.behance.net/gallery/186372427/Brand-Promotion-Social-Media-Post", verified: true, thumbnail: "/media/behance/186372427.jpg", full: "/media/behance/hd/186372427.jpg" },
+  { id: "social", title: "Social Media Post", caption: "A standalone social media design.", type: "Social", url: "https://www.behance.net/gallery/183253499/Social-Media-Post", verified: true, thumbnail: "/media/behance/183253499.jpeg", full: "/media/behance/hd/183253499.jpeg" },
+  { id: "social-brand", title: "Brand Identity · Social Post", caption: "A visual identity adapted for social media.", type: "Social", url: "https://www.behance.net/gallery/183014205/Social-Media-Post-Branding", verified: true, thumbnail: "/media/behance/183014205.jpg", full: "/media/behance/hd/183014205.jpg" },
   { id: "oggy", title: "Oggy · Vector Illustration", caption: "A vector illustration built around Oggy’s expressive silhouette.", type: "Illustration", url: "https://www.behance.net/gallery/181839773/Cartoon-Character-Oggy-Vector-Art", verified: true },
   { id: "hattori", title: "Ninja Hattori · Vector Illustration", caption: "A vector illustration focusing on Ninja Hattori’s pose and recognisable details.", type: "Illustration", url: "https://www.behance.net/gallery/181917209/Cartoon-Art-Ninja-Hattori-Vector-Art", verified: true },
   { id: "brochure", title: "Square Tri-Fold Brochure", caption: "A tri-fold brochure that presents information panel by panel.", type: "Print", url: "https://www.behance.net/gallery/181822017/Square-Tri-Fold-Threefold-brochure", verified: true },
@@ -186,15 +186,17 @@ export const projectCategories: ProjectCategory[] = ["★ Flagship", "Brand Stra
 export type Project = {
   id: string; title: string; subtitle: string; role?: string;
   challenge?: string; contribution?: string; outcome?: string; summary?: string;
-  images: string[]; captions?: string[]; metrics?: { value: string; label: string }[]; link?: string; linkLabel?: string; badge?: string;
+  images: string[]; /** Creative artwork: shown uncropped; `artworkFallback` is the known-good smaller file. */ artwork?: boolean; artworkFallback?: string | undefined; captions?: string[]; metrics?: { value: string; label: string }[]; link?: string; linkLabel?: string; badge?: string;
   /** "Case brands" = competition case subjects (not clients); "Clients"/"Brands" = professional work. */
   brandRow?: { label: string; names: string[] };
   /** Work thumbnail gradient; original images stay in `images`. */
   gradient?: { from: string; to: string; tag: string; star?: boolean };
 };
 
-const behanceProjects = behanceWorks.map<Project>((w) => ({
-  id: `bh-${w.id}`, title: w.title, subtitle: `${w.type} · Behance`, summary: w.caption, images: w.thumbnail ? [w.thumbnail] : [], link: w.url,
+/** Behance works kept on Behance/Files but not shown anywhere in Photos. */
+export const photosHiddenWorks = ["oggy", "hattori"];
+const behanceProjects = behanceWorks.filter((w) => !photosHiddenWorks.includes(w.id)).map<Project>((w) => ({
+  id: `bh-${w.id}`, title: w.title, subtitle: `${w.type} · Behance`, summary: w.caption, images: w.full ? [w.full] : w.thumbnail ? [w.thumbnail] : [], artwork: true, artworkFallback: w.thumbnail, link: w.url,
 }));
 
 export const projects: Project[] = [
@@ -224,11 +226,11 @@ export const photoRoots: PhotoRoot[] = [
   { id: "XYZ Agency", ids: ["agency"], gradient: { from: "#ff6b00", to: "#4a1200", tag: "#IndependentAgency" } },
   { id: "Legend International School", ids: ["legend"], gradient: { from: "#c9a227", to: "#1b1b1b", tag: "#SchoolMarketing" } },
   { id: "Campaigns & Creative", gradient: { from: "#00a651", to: "#05351c", tag: "#Campaigns" }, albums: [
+    { id: "campaigns", title: "Curated", ids: ["bh-skin", "bh-bankcard", "bh-promo-video", "bh-promo-social", "bh-social", "bh-social-brand"] },
+    { id: "berger", title: "Outdoor", ids: ["bh-berger", "bh-billboard"] },
     { id: "pureit", title: "Pureit", ids: ["bh-pureit-cat", "bh-pureit-man"] },
-    { id: "berger", title: "Berger & Outdoor", ids: ["bh-berger", "bh-billboard"] },
     { id: "packaging", title: "Packaging", ids: ["bh-parachute"] },
-    { id: "campaigns", title: "Campaigns & Digital", ids: ["bh-skin", "bh-bankcard", "bh-promo-video", "bh-promo-social", "bh-social", "bh-social-brand"] },
-    { id: "other", title: "Other Design", ids: ["bh-letterhead", "bh-brochure", "bh-oggy", "bh-hattori"] },
+    { id: "print", title: "Print Materials", ids: ["bh-letterhead", "bh-brochure"] },
   ] },
   { id: "Community & Leadership", ids: ["yes"], gradient: { from: "#00c7be", to: "#063b3a", tag: "#Leadership" } },
   { id: "Awards & Achievements", ids: awards.map(a => `award-${a.id}`) },
@@ -244,6 +246,7 @@ export const projectById = (id: string) => projects.find((p) => p.id === id);
 export const albumItems = (ids: string[]) => ids.map(projectById).filter((p): p is Project => !!p);
 export const rootIds = (r: PhotoRoot) => r.ids ?? (r.albums ?? []).flatMap((a) => a.ids);
 export function findAlbum(id: string): { root: ProjectCategory; album: PhotoAlbum } | undefined {
+  if (id === "other") id = "print";
   if (id === "agency") return { root: "X Integrated Marketing Agency", album: { id, title: "X Integrated Marketing Agency", ids: ["x-agency"] } };
   return photoRoots.flatMap((root) => (root.albums ?? []).map((album) => ({ root: root.id, album }))).find((entry) => entry.album.id === id);
 }

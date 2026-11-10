@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -33,9 +34,9 @@ export function ProjectGallery({ project }: { project: Project }) {
         <header className="flex shrink-0 items-center gap-2 border-b border-border px-4 py-2"><DialogTitle className="min-w-0 flex-1 text-sm">{project.title}</DialogTitle><Button variant="ghost" size="icon" aria-label="Close photo story" onClick={() => setIndex(null)}><X/></Button></header>
         <DialogDescription className="sr-only">{project.subtitle}. Photo and case story.</DialogDescription>
         <div className="min-h-0 overflow-y-auto overscroll-contain p-4" onTouchStart={e => setStart(e.touches[0]?.clientX ?? null)} onTouchEnd={e => { const x=e.changedTouches[0]?.clientX; if(start !== null && x !== undefined && Math.abs(x-start)>60) step(x<start?1:-1);setStart(null); }}>
-          {index !== null && <figure><img src={images[index]} alt={captions?.[index] ?? `${project.title} photo ${index+1}`} className="max-h-[52dvh] w-full object-contain"/><figcaption className="mt-3 text-sm leading-relaxed text-muted-foreground">{captions?.[index] ?? `${project.title} · ${project.badge} · Photo ${index+1}`}</figcaption></figure>}
+          {index !== null && <figure><img src={images[index]} alt={captions?.[index] ?? `${project.title} photo ${index+1}`} onError={e => { const fb = project.artworkFallback; if (fb && !e.currentTarget.src.endsWith(fb)) e.currentTarget.src = fb; }} className={cn("max-h-[52dvh] object-contain", project.artwork ? "mx-auto w-auto max-w-full rounded-lg bg-muted" : "w-full")}/><figcaption className="mt-3 text-sm leading-relaxed text-muted-foreground">{captions?.[index] ?? [project.title, project.badge, `Photo ${index+1}`].filter(Boolean).join(" · ")}</figcaption></figure>}
           <div className="my-4 flex items-center justify-between"><Button variant="secondary" size="icon" aria-label="Previous photo" onClick={() => step(-1)} disabled={count<2}><ChevronLeft/></Button><span className="text-xs text-muted-foreground">{(index ?? 0)+1} / {count}</span><Button variant="secondary" size="icon" aria-label="Next photo" onClick={() => step(1)} disabled={count<2}><ChevronRight/></Button></div>
-          <p className="mb-2 text-sm text-muted-foreground">{project.subtitle}{project.role ? ` · ${project.role}` : ""} · {project.badge}</p><StoryText project={project}/>
+          <p className="mb-2 text-sm text-muted-foreground">{[project.subtitle, project.role, project.badge].filter(Boolean).join(" · ")}</p><StoryText project={project}/>
         </div>
       </DialogContent>
     </Dialog>

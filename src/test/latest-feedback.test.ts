@@ -11,7 +11,7 @@ describe("owner's latest factual rules", () => {
     expect(photoRoots.some(r => r.id === ("Product Launches" as string))).toBe(false);
     expect(notes.some(n => n.id === "insights")).toBe(true);
   });
-  it("recomputes the remaining collection counts", () => expect(photoRoots.map(r => rootIds(r).length)).toEqual([2, 1, 1, 1, 1, 15, 1, 8]));
+  it("recomputes the remaining collection counts", () => expect(photoRoots.map(r => rootIds(r).length)).toEqual([2, 1, 1, 1, 1, 13, 1, 8]));
   it("maps obsolete launch category to the retained Pureit category", () => expect(resolvePhotoCategory("Product Launches")).toBe("Brand Strategy & Transition"));
   it("preserves Pureit scope without making India a Pureit research market", () => {
     expect(projectById("pureit-transition")?.metrics?.map(m => m.value)).toEqual(["7+", "2", "3", "300+"]);

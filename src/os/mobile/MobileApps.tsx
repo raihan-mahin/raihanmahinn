@@ -117,7 +117,7 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHom
       <div className="px-4 pb-36">
         {searching ? <><label className="mb-5 flex h-11 items-center gap-2 rounded-lg bg-secondary px-3"><Search size={18}/><input autoFocus aria-label="Search Photos" placeholder={root === "Awards & Achievements" ? "Search awards" : "Search work"} value={q} onChange={e => setQ(e.target.value)} className="min-w-0 flex-1 bg-transparent outline-none" /></label>{itemGrid(results, root === "Awards & Achievements")}{!results.length && <p className="py-10 text-center text-muted-foreground">No results</p>}</> : r ? r.albums && !a ? collections(r.albums, setAlbum) : itemGrid(albumItems(a?.ids ?? rootIds(r)), root === "Awards & Achievements") : tab === "Library" ? itemGrid(workProjects) : <>
           <div className="mb-3 flex items-center justify-between"><h2 className="text-[20px] font-semibold">Projects</h2><Button variant="ghost" className="h-11 px-0 text-primary" onClick={() => { setTab("Library"); setRoot(null); setAlbum(null); }}>See All <ChevronRight size={18}/></Button></div>
-          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover, coverStyle: x.coverStyle, gradient: x.gradient })), id => setRoot(resolvePhotoCategory(id)))}
+          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover, coverStyle: x.coverStyle, gradient: x.gradient })), id => { setRoot(resolvePhotoCategory(id)); setAlbum(null); })}
           <h3 className="mb-5 mt-12 text-[25px] font-bold leading-tight">Awards & Achievements</h3>
           {itemGrid(albumItems(awards.map(x => `award-${x.id}`)), true)}
         </>}
