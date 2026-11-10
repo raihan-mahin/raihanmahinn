@@ -54,14 +54,19 @@ describe("Messages navigation and actions", () => {
     fireEvent.click(screen.getByRole("button", { name: "Open XYZ portfolio" }));
     expect(open).toHaveBeenLastCalledWith("photos", "agency");
   });
-  it("maps awards and client responses to real projects without claiming the response target was achieved", () => {
+  it("maps awards and client responses to real projects", () => {
     for (const question of ["Tell me about Marico", "What did you pitch at Admaker?", "Which client accounts?"]) {
       const reply = messageReply("competitions", question);
       const action = reply.actions?.[0];
       expect(action?.app).toBe("photos");
       expect(projectById(action?.payload ?? "")).toBeDefined();
     }
-    expect(messageReply("x-integrated", "How did you handle queries?").text).toContain("90%");
-    expect(messageReply("x-integrated", "How did you handle queries?").text).toContain("response target, not an achieved result");
+    expect(messageReply("x-integrated", "How did you handle queries?").actions?.[0]).toEqual({ label: "Open X Integrated case study", app: "photos", payload: "x-agency" });
+  });
+  it.each(["What did you do at Pureit?", "Which launches?", "What did you do in Sri Lanka?"])("keeps the Pureit destination for %s", question => {
+    render(<Messages payload="pureit"/>);
+    fireEvent.click(screen.getByRole("button", { name: question }));
+    fireEvent.click(screen.getByRole("button", { name: "Open Pureit case study" }));
+    expect(open).toHaveBeenLastCalledWith("photos", "pureit-transition");
   });
 });
