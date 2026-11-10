@@ -1,3 +1,3 @@
-- [x] Nudge only the phone LinkedIn graphic by four pixels.
-- [x] Refine shared Messages, grouped Notes and functional Settings views.
-- [x] Verify phone/desktop flows and persistence; commit once without publishing.
+- [x] Finish the supplied shared gallery and Notes patch, preserving the partial revision.
+- [x] Run tests and inspect phone/desktop contact actions, gradients, collections and unchanged award media.
+- [x] Save one finished commit without publishing or changing visibility.

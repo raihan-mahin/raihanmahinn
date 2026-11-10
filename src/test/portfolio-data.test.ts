@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { photoRoots, rootIds, albumItems, highlights, albumCover, agencyBrands, awards, pureitCases, projects, notes, qa, experience, profile, workRoots, workProjects, resolvePhotoCategory } from "@/data/portfolio";
+import { photoRoots, rootIds, albumItems, highlights, albumCover, agencyBrands, awards, pureitCases, projects, notes, qa, experience, profile, workRoots, workProjects, resolvePhotoCategory, findAlbum } from "@/data/portfolio";
 
 describe("portfolio content rules", () => {
   it("current agency reels are exactly Lux, Lifebuoy and Dove", () => {
@@ -57,7 +57,7 @@ describe("media", () => {
 
 describe("work collections and achievements", () => {
   it("keeps the remaining career categories in order", () => {
-    expect(workRoots.map(r => r.id)).toEqual(["★ Flagship", "Brand Strategy & Transition", "Client Engagement", "Campaigns & Creative", "Community & Leadership"]);
+    expect(workRoots.map(r => r.id)).toEqual(["★ Flagship", "Brand Strategy & Transition", "X Integrated Marketing Agency", "Co-Founder · Independent Agency", "Legend International School", "Campaigns & Creative", "Community & Leadership"]);
   });
   it("excludes all competition records and photos from work collections", () => {
     for (const r of workRoots) for (const p of albumItems(rootIds(r))) {
@@ -75,6 +75,10 @@ describe("work collections and achievements", () => {
   });
   it("Flagship prioritizes transition and servicing without Music That Heals", () => {
     expect(photoRoots.find(r => r.id === "★ Flagship")?.ids).toEqual(["pureit-transition", "x-agency"]);
+    expect(photoRoots.find(r => r.id === "X Integrated Marketing Agency")?.ids).toEqual(["x-agency"]);
+    expect(photoRoots.find(r => r.id === "Co-Founder · Independent Agency")?.ids).toEqual(["agency"]);
+    expect(photoRoots.find(r => r.id === "Legend International School")?.ids).toEqual(["legend"]);
+    expect(workRoots.every(root => Boolean(root.gradient))).toBe(true);
     expect(workProjects.some(p => p.id === "mth")).toBe(false);
   });
   it("each creative project occurs in only one creative folder", () => {
@@ -85,6 +89,7 @@ describe("work collections and achievements", () => {
   });
   it("every collection id resolves and legacy shortcuts still work", () => {
     for (const r of photoRoots) expect(albumItems(rootIds(r))).toHaveLength(rootIds(r).length);
+    expect(findAlbum("agency")).toEqual({ root: "X Integrated Marketing Agency", album: { id: "agency", title: "X Integrated Marketing Agency", ids: ["x-agency"] } });
     expect(resolvePhotoCategory("Featured")).toBe("★ Flagship");
     expect(resolvePhotoCategory("Brand Design")).toBe("Campaigns & Creative");
     expect(resolvePhotoCategory("Competitions")).toBe("Awards & Achievements");

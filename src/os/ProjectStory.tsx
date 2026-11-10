@@ -24,6 +24,9 @@ export function ProjectGallery({ project }: { project: Project }) {
   const step = (delta: number) => setIndex(i => i === null ? null : (i + delta + count) % count);
   return <>
     {count ? <Button variant="ghost" className="block aspect-video h-auto w-full overflow-hidden rounded-lg bg-secondary p-0" aria-label={`Open photo 1 of ${project.title}`} onClick={() => setIndex(0)}><ProjectCover project={project} contain/></Button> : <div className="aspect-video overflow-hidden rounded-lg bg-secondary"><ProjectCover project={project} contain/></div>}
+    {project.gradient && count > 0 && (
+      <Button variant="outline" className="mt-3" onClick={() => setIndex(0)}>View original photo</Button>
+    )}
     {count > 1 && <div className="mt-3 grid grid-cols-3 gap-2">{project.images.slice(1).map((src, i) => <Button key={src} variant="ghost" className="aspect-square h-auto overflow-hidden rounded-lg p-0" aria-label={`Open photo ${i+2} of ${project.title}`} onClick={() => setIndex(i+1)}><img src={src} alt={project.captions?.[i+1] ?? `${project.title} photo ${i+2}`} className="h-full w-full object-cover" loading="lazy"/></Button>)}</div>}
     <Dialog open={index !== null} onOpenChange={open => { if (!open) setIndex(null); }}>
       <DialogContent className="photo-story native-dark z-[9500] flex max-h-[90dvh] w-[calc(100vw-24px)] max-w-4xl flex-col gap-0 overflow-hidden p-0" onKeyDown={e => { if(e.key === "ArrowRight") {e.preventDefault();step(1);} if(e.key === "ArrowLeft") {e.preventDefault();step(-1);} }}>

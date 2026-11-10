@@ -261,3 +261,44 @@
 .photos-native .photos-bottom-bar { bottom: calc(max(env(safe-area-inset-bottom), 8px) + 24px); }
 
 .photos-native .photos-header { border: 0; }
+
+/* Owner-sampled career cover palette; shared by phone and desktop. */
+:root {
+  --cover-ink: #fff;
+  --cover-hash: #ffffff1a;
+  --cover-stripe: #ffffff0b;
+  --cover-light: #ffffff4d;
+  --cover-shade: #00000059;
+  --cover-star: #fde047;
+  --cover-star-ink: #713f12;
+  --cover-flagship-from: #e2483d;
+  --cover-flagship-to: #4a1036;
+  --cover-transition-from: #ff2d55;
+  --cover-transition-to: #1b0b3a;
+  --cover-servicing-from: #2478e8;
+  --cover-servicing-to: #11264d;
+  --cover-agency-from: #ff6b00;
+  --cover-agency-to: #4a1200;
+  --cover-school-from: #c9a227;
+  --cover-school-to: #1b1b1b;
+  --cover-campaigns-from: #00a651;
+  --cover-campaigns-to: #05351c;
+  --cover-leadership-from: #00c7be;
+  --cover-leadership-to: #063b3a;
+}
+.gradient-cover {
+  color: var(--cover-ink);
+  background-image: repeating-linear-gradient(240deg, var(--cover-stripe) 0px 2px, transparent 2px 14px),
+    radial-gradient(circle at 85% 12%, var(--cover-light), transparent 42%),
+    radial-gradient(circle at 0% 100%, var(--cover-shade), transparent 55%),
+    linear-gradient(150deg, var(--cover-from), var(--cover-to));
+}
+.gradient-cover-hash { color: var(--cover-hash); }
+.gradient-cover-star { background: var(--cover-star); color: var(--cover-star-ink); }
+.gradient-cover[data-gradient-from="#e2483d"] { --cover-from: var(--cover-flagship-from); --cover-to: var(--cover-flagship-to); }
+.gradient-cover[data-gradient-from="#ff2d55"] { --cover-from: var(--cover-transition-from); --cover-to: var(--cover-transition-to); }
+.gradient-cover[data-gradient-from="#2478e8"] { --cover-from: var(--cover-servicing-from); --cover-to: var(--cover-servicing-to); }
+.gradient-cover[data-gradient-from="#ff6b00"] { --cover-from: var(--cover-agency-from); --cover-to: var(--cover-agency-to); }
+.gradient-cover[data-gradient-from="#c9a227"] { --cover-from: var(--cover-school-from); --cover-to: var(--cover-school-to); }
+.gradient-cover[data-gradient-from="#00a651"] { --cover-from: var(--cover-campaigns-from); --cover-to: var(--cover-campaigns-to); }
+.gradient-cover[data-gradient-from="#00c7be"] { --cover-from: var(--cover-leadership-from); --cover-to: var(--cover-leadership-to); }

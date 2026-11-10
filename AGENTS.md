@@ -37,7 +37,7 @@ use the editor.
 - App icons are original SVG drawings in `src/os/icons.tsx` (illustration colours allowed there only).
 - Brand logos: files in `public/media/logos/`, mapped by brand name in `src/data/brandLogos.ts`, rendered only via `BrandLogo`/`BrandStrip` (text fallback); competition case brands never get logo entries.
 - Photos work taxonomy and separate achievements collection are defined in `photoRoots`; `workRoots` and `workProjects` exclude awards, and legacy category payloads resolve centrally so existing shortcuts keep working.
-- ProjectCover renders actual project imagery or verified branded/neutral covers so work without photographs remains distinct from award media.
+- ProjectCover and CollectionCover share GradientCover for explicitly configured career covers using CSS palette tokens; original images remain accessible in ProjectStory and awards retain image-first covers.
 - CollectionCover reads collection-level cover styles from the shared taxonomy to distinguish designed career covers from project and award imagery.
 - RecruiterContent is shared across desktop and the native phone page to keep career facts and actions identical; sanitized PDFs and Preview read the same separate verbatim CV content source, never private CV fields.
 - Music links to external Spotify discovery searches only; no simulated playback or invented personal recordings.

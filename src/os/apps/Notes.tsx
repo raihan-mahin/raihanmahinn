@@ -4,18 +4,43 @@ import { notes as seed } from "@/data/portfolio";
 
 import { loadNotes, NOTES_KEY as KEY } from "@/lib/note-storage";
 import { Button } from "@/components/ui/button";
+import { useOS } from "../store";
 import { NoteList } from "../NoteList";
 import { newNote, editNote, type DatedNote } from "@/lib/note-presentation";
 
+const noteLinkClass = "rounded-sm text-primary underline underline-offset-2 focus-visible:outline focus-visible:outline-2";
+
+function noteHref(value: string) {
+  if (/^mailto:[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(value)) return value;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:" ? url.href : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function Render({ body }: { body: string }) {
+  const open = useOS().open;
+  const inline = (line: string) => line.split(/(\[[^\]\n]+\]\([^\s)]+\)|https?:\/\/[^\s<>]+|[\w.+-]+@[\w.-]+\.[a-z]{2,})/gi).map((part, i) => {
+    const token = part.match(/^\[([^\]]+)\]\(([^\s)]+)\)$/);
+    if (token?.[2] === "app:photos") {
+      return <Button variant="link" type="button" key={i} className={noteLinkClass + " h-auto p-0 text-[inherit] font-normal"} onClick={() => open("photos")}>{token[1]}</Button>;
+    }
+    const value = token?.[2] ?? (/^[\w.+-]+@[\w.-]+\.[a-z]{2,}$/i.test(part) ? "mailto:" + part : part);
+    const href = noteHref(value);
+    if (!href) return token?.[1] ?? part;
+    const external = !href.toLowerCase().startsWith("mailto:");
+    return <a key={i} className={noteLinkClass} href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>{token?.[1] ?? part}</a>;
+  });
   return (
     <div className="space-y-1.5 text-[15px] leading-relaxed">
       {body.split("\n").map((l, i) => {
-        if (l.startsWith("# ")) return <h1 key={i} className="pb-1 text-2xl font-bold tracking-tight">{l.slice(2)}</h1>;
-        if (l.startsWith("## ")) return <h2 key={i} className="pt-2 text-base font-bold">{l.slice(3)}</h2>;
-        if (l.startsWith("- ")) return <p key={i} className="flex gap-2 pl-1"><span className="text-primary">•</span><span>{l.slice(2)}</span></p>;
+        if (l.startsWith("# ")) return <h1 key={i} className="pb-1 text-2xl font-bold tracking-normal">{inline(l.slice(2))}</h1>;
+        if (l.startsWith("## ")) return <h2 key={i} className="pt-2 text-base font-bold">{inline(l.slice(3))}</h2>;
+        if (l.startsWith("- ")) return <p key={i} className="flex gap-2 pl-1"><span className="text-primary">•</span><span>{inline(l.slice(2))}</span></p>;
         if (!l.trim()) return <div key={i} className="h-2" />;
-        return <p key={i}>{l}</p>;
+        return <p key={i}>{inline(l)}</p>;
       })}
     </div>
   );

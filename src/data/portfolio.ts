@@ -235,7 +235,10 @@ export const workProjects = projects.filter(p => !p.id.startsWith("award-"));
 export const projectById = (id: string) => projects.find((p) => p.id === id);
 export const albumItems = (ids: string[]) => ids.map(projectById).filter((p): p is Project => !!p);
 export const rootIds = (r: PhotoRoot) => r.ids ?? (r.albums ?? []).flatMap((a) => a.ids);
-export const findAlbum = (id: string) => photoRoots.flatMap((r) => (r.albums ?? []).map((a) => ({ root: r.id, album: a }))).find((x) => x.album.id === id);
+export function findAlbum(id: string): { root: ProjectCategory; album: PhotoAlbum } | undefined {
+  if (id === "agency") return { root: "X Integrated Marketing Agency", album: { id, title: "X Integrated Marketing Agency", ids: ["x-agency"] } };
+  return photoRoots.flatMap((root) => (root.albums ?? []).map((album) => ({ root: root.id, album }))).find((entry) => entry.album.id === id);
+}
 /** First real image in an album (used as its cover). */
 export const albumCover = (ids: string[]) => albumItems(ids).flatMap((p) => p.images)[0];
 
