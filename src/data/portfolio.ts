@@ -311,3 +311,6 @@ export const qa = [
   { q: "Education?", a: "Final-year BBA in Marketing at North South University, expected December 2026. HSC Science from DRMC." },
   { q: "How can I reach you?", a: `Want to talk about a role, a project or something you saw here? Reach me by email or on LinkedIn. Email: ${profile.email}. LinkedIn: ${profile.linkedin}` },
 ];
+
+/** Single-case collections that open their story directly instead of a redundant one-item grid. */
+export const directCollectionProject: Partial<Record<ProjectCategory, string>> = { "XYZ Agency": "agency" };

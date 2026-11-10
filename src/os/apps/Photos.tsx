@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ExternalLink, Trophy, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, findAlbum, projectById, type ProjectCategory, type Project } from "@/data/portfolio";
+import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, findAlbum, projectById, directCollectionProject, type ProjectCategory, type Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { ProjectCover, coverFrame } from "../ProjectCover";
 import { ProjectGallery, StoryText } from "../ProjectStory";
@@ -28,10 +28,11 @@ export function Photos({ payload }: { payload?: string | undefined }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [view, setView] = useState<"Library" | "Collections">("Collections");
   const [q, setQ] = useState("");
+  const [prev, setPrev] = useState<{ root: ProjectCategory; view: "Library" | "Collections"; album: string | null } | null>(null);
   useEffect(() => {
     if (!payload) return;
     setQ(""); setView("Collections");
-    if (payload.startsWith("cat:")) { setRoot(resolvePhotoCategory(payload.slice(4))); setAlbum(null); setOpenId(null); }
+    if (payload.startsWith("cat:")) { const c = resolvePhotoCategory(payload.slice(4)); setRoot(c); setAlbum(null); setOpenId(directCollectionProject[c] ?? null); setPrev(null); }
     else if (payload.startsWith("album:")) { const f = findAlbum(payload.slice(6)); if (f) { setRoot(f.root); setAlbum(f.album.id); setOpenId(null); } }
     else if (projectById(payload)) { setOpenId(payload); if (payload.startsWith("award-")) setRoot("Awards & Achievements"); }
   }, [payload]);
@@ -42,7 +43,9 @@ export function Photos({ payload }: { payload?: string | undefined }) {
   const isAwards = root === "Awards & Achievements";
   const source = q ? (isAwards ? albumItems(rootIds(r)) : workProjects) : view === "Library" ? workProjects : albumItems(a?.ids ?? rootIds(r));
   const items = source.filter(p => `${p.title} ${p.subtitle} ${p.summary ?? ""}`.toLowerCase().includes(q.toLowerCase()));
-  const select = (id: ProjectCategory) => { setRoot(id); setAlbum(null); setOpenId(null); setQ(""); setView("Collections"); };
+  const select = (id: ProjectCategory) => { const d = directCollectionProject[id]; setPrev(d ? { root, view, album } : null); setRoot(id); setAlbum(null); setOpenId(d ?? null); setQ(""); setView("Collections"); };
+  const direct = !!current && directCollectionProject[root] === current.id && !q;
+  const goBack = () => { if (direct) { const p = prev ?? { root: "★ Flagship" as ProjectCategory, view: "Collections" as const, album: null }; setRoot(p.root); setView(p.view); setAlbum(p.album); setOpenId(null); setPrev(null); } else if (current) setOpenId(null); else setAlbum(null); };
   const heading = current?.title ?? a?.title ?? (view === "Library" ? "Library" : r.id);
   return <div className="flex h-full">
     <aside className="w-52 shrink-0 overflow-y-auto border-r border-border bg-secondary/50 p-2">
@@ -55,7 +58,7 @@ export function Photos({ payload }: { payload?: string | undefined }) {
     </aside>
     <div className="flex min-w-0 flex-1 flex-col">
       <header className="flex min-h-14 shrink-0 items-center gap-2 border-b border-border px-4">
-        {(current || a) && <Button variant="ghost" size="icon" aria-label="Back to albums" onClick={() => current ? setOpenId(null) : setAlbum(null)}><ChevronLeft /></Button>}
+        {(current || a) && <Button variant="ghost" size="icon" aria-label="Back to albums" onClick={goBack}><ChevronLeft /></Button>}
         <div className="min-w-0 flex-1"><h2 className="truncate text-lg font-bold">{heading}</h2>{!current && <p className="text-xs text-muted-foreground">{items.length} {items.length === 1 ? "item" : "items"}</p>}</div>
         <label className="flex w-40 items-center gap-2 rounded-md bg-secondary px-2"><Search size={14}/><input aria-label="Search Photos" placeholder="Search" value={q} onChange={e => { setQ(e.target.value); setOpenId(null); }} className="h-8 min-w-0 w-full bg-transparent text-xs outline-none" /></label>
       </header>

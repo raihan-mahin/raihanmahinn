@@ -10,7 +10,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Search, Folder, Check, ExternalLink, Star, Layers, PanelsTopLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import wallpaper from "@/assets/wallpaper-indigo.jpg";
-import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, albumCover, findAlbum, projectById, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project, type PhotoRoot } from "@/data/portfolio";
+import { photoRoots, workRoots, workProjects, resolvePhotoCategory, rootIds, albumItems, albumCover, findAlbum, projectById, directCollectionProject, notes as seedNotes, projects, profile, experience, awards, agencyBrands, behanceWorks, type Note, type ProjectCategory, type Project, type PhotoRoot } from "@/data/portfolio";
 import { useOS, type Wallpaper } from "../store";
 import { Badge, MediaPlaceholder, hash } from "../ui";
 import { Render } from "../apps/Notes";
@@ -98,14 +98,14 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHom
   const found = initialAlbum ? findAlbum(initialAlbum) : undefined;
   const [root, setRoot] = useState<ProjectCategory | null>(found?.root ?? initial ?? null);
   const [album, setAlbum] = useState<string | null>(found?.album.id ?? null);
-  const [pid, setPid] = useState<string | null>(initialPid ?? null);
+  const [pid, setPid] = useState<string | null>(initialPid ?? (!initialAlbum && initial ? directCollectionProject[initial] ?? null : null));
   const [tab, setTab] = useState<"Library" | "Collections">("Collections");
   const [searching, setSearching] = useState(false);
   const [q, setQ] = useState("");
   const r = photoRoots.find(x => x.id === root);
   const a = r?.albums?.find(x => x.id === album);
   const p = pid ? projectById(pid) : undefined;
-  const back = () => { if (searching) { setSearching(false); setQ(""); } else if (pid) setPid(null); else if (album) setAlbum(null); else if (root) setRoot(null); else onHome(); };
+  const back = () => { if (searching) { setSearching(false); setQ(""); } else if (pid) { setPid(null); if (root && directCollectionProject[root] === pid) setRoot(null); } else if (album) setAlbum(null); else if (root) setRoot(null); else onHome(); };
   const itemGrid = (items: Project[], countPhotos = false) => <div className="grid grid-cols-2 items-start gap-x-3 gap-y-6">{items.map(x => <Button key={x.id} variant="ghost" className="photos-item h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => setPid(x.id)}><div className={`${coverFrame(x)} overflow-hidden rounded-[12px]`}><ProjectCover project={x}/></div><p className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug">{x.title.replace(/ — .*$/, "")}</p>{!x.id.startsWith("bh-") && <p className="mt-1 text-[13px] text-muted-foreground">{countPhotos ? x.images.length ? `${x.images.length} ${x.images.length === 1 ? "photo" : "photos"} · ${x.badge}` : x.badge : x.subtitle}</p>}</Button>)}</div>;
   const collections = (entries: { id: string; title: string; ids: string[]; cover?: string | undefined; coverStyle?: PhotoRoot["coverStyle"]; gradient?: PhotoRoot["gradient"] }[], open: (id: string) => void) => <div className="grid grid-cols-2 gap-x-3 gap-y-7">{entries.map(x => {
     return <Button key={x.id} variant="ghost" className="photos-item h-auto min-w-0 flex-col items-stretch justify-start gap-0 whitespace-normal p-0 text-left" onClick={() => open(x.id)}><div className={`${collectionFrame(x)} overflow-hidden rounded-[12px]`}><CollectionCover collection={x}/></div><p className="mt-2 text-[15px] font-semibold leading-snug">{x.title}</p><p className="mt-1 text-[13px] text-muted-foreground">{x.ids.length} {x.ids.length === 1 ? "item" : "items"}</p></Button>;
@@ -113,11 +113,11 @@ export function IOSPhotos({ onHome, initial, initialAlbum, initialPid }: { onHom
   const source = root === "Awards & Achievements" ? albumItems(r ? rootIds(r) : []) : workProjects;
   const results = source.filter(x => `${x.title} ${x.subtitle} ${x.summary ?? ""}`.toLowerCase().includes(q.toLowerCase()));
   return <div className="native-dark photos-native absolute inset-0">
-    {p ? <ProjectDetail p={p} back={a?.title ?? r?.id ?? tab} onBack={back}/> : <IOSPage title={searching ? "Search" : a?.title ?? r?.id ?? tab} backLabel={root ? "Collections" : "Home"} onBack={back} photos>
+    {p ? <ProjectDetail p={p} back={root && directCollectionProject[root] === p.id ? "Collections" : a?.title ?? r?.id ?? tab} onBack={back}/> : <IOSPage title={searching ? "Search" : a?.title ?? r?.id ?? tab} backLabel={root ? "Collections" : "Home"} onBack={back} photos>
       <div className="px-4 pb-36">
         {searching ? <><label className="mb-5 flex h-11 items-center gap-2 rounded-lg bg-secondary px-3"><Search size={18}/><input autoFocus aria-label="Search Photos" placeholder={root === "Awards & Achievements" ? "Search awards" : "Search work"} value={q} onChange={e => setQ(e.target.value)} className="min-w-0 flex-1 bg-transparent outline-none" /></label>{itemGrid(results, root === "Awards & Achievements")}{!results.length && <p className="py-10 text-center text-muted-foreground">No results</p>}</> : r ? r.albums && !a ? collections(r.albums, setAlbum) : itemGrid(albumItems(a?.ids ?? rootIds(r)), root === "Awards & Achievements") : tab === "Library" ? itemGrid(workProjects) : <>
           <div className="mb-3 flex items-center justify-between"><h2 className="text-[20px] font-semibold">Projects</h2><Button variant="ghost" className="h-11 px-0 text-primary" onClick={() => { setTab("Library"); setRoot(null); setAlbum(null); }}>See All <ChevronRight size={18}/></Button></div>
-          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover, coverStyle: x.coverStyle, gradient: x.gradient })), id => { setRoot(resolvePhotoCategory(id)); setAlbum(null); })}
+          {collections(workRoots.map(x => ({ id: x.id, title: x.id, ids: rootIds(x), cover: x.cover, coverStyle: x.coverStyle, gradient: x.gradient })), id => { const c = resolvePhotoCategory(id); setRoot(c); setAlbum(null); setPid(directCollectionProject[c] ?? null); })}
           <h3 className="mb-5 mt-12 text-[25px] font-bold leading-tight">Awards & Achievements</h3>
           {itemGrid(albumItems(awards.map(x => `award-${x.id}`)), true)}
         </>}
