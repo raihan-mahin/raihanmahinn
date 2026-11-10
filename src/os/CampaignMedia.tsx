@@ -12,7 +12,7 @@ type ShelfItem = { key: string; brand: string; title: string; poster: string; wi
 const smooth = (t: number) => t * t * (3 - 2 * t);
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
-/** Fan-shaped 3D cover shelf: dominant centre cover, side covers taper and recede as narrow slices. */
+/** Compact 3D cover shelf: adjacent projected faces determine spacing, not viewport edges. */
 export function CoverShelf({ items, label, soundPreference }: { items: ShelfItem[]; label: string; soundPreference?: { current: boolean } }) {
   const n = items.length;
   const [open, setOpen] = useState<ShelfItem | null>(null);
@@ -100,26 +100,32 @@ export function CoverShelf({ items, label, soundPreference }: { items: ShelfItem
   const current = items[active];
   const scrollHeight = shelf.current?.closest(".overflow-auto")?.clientHeight;
   const H = Math.round(clamp(Math.min(width * 0.9, (typeof window === "undefined" ? 900 : window.innerHeight) * 0.5, scrollHeight ? scrollHeight - 200 : 440), 240, 440));
-  const maxW = Math.min(H, width * (width < 450 ? 0.4 : 0.46));
-  const coverWidth = (index: number) => { const item = items[index]; return item ? Math.min(H * item.width / item.height, maxW) : 0; };
+  const maxW = Math.min(H, width * (width < 450 ? 0.36 : 0.46));
   const low = clamp(Math.floor(pos), 0, n - 1), high = clamp(low + 1, 0, n - 1);
-  const centerWidth = coverWidth(low) + (coverWidth(high) - coverWidth(low)) * clamp(pos - low, 0, 1);
+  const nativeWidth = (index: number) => { const item = items[index]; return item ? Math.min(H * item.width / item.height, maxW) : 0; };
+  const centerWidth = nativeWidth(low) + (nativeWidth(high) - nativeWidth(low)) * clamp(pos - low, 0, 1);
+  const nativeHeight = (index: number) => { const item = items[index]; return item ? nativeWidth(index) * item.height / item.width : 0; };
+  const centerHeight = nativeHeight(low) + (nativeHeight(high) - nativeHeight(low)) * clamp(pos - low, 0, 1);
   const extent = Math.max(0, width / 2 - (width < 450 ? 12 : 24));
-  const geo = items.map((it, i) => {
+  const gap = clamp(width * 0.015, 6, 12);
+  const faces = items.map((it, i) => {
     const r = i - pos, d = Math.abs(r), side = Math.sign(r);
     const o = smooth(Math.max(0, 1 - d));
-    const base = Math.min(H * it.width / it.height, maxW);
-    const scale = o + (1 - o) * clamp(0.83 - 0.14 * Math.max(0, d - 1), 0.36, 0.83);
+    const native = nativeWidth(i);
+    const base = Math.min(native, centerWidth, centerHeight * it.width / it.height) * (1 - o) + native * o;
+    const scale = o + (1 - o) * clamp(0.8 - 0.12 * Math.max(0, d - 1), 0.48, 0.8);
     const w = base * scale, h = w * it.height / it.width;
-    const slice = clamp(width * 0.024 - 2 * Math.max(0, d - 1), 6, 24);
-    // Distinct evenly distributed side positions, fitted independently on either side.
-    const count = Math.max(1, side < 0 ? pos : n - 1 - pos);
-    const first = centerWidth / 2 + slice / 2 + Math.max(10, width * 0.025);
-    const far = Math.max(first, extent - slice * 2);
-    const outward = first + (far - first) * clamp((d - 1) / Math.max(1, count - 1), 0, 1);
-    const x = side * (d < 1 ? first * d : outward);
-    return { it, i, r, d, o, w, h, slice, x };
+    const slice = 3;
+    const turn = -side * (22 + Math.min(8, Math.max(0, d - 1) * 4)) * (1 - o);
+    // Include shallow depth/perspective in the packing width; posters keep their full native ratio.
+    const z = -Math.min(12, d * 4);
+    const projected = w * Math.cos(turn * Math.PI / 180) * (width * 2 / (width * 2 - z));
+    return { it, i, r, d, o, w, h, slice, turn, z, projected };
   });
+  const positions: number[] = [];
+  faces.forEach((g, i) => { positions[i] = i === 0 ? 0 : (positions[i - 1] ?? 0) + ((faces[i - 1]?.projected ?? 0) + g.projected) / 2 + gap; });
+  const anchor = (positions[low] ?? 0) + ((positions[high] ?? 0) - (positions[low] ?? 0)) * clamp(pos - low, 0, 1);
+  const geo = faces.map(g => ({ ...g, x: (positions[g.i] ?? 0) - anchor }));
   const centerGeometry = geo[active];
 
   const onDown = (e: PointerEvent) => { if (e.button > 0) return; dragged.current = false; drag.current = { x: e.clientX, y: e.clientY, pos: posRef.current, t: performance.now(), lastX: e.clientX, v: 0, horizontal: null }; };
@@ -149,13 +155,13 @@ export function CoverShelf({ items, label, soundPreference }: { items: ShelfItem
       className="relative select-none overflow-hidden" style={{ height: H + 20, perspective: `${Math.round(width * 2)}px`, touchAction: "pan-y" }}>
       {geo.map(g => {
         const x = g.x, isCenter = g.i === active, side = Math.sign(g.r) || 1;
-        const turn = side * 89 * (1 - g.o), hidden = g.d > 6.5;
+        const hidden = Math.abs(x) + g.projected / 2 > extent && g.d >= 1;
         const shade = 1 - (1 - g.o) * clamp(0.3 + 0.08 * g.d, 0, 0.7);
         return <button key={g.it.key} type="button" tabIndex={isCenter ? 0 : -1} aria-hidden={hidden || undefined}
           aria-label={isCenter ? `${g.it.video ? "Play" : "View"} ${g.it.brand} ${g.it.title}${g.it.video ? " video with sound" : " image"}` : `Show ${g.it.brand} ${g.it.title}`}
           onClick={() => press(g.i)} draggable={false} className="absolute left-1/2 top-1/2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          style={{ width: g.w, height: g.h, marginLeft: -g.w / 2, marginTop: -g.h / 2, opacity: hidden ? 0 : 1, zIndex: Math.round(100 - g.d * 10), willChange: "transform",
-            transformStyle: "preserve-3d", transform: `translateX(${x}px) translateY(0px) translateZ(${g.o * 16 - g.slice / 2}px) rotateY(${turn}deg)` }}>
+          style={{ width: g.w, height: g.h, marginLeft: -g.w / 2, marginTop: -g.h / 2, opacity: hidden ? 0 : 1, pointerEvents: hidden ? "none" : undefined, zIndex: Math.round(100 - g.d * 10), willChange: "transform",
+            transformStyle: "preserve-3d", transform: `translateX(${x}px) translateY(0px) translateZ(${g.z}px) rotateY(${g.turn}deg)` }}>
           <span className="absolute inset-0 overflow-hidden rounded-md bg-secondary shadow-xl" style={{ transform: `translateZ(${g.slice / 2}px)`, backfaceVisibility: "hidden", filter: `brightness(${shade})` }}>
             <img src={g.it.poster} alt="" draggable={false} className="block h-full w-full"/>
             {isCenter && g.o > 0.9 && g.it.video && <span aria-hidden className="absolute bottom-2 right-2 grid size-10 place-items-center rounded-full bg-background/70 text-foreground backdrop-blur"><Play size={18} className="ml-0.5" fill="currentColor"/></span>}
