@@ -39,4 +39,19 @@ describe("latest owner facts", () => {
   it("counts seven podiums and three championships separately",()=> {
     expect(recruiter.stats.map(s=>s.value)).toEqual(["10+","7","3","2+ years"]);
   });
+  it("places the Sri Lanka languages paragraph between the acquisition and transition paragraphs", () => {
+    const about = notes.find(n => n.id === "about")?.body ?? "";
+    const paragraph = "I didn’t speak Sinhala or Tamil. Then I was asked to prepare Pureit’s rollout materials in both. I got both versions ready for Sri Lanka.";
+    const expected = `A. O. Smith acquired the brand.\n\n${paragraph}\n\nI helped carry Pureit through the transition`;
+    expect(about).toContain(expected);
+  });
+  it("migrates the exact previous About default to the new text and keeps edits", () => {
+    const previous = legacy.find(n => n.id === "about" && n.body.includes("Three markets: Bangladesh, India and Sri Lanka"));
+    if (!previous) throw new Error("Previous About default must be a known legacy seed");
+    const migrated = mergeNotes([previous]).find(n => n.id === "about");
+    expect(migrated?.body).toBe(notes.find(n => n.id === "about")?.body);
+    expect(migrated?.body).toContain("I got both versions ready for Sri Lanka.");
+    const edited = { ...previous, body: previous.body + "\n\nMy own addition" };
+    expect(mergeNotes([edited]).find(n => n.id === "about")).toEqual(edited);
+  });
 });
